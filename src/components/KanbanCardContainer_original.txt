@@ -1,0 +1,67 @@
+import { Col, Container, Row } from 'react-bootstrap';
+import '../styles/KanbanCardContainer.css';
+import React, { useState, useEffect, useRef } from 'react';
+import KanbanCard from './KanbanCard';
+
+
+
+const KanbanCardContainer = () => {
+    const [dndProps, setDndProps] = useState({
+        startMousePos: {x: 0, y: 0},
+        hostRect: {x: 0, y: 0, width: 0, height: 0}
+    })
+    const [cardPos, setCardPos] = useState({x:0,y:0});
+    let draggingCard = useRef(false);
+
+    //TODO- set initial state and include this stuff... 
+    const onDragStart = (e) => {
+        console.log("START");
+
+        //hide ghost image 
+        e.dataTransfer.setDragImage(e.currentTarget, -99999, -99999);
+
+        let startMousePos = getRelativeCoordinates(e);
+        let hostRect = e.currentTarget.getBoundingClientRect();
+        let x = hostRect.x;
+        let y = hostRect.y;
+
+        draggingCard.current = true;
+        setDndProps({...dndProps, startMousePos: startMousePos, hostRect: hostRect});
+        setCardPos({x,y});
+    }
+    const onDrag = (e) => {
+        let dragMousePos = getRelativeCoordinates(e);
+        let {startMousePos, hostRect} = dndProps;
+        let x = hostRect.x + dragMousePos.x - startMousePos.x;
+        let y = hostRect.y + dragMousePos.y - startMousePos.y;
+
+        if(cardPos.x !== x || cardPos.y !== y)
+            setCardPos({x,y});
+    }
+    const onDragEnd = (e) => {
+        console.log("END");
+        draggingCard.current = false;
+    }
+
+    function getRelativeCoordinates (e) {   
+        return { 
+            x: e.pageX - e.currentTarget.offsetLeft,
+            y: e.pageY - e.currentTarget.offsetTop,
+        };   
+    }
+
+    let dragCard = <KanbanCard isDummyCard={true} styles={{
+        display: (draggingCard.current) ? 'block' : 'none', 
+        position: 'absolute', left: `${cardPos.x}px`, 
+        top: `${cardPos.y}px`}} 
+    />;
+
+    return (<div className='KanbanCardContainer'>
+        <KanbanCard onDragStart={onDragStart} onDrag={onDrag} onDragEnd={onDragEnd} />
+        {/* <Row>
+            <Col><KanbanCard onDragStart={onDragStart} onDrag={onDrag} onDragEnd={onDragEnd} /></Col>
+        </Row> */}
+        {dragCard}
+    </div>);
+}
+export default KanbanCardContainer;

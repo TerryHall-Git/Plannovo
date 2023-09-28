@@ -1,0 +1,56 @@
+
+let clone;
+let startMousePos = {x: 0, y: 0, width: 0, height: 0};
+let hostRect = {x: 0, y: 0, width: 0, height: 0};;
+const onDragStart = (e) => {
+    if(e.isTemp === true) return;
+    console.log("START");
+    //hide ghost image 
+    e.dataTransfer.setDragImage(e.currentTarget, -99999, -99999);
+
+    startMousePos = getRelativeCoordinates(e);
+
+    hostRect = e.currentTarget.getBoundingClientRect();
+
+    clone = e.currentTarget.cloneNode(true);
+    clone.draggable = false;
+    clone.style.position = 'absolute';
+    clone.style.left = hostRect.x + 'px';
+    clone.style.top = hostRect.y + 'px';
+    clone.style.zIndex = -1;
+    document.body.appendChild(clone);
+}
+const onDragEnd = (e) => {
+    document.body.removeChild(clone);
+    clone = null;
+}
+
+function getRelativeCoordinates (e) {
+    const offset = {
+      left: e.currentTarget.offsetLeft,
+      top: e.currentTarget.offsetTop
+    };
+  
+    // let reference = referenceElement.offsetParent;
+    // while(reference){
+    //   offset.left += reference.offsetLeft;
+    //   offset.top += reference.offsetTop;
+    //   reference = reference.offsetParent;
+    // }
+
+    return { 
+      x: e.pageX - offset.left,
+      y: e.pageY - offset.top,
+    };   
+}
+
+const onDrag = (e) => {
+    let dragMousePos = getRelativeCoordinates(e);
+
+    let left = hostRect.x + dragMousePos.x - startMousePos.x;
+    let top = hostRect.y + dragMousePos.y - startMousePos.y;
+    clone.style.left = left + 'px';
+    clone.style.top = top + 'px';
+    clone.style.zIndex = 1;
+
+}

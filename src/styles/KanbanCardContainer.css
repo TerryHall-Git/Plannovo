@@ -1,0 +1,10 @@
+.KanbanCardContainer {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 1rem;
+    margin: 2rem;
+    background-color: black;
+    width: 18rem;
+    height: 50rem;
+}

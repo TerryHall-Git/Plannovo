@@ -1,0 +1,12 @@
+.KanbanCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 18rem;
+    min-height: 5rem;
+    background-color: rgb(41, 41, 41);
+    color: white;
+    margin: 0.25rem;
+    z-index: 1;
+}
