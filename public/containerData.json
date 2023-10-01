@@ -1,52 +1,36 @@
 {
-    "data":
-    [
-        {
-            "type": "container",
-            "id": "container1",
-            "cards": [
-                {
-                    "parent": "container1",
-                    "type": "card",
-                    "id": "card1",
-                    "title": "Card 1"
-                },
-                {
-                    "parent": "container1",
-                    "type": "card",
-                    "id": "card2",
-                    "title": "Card 2"
-                },
-                {
-                    "parent": "container1",
-                    "type": "card",
-                    "id": "card3",
-                    "title": "Card 3"
-                }
-            ]
-        },
-        {
-            "type": "container",
-            "id": "container2",
-            "cards": [
-                {
-                    "parent": "container2",
-                    "type": "card",
-                    "id": "card4",
-                    "title": "Card 4"
-                },
-                {
-                    "parent": "container2",
-                    "type": "card",
-                    "id": "card5",
-                    "title": "Card 5"
-                }
-            ]
-        },
-        {
-            "type": "container",
-            "id": "container3",
-            "cards": []
+    "container1": {
+        "type": "container",
+        "cards": {
+            "card1": {
+                "type": "card",
+                "title": "Card 1"
+            },
+            "card2": {
+                "type": "card",
+                "title": "Card 2"
+            },
+            "card3": {
+                "type": "card",
+                "title": "Card 3"
+            }
         }
-    ]
+    },
+    "container2": {
+        "type": "container",
+        "cards": {
+            "card4": {
+                "type": "card",
+                "title": "Card 4"
+            },
+            "card5":{
+                "type": "card",
+                "title": "Card 5"
+            }
+        }
+    },
+    "container3": {
+        "type": "container",
+        "cards": []
+    }
 }

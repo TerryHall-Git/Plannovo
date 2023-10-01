@@ -9,7 +9,7 @@ export function Droppable(props) {
     idx: props.idx
   });
   const style = {
-    opacity: isOver ? 1 : 0.5,
+    //opacity: isOver ? 1 : 0.5,
   };
 
   return (

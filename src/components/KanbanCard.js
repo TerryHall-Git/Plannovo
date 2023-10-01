@@ -1,10 +1,13 @@
 import '../styles/KanbanCard.css';
-import React, { useState, useEffect } from 'react';
 
-const KanbanCard = () => {
+const KanbanCard = ({title}) => {
     return (
         <div className='KanbanCard'>
-            DRAGGABLE CARD
+            <div className='wrapper'>
+                <div className='title'>
+                    <h3>{title}</h3>
+                </div>
+            </div>
         </div>
     );
 }
