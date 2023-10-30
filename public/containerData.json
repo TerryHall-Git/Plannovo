@@ -1,36 +1,59 @@
 {
-    "container1": {
-        "type": "container",
-        "cards": {
-            "card1": {
-                "type": "card",
-                "title": "Card 1"
-            },
-            "card2": {
-                "type": "card",
-                "title": "Card 2"
-            },
-            "card3": {
-                "type": "card",
-                "title": "Card 3"
-            }
+    "containers": [
+        {
+            "name": "container1",
+            "type": "container",
+            "idx": 0,
+            "cards": [
+                {
+                    "idx": 0,
+                    "parentIdx": 0,
+                    "name": "card1",
+                    "type": "card",
+                    "title": "Card 1"
+                },
+                {
+                    "idx": 1,
+                    "parentIdx": 0,
+                    "name": "card2",
+                    "type": "card",
+                    "title": "Card 2"
+                },
+                {
+                    "idx": 2,
+                    "parentIdx": 0,
+                    "name": "card3",
+                    "type": "card",
+                    "title": "Card 3"
+                }
+            ]
+        },
+        {
+            "name": "container2",
+            "type": "container",
+            "idx": 1,
+            "cards": [
+                {
+                    "idx": 0,
+                    "parentIdx": 1,
+                    "name": "card4",
+                    "type": "card",
+                    "title": "Card 4"
+                },
+                {
+                    "idx": 1,
+                    "parentIdx": 1,
+                    "name": "card5",
+                    "type": "card",
+                    "title": "Card 5"
+                }
+            ]
+        },
+        {
+            "name": "container3",
+            "type": "container",
+            "idx": 2,
+            "cards": []
         }
-    },
-    "container2": {
-        "type": "container",
-        "cards": {
-            "card4": {
-                "type": "card",
-                "title": "Card 4"
-            },
-            "card5":{
-                "type": "card",
-                "title": "Card 5"
-            }
-        }
-    },
-    "container3": {
-        "type": "container",
-        "cards": []
-    }
+    ]
 }

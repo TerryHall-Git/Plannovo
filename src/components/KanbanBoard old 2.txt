@@ -1,0 +1,99 @@
+// import { Col, Container, Row } from 'react-bootstrap';
+import '../styles/KanbanBoard.css';
+import React, { useState, useEffect, useRef } from 'react';
+import { Droppable } from './Droppable';
+import {DndContext} from '@dnd-kit/core';
+import KanbanContainer from './KanbanContainer';
+
+
+const KanbanBoard = () => {
+   
+    const [containers, setContainers] = useState({}); //{id: null}
+    const [activeId, setActiveId] = useState('')
+    
+    useEffect(()=>{
+        fetch("./containerData.json")
+        .then((res) => res.json())
+        .then((data) => {
+            setContainers(data);
+        });
+
+    },[])
+
+    
+    function handleDragEnd({active, over}) {
+        if(!over) return;
+
+        let updatedContainers = {...containers};
+
+        let {cardKey, parentKey} = active.data.current;
+
+        if(over.data.current.type === "container") { //dragging over container
+            let {containerKey} = over.data.current;
+            if(containerKey !== parentKey) {
+                let {containerKey} = over.data.current;
+
+                updatedContainers[containerKey].cards[cardKey] = updatedContainers[parentKey].cards[cardKey];
+                
+                updatedContainers[containerKey].cards[cardKey].idx = Object.keys(updatedContainers[containerKey].cards).length-1;
+
+                delete updatedContainers[parentKey].cards[cardKey];
+
+                console.log("UPDATED CONTAINERS!");
+                setContainers(updatedContainers);
+            }
+        } else if(over.data.current.type !== "container" && active.id !== over.id) { //dragging over another item
+            
+            let overParentKey = active.data.current.parentKey;
+            let overCardKey = active.data.current.cardKey;
+            if(overParentKey !== parentKey) {
+                //Over a card from another container
+            }
+
+            let activeIdx = updatedContainers[parentKey].cards[cardKey].idx;
+            let overIdx = updatedContainers[parentKey].cards[over.data.current.cardKey].idx;
+
+            console.log("SORT"); //TODO:
+            console.log("active: ", activeIdx);
+            console.log("over: ", overIdx);
+
+            //swap            
+            updatedContainers[parentKey].cards[cardKey].idx = overIdx;
+            updatedContainers[parentKey].cards[over.data.current.cardKey].idx = activeIdx;
+
+            setContainers(updatedContainers);
+        }
+
+
+        setActiveId('');
+    }
+
+    function handleDragOver({active, over}) {
+        //console.log(over);
+    }
+
+    function handleDrag({active, over}) {
+        
+    }
+
+    function handleDragStart({active, over}) {
+        setActiveId(active.id);
+    }
+
+    const containerMarkup = Object.keys(containers).map((containerID, index1) => {
+        return <Droppable key={containerID} id={containerID} data={{containerKey: containerID, containerIndex: index1, type: "container"}}  >
+            <KanbanContainer key={containerID} myContainerID={containerID} myContainer={containers[containerID]} activeId={activeId} />
+        </Droppable>
+        //  return <KanbanContainer key={containerID} myContainerID={containerID} myContainer={containers[containerID]} />
+    }) 
+
+
+    return (
+        <div style={{display: 'flex'}}>
+            <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} onDragMove={handleDrag} onDragStart={handleDragStart} >
+                {containerMarkup}
+            </DndContext>
+        </div>
+    );
+}
+export default KanbanBoard;

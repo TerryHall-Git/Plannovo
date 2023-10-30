@@ -1,0 +1,41 @@
+{
+    "container1": {
+        "type": "container",
+        "cards": {
+            "card1": {
+                "idx": 0,
+                "type": "card",
+                "title": "Card 1"
+            },
+            "card2": {
+                "idx": 1,
+                "type": "card",
+                "title": "Card 2"
+            },
+            "card3": {
+                "idx": 2,
+                "type": "card",
+                "title": "Card 3"
+            }
+        }
+    },
+    "container2": {
+        "type": "container",
+        "cards": {
+            "card4": {
+                "idx": 0,
+                "type": "card",
+                "title": "Card 4"
+            },
+            "card5":{
+                "idx": 1,
+                "type": "card",
+                "title": "Card 5"
+            }
+        }
+    },
+    "container3": {
+        "type": "container",
+        "cards": []
+    }
+}
