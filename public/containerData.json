@@ -53,7 +53,22 @@
             "name": "container3",
             "type": "container",
             "idx": 2,
-            "cards": []
+            "cards": [
+                {
+                    "idx": 0,
+                    "parentIdx": 2,
+                    "name": "card6",
+                    "type": "card",
+                    "title": "Card 6"
+                },
+                {
+                    "idx": 1,
+                    "parentIdx": 2,
+                    "name": "card7",
+                    "type": "card",
+                    "title": "Card 7"
+                }
+            ]
         }
     ]
 }
