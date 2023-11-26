@@ -25,28 +25,9 @@ const KanbanContainer = (props) => {
         parent: props.parent,
         idx: props.idx,
     });
-    // const {
-    //     setNodeRef,
-    //     attributes,
-    //     listeners,
-    //     transform,
-    //     transition,
-    //     isDragging,
-    // } = useSortable({
-    //     data: props.data,
-    //     parent: props.parent,
-    //     activeCard: props.activeCard,
-    // });
-
-    // const style = {
-    //     transition,
-    //     transform: CSS.Transform.toString(transform),
-    // };
     const {data, activeCard} = props;
     
     let cards = data.cards;
-    //if(activeId !== '') activeCard = cards.filter(card=>card.name === activeId)[0];
-
     let cardsMarkup = cards.map(card => (
             <KanbanCard key={card.name} id={card.name} title={card.title} isDragging={activeCard && activeCard.name === card.name ? true : false} classStyle='KanbanCard' data={card} />
         )
