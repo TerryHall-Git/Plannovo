@@ -85,7 +85,6 @@ const KanbanBoard = () => {
         }
     }
 
-
     function handleDragStart({active}) {
         setActiveCard(active.data.current);
     }
