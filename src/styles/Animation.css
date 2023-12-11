@@ -1,0 +1,22 @@
+.appearAnimation {
+  animation-duration: 0.75s;
+  animation-duration: 0.5s;
+  animation-delay: 0.1s;
+  animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+  animation-fill-mode: backwards;
+  animation-name: animate-popIn;
+}
+@keyframes animate-popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+.enlargeOnHover:hover {
+  transform: scale(1.05, 1.05);
+}

@@ -1,10 +1,9 @@
-import './App.css';
-import KanbanBoard from './components/KanbanBoard';
+import RouteList from "./RouteList";
 
 function App() {
   return (
-    <div className="App">
-        <KanbanBoard />
+    <div className="bg-primary min-h-screen min-w-fit ml-72 text-highlight3">
+      <RouteList />
     </div>
   );
 }
