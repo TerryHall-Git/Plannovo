@@ -5,19 +5,28 @@ import { ReactComponent as OverviewIcon } from "../assets/OverviewIcon.svg";
 import { ReactComponent as AdministrationIcon } from "../assets/AdministrationIcon.svg";
 import { ReactComponent as DeepThoughtsIcon } from "../assets/DeepThoughtsIcon.svg";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  const [selected, setSelected] = useState("projects");
+  const [selection, setSelection] = useState("");
+  const navigate = useNavigate();
 
-  const navSelectable =
+  const navDeselected =
     "flex items-center px-6 py-2 mt-2 text-highlight3 hover:bg-secondary hover:bg-opacity-25 hover:text-white";
   const navSelected =
     "flex items-center px-6 py-2 mt-2 text-white bg-opacity-25 bg-highlight1";
 
+  function homeClickHandler() {
+    setSelection("");
+    navigate("/");
+  }
+
   return (
     <>
-      <div className="absolute top-0 left-0 flex m-0 bg-primary border-b-4 border-secondary min-w-full h-16">
+      <div
+        className="absolute top-0 left-0 flex m-0 bg-primary border-b-4 border-secondary min-w-full h-16 cursor-pointer"
+        onClick={homeClickHandler}
+      >
         <div className="p-3 inline-block w-16">
           <DeepThoughtsIcon />
         </div>
@@ -30,8 +39,8 @@ export default function Navbar() {
           <Link
             to="/projects"
             name="projects"
-            className={selected === "projects" ? navSelected : navSelectable}
-            onClick={(e) => setSelected(e.target.closest("a").name)}
+            className={selection === "projects" ? navSelected : navDeselected}
+            onClick={(e) => setSelection(e.target.closest("a").name)}
           >
             <ProjectsIcon />
             <span className="mx-3">Projects</span>
@@ -40,8 +49,8 @@ export default function Navbar() {
           <Link
             to="/overview"
             name="overview"
-            className={selected === "overview" ? navSelected : navSelectable}
-            onClick={(e) => setSelected(e.target.closest("a").name)}
+            className={selection === "overview" ? navSelected : navDeselected}
+            onClick={(e) => setSelection(e.target.closest("a").name)}
           >
             <OverviewIcon />
             <span className="mx-3">Overview</span>
@@ -50,8 +59,8 @@ export default function Navbar() {
           <Link
             to="/boards"
             name="boards"
-            className={selected === "boards" ? navSelected : navSelectable}
-            onClick={(e) => setSelected(e.target.closest("a").name)}
+            className={selection === "boards" ? navSelected : navDeselected}
+            onClick={(e) => setSelection(e.target.closest("a").name)}
           >
             <BoardsIcon />
             <span className="mx-3">Boards</span>
@@ -60,8 +69,8 @@ export default function Navbar() {
           <Link
             to="/tasks"
             name="tasks"
-            className={selected === "tasks" ? navSelected : navSelectable}
-            onClick={(e) => setSelected(e.target.closest("a").name)}
+            className={selection === "tasks" ? navSelected : navDeselected}
+            onClick={(e) => setSelection(e.target.closest("a").name)}
           >
             <TasksIcon />
             <span className="mx-3">Tasks</span>
@@ -70,8 +79,8 @@ export default function Navbar() {
           <Link
             to="/admin"
             name="admin"
-            className={selected === "admin" ? navSelected : navSelectable}
-            onClick={(e) => setSelected(e.target.closest("a").name)}
+            className={selection === "admin" ? navSelected : navDeselected}
+            onClick={(e) => setSelection(e.target.closest("a").name)}
           >
             <AdministrationIcon />
             <span className="mx-3">Administration</span>

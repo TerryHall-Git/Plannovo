@@ -15,6 +15,16 @@ module.exports = {
         highlight3: "#9fb9d0",
         badge: "#ff865b",
       },
+      width: {
+        128: "32rem",
+        144: "36rem",
+        160: "40rem",
+      },
+      height: {
+        128: "32rem",
+        144: "36rem",
+        160: "40rem",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],
