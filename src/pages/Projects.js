@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddProjectTile from "../components/AddProjectTile";
 import ProjectTile from "../components/ProjectTile";
 import NewProjectForm from "../components/NewProjectForm";
+import "../styles/Projects.css";
 
 export default function Projects() {
   const [formShowing, setFormShowing] = useState(false);
@@ -10,12 +11,12 @@ export default function Projects() {
     setFormShowing(true);
   };
   return (
-    <div className="flex h-screen">
-      <div className="m-auto">
+    <div className="Projects">
+      <div className="Projects-content">
         {formShowing ? (
           <NewProjectForm />
         ) : (
-          <div className="grid grid-cols-4 gap-4">
+          <div className="Projects-grid">
             <AddProjectTile addNewProject={addNewProject} />
             <ProjectTile
               projName="Project 1"
