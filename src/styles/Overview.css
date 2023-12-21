@@ -1,0 +1,10 @@
+.Overview {
+  display: flex;
+  height: 100vh;
+  margin: auto;
+}
+
+.Overview-content {
+  margin: auto;
+  font-weight: bold;
+}

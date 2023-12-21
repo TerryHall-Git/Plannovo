@@ -1,0 +1,10 @@
+.Home {
+  display: flex;
+  height: 100vh;
+  margin: auto;
+}
+
+.Home-content {
+  margin: auto;
+  font-weight: bold;
+}

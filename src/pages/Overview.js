@@ -1,8 +1,9 @@
+import "../styles/Overview.css";
 export default function Overview() {
   return (
-    <div className="flex h-screen">
-      <div className="m-auto">
-        <span className="text-5xl font-bold text">[Overview Placeholder]</span>
+    <div className="Overview">
+      <div className="Overview-content">
+        <h1>[Overview Placeholder]</h1>
       </div>
     </div>
   );

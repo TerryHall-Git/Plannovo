@@ -6,6 +6,7 @@ import { ReactComponent as AdministrationIcon } from "../assets/AdministrationIc
 import { ReactComponent as DeepThoughtsIcon } from "../assets/DeepThoughtsIcon.svg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../styles/Navbar.css";
 
 export default function Navbar() {
   const [selection, setSelection] = useState("");
@@ -23,10 +24,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div
-        className="absolute top-0 left-0 flex m-0 bg-primary border-b-4 border-secondary min-w-full h-16 cursor-pointer"
-        onClick={homeClickHandler}
-      >
+      <div className="Navbar-header" onClick={homeClickHandler}>
         <div className="p-3 inline-block w-16">
           <DeepThoughtsIcon />
         </div>

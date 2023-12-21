@@ -1,0 +1,10 @@
+.Tasks {
+  display: flex;
+  height: 100vh;
+  margin: auto;
+}
+
+.Tasks-content {
+  margin: auto;
+  font-weight: bold;
+}

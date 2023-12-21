@@ -1,0 +1,10 @@
+.Boards {
+  display: flex;
+  height: 100vh;
+  margin: auto;
+}
+
+.Boards-content {
+  margin: auto;
+  font-weight: bold;
+}

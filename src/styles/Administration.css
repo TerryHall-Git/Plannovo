@@ -1,0 +1,10 @@
+.Administration {
+  display: flex;
+  height: 100vh;
+  margin: auto;
+}
+
+.Administration-content {
+  margin: auto;
+  font-weight: bold;
+}

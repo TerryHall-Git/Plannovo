@@ -1,11 +1,32 @@
+.enlargeOnHover:hover {
+  transform: scale(1.05, 1.05);
+}
+
 .appearAnimation {
   animation-duration: 0.35s;
   animation-delay: 0.1s;
   animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
   animation-fill-mode: backwards;
-  animation-name: animate-popIn;
+  animation-name: popIn1;
 }
-@keyframes animate-popIn {
+
+.appearAndSpinAnimation {
+  animation-duration: 0.35s;
+  animation-delay: 0.1s;
+  animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+  animation-fill-mode: backwards;
+  animation-name: popIn2;
+}
+
+.appearAndWobble {
+  animation-duration: 0.5s;
+  animation-delay: 0.1s;
+  animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
+  animation-fill-mode: backwards;
+  animation-name: popInAndWobble;
+}
+
+@keyframes popIn1 {
   0% {
     opacity: 0;
     transform: scale(0.5, 0.5);
@@ -20,6 +41,35 @@
   }
 }
 
-.enlargeOnHover:hover {
-  transform: scale(1.05, 1.05);
+@keyframes popIn2 {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.5, 0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(360deg) scale(1, 1);
+  }
+}
+
+@keyframes popInAndWobble {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.1, 0.1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(15deg) scale(0.5, 0.5);
+  }
+  70% {
+    opacity: 0.75;
+    transform: rotate(0) scale(0.75, 0.75);
+  }
+  90% {
+    transform: rotate(-15deg) scale(1.01, 1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1, 1);
+  }
 }

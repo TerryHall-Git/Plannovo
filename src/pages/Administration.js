@@ -1,10 +1,9 @@
+import "../styles/Administration.css";
 export default function Administration() {
   return (
-    <div className="flex h-screen">
-      <div className="m-auto">
-        <span className="text-5xl font-bold text">
-          [Administration Placeholder]
-        </span>
+    <div className="Administration">
+      <div className="Administration-content">
+        <h1>[Administration Placeholder]</h1>
       </div>
     </div>
   );

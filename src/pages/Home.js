@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import "../styles/Home.css";
 
 const Home = () => {
   return (
-    <div className="flex h-screen">
-      <div className="m-auto">
-        <span className="text-5xl font-bold text">Welcome!</span>
+    <div className="Home">
+      <div className="Home-content">
+        <h1>Welcome!</h1>
       </div>
     </div>
   );
