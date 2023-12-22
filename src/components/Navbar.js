@@ -9,13 +9,44 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 
 export default function Navbar() {
-  const [selection, setSelection] = useState("");
   const navigate = useNavigate();
-
+  const [navLinks, setNavLinks] = useState([
+    {linkName: "projects", cls: "Navbar-deselected", icon: <ProjectsIcon />}, 
+    {linkName: "overview", cls: "Navbar-deselected", icon: <OverviewIcon />}, 
+    {linkName: "boards", cls: "Navbar-deselected", icon: <BoardsIcon />}, 
+    {linkName: "tasks", cls: "Navbar-deselected", icon: <TasksIcon />}, 
+    {linkName: "admin", cls: "Navbar-deselected", icon: <AdministrationIcon />}, 
+  ]); 
+    
   function homeClickHandler() {
-    setSelection("");
     navigate("/");
   }
+
+  //update link status on click
+  function onClickHandler(e) {
+    let elName = e.target.closest("a").name;
+    let updatedLinks = [...navLinks];
+    updatedLinks.forEach(navLink => {
+      navLink.cls = (navLink.linkName === elName) ? "Navbar-selected" : "Navbar-deselected"
+    });
+    setNavLinks(updatedLinks);
+  }
+
+  //create nav links
+  let navLinkMarkup = navLinks.map(({linkName, cls, icon}) => {
+    return (
+      <Link
+        key={linkName}
+        to={`/${linkName}`}
+        name={linkName}
+        className={cls}
+        onClick={onClickHandler}
+      >
+        {icon}
+        <span className="Navbar-icon">{linkName.charAt(0).toUpperCase() + linkName.slice(1)}</span>
+      </Link>
+    );
+  });
 
   return (
     <div>
@@ -29,55 +60,7 @@ export default function Navbar() {
       </div>
       <div className="Navbar-left">
         <nav>
-          <Link
-            to="/projects"
-            name="projects"
-            className={selection === "projects" ? "Navbar-selected" : "Navbar-deselected"}
-            onClick={(e) => setSelection(e.target.closest("a").name)}
-          >
-            <ProjectsIcon />
-            <span className="Navbar-icon">Projects</span>
-          </Link>
-
-          <Link
-            to="/overview"
-            name="overview"
-            className={selection === "overview" ? "Navbar-selected" : "Navbar-deselected"}
-            onClick={(e) => setSelection(e.target.closest("a").name)}
-          >
-            <OverviewIcon />
-            <span className="Navbar-icon">Overview</span>
-          </Link>
-
-          <Link
-            to="/boards"
-            name="boards"
-            className={selection === "boards" ? "Navbar-selected" : "Navbar-deselected"}
-            onClick={(e) => setSelection(e.target.closest("a").name)}
-          >
-            <BoardsIcon />
-            <span className="Navbar-icon">Boards</span>
-          </Link>
-
-          <Link
-            to="/tasks"
-            name="tasks"
-            className={selection === "tasks" ? "Navbar-selected" : "Navbar-deselected"}
-            onClick={(e) => setSelection(e.target.closest("a").name)}
-          >
-            <TasksIcon />
-            <span className="Navbar-icon">Tasks</span>
-          </Link>
-
-          <Link
-            to="/admin"
-            name="admin"
-            className={selection === "admin" ? "Navbar-selected" : "Navbar-deselected"}
-            onClick={(e) => setSelection(e.target.closest("a").name)}
-          >
-            <AdministrationIcon />
-            <span className="Navbar-icon">Administration</span>
-          </Link>
+          {navLinkMarkup}
         </nav>
       </div>
     </div>
