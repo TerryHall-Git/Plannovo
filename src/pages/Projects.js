@@ -30,9 +30,9 @@ export default function Projects() {
               projName="Project 3"
               projDesc="This is a really interesting project. Don't you think?"
             />
-            <ProjectTile projName="Project 4" />
-            <ProjectTile projName="Project 5" />
-            <ProjectTile projName="Project 6" />
+            <ProjectTile projName="Project 4" projDesc="test 1" />
+            <ProjectTile projName="Project 5" projDesc="test 2" />
+            <ProjectTile projName="Project 6" projDesc="test 3" />
           </div>
         )}
       </div>

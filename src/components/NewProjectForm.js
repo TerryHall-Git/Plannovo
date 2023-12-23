@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../styles/Animation.css";
 import "../styles/NewProjectForm.css";
+import {CreateNewProject} from "../utils.js";
 
 export default function NewProjectForm() {
   const [formData, setFormData] = useState({
@@ -23,22 +24,29 @@ export default function NewProjectForm() {
     });
   }
 
+  function onSubmitHandler(e) {
+    e.preventDefault();
+    CreateNewProject(formData.projectName, formData.projectDesc);
+  }
+
   return (
     <div className="NewProjectForm appearAnimation">
       <div className="NewProjectForm-header">
         <p>Create New Project</p>
       </div>
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <div className="NewProjectForm-inputs">
-          <label for="projectName">Project Name:</label>
+          <label htmlFor="projectName">Project Name:</label>
           <input
+            id="projectName"
             name="projectName"
             type="text"
             value={formData.projectName}
             onChange={onChangeHandler}
           />
-          <label for="projectName">Project Description:</label>
+          <label htmlFor="projectName">Project Description:</label>
           <textarea
+            id="projectDesc"
             name="projectDesc"
             type="text"
             value={formData.projectDesc}
