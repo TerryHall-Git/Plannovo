@@ -1,9 +1,8 @@
 import { useState } from "react";
 import "../styles/Animation.css";
 import "../styles/NewProjectForm.css";
-import {CreateNewProject} from "../utils.js";
 
-export default function NewProjectForm() {
+export default function NewProjectForm({createProject}) {
   const [formData, setFormData] = useState({
     projectName: "",
     projectDesc: "",
@@ -26,7 +25,7 @@ export default function NewProjectForm() {
 
   function onSubmitHandler(e) {
     e.preventDefault();
-    CreateNewProject(formData.projectName, formData.projectDesc);
+    createProject(formData.projectName, formData.projectDesc);
   }
 
   return (

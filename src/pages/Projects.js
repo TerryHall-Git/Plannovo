@@ -1,38 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddProjectTile from "../components/AddProjectTile";
 import ProjectTile from "../components/ProjectTile";
 import NewProjectForm from "../components/NewProjectForm";
+import {getProjects, createNewProject} from "../utils.js";
 import "../styles/Projects.css";
 
 export default function Projects() {
   const [formShowing, setFormShowing] = useState(false);
+  const [projects, setProjects] = useState(getProjects());
 
   const addNewProject = () => {
     setFormShowing(true);
   };
+
+  function createProject(name, desc) {
+    createNewProject(name, desc);
+    setProjects(getProjects());
+    setFormShowing(false);
+  }
+
   return (
     <div className="Projects">
       <div className="Projects-content">
         {formShowing ? (
-          <NewProjectForm />
+          <NewProjectForm createProject={createProject} />
         ) : (
           <div className="Projects-grid">
             <AddProjectTile addNewProject={addNewProject} />
-            <ProjectTile
-              projName="Project 1"
-              projDesc="This is a really interesting project. Don't you think?"
-            />
-            <ProjectTile
-              projName="Project 2"
-              projDesc="This is a really interesting project. Don't you think?"
-            />
-            <ProjectTile
-              projName="Project 3"
-              projDesc="This is a really interesting project. Don't you think?"
-            />
-            <ProjectTile projName="Project 4" projDesc="test 1" />
-            <ProjectTile projName="Project 5" projDesc="test 2" />
-            <ProjectTile projName="Project 6" projDesc="test 3" />
+            {Object.keys(projects).map(key=> {
+              const {name, desc} = projects[key];
+              return (
+                <ProjectTile
+                  key={key}
+                  projName={name}
+                  projDesc={desc}
+                />
+              );
+            })}
           </div>
         )}
       </div>

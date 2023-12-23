@@ -1,26 +1,34 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const SITE_KEY = "DEEP_THOUGHTS";
+/**
+ * Creates a new Project.
+ * @param {string} name 
+ * @param {string} desc 
+ */
+function createNewProject(name, desc) {
+    const rootData = getRootData();
 
-function CreateNewProject(name, desc) {
-    const rootData = GetRootData();
-
-    rootData["projects"] = {
+    rootData.projects = {
         ...rootData.projects,
         [uuidv4()]: {name: name, desc: desc}
     };
 
-    SaveRootData(rootData);
+    saveRootData(rootData);
 }
 
-function SaveRootData(data) {
+function getProjects() {
+    return getRootData().projects;
+}
+
+function saveRootData(data) {
     localStorage.setItem(SITE_KEY, JSON.stringify(data));
 }
 
-function GetRootData() {
+function getRootData() {
     const data = JSON.parse(localStorage.getItem(SITE_KEY));
-    return (data) ? data : {};
+    return (data) ? data : {projects:{}};
 }
 
-export {CreateNewProject};
+export {createNewProject, getProjects};
 
