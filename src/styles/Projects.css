@@ -1,19 +1,20 @@
 .Projects {
   display: flex;
-  height: 100vh;
-  margin: auto;
+  min-height: 100vh;
+  margin: 4rem auto;
 }
 
 .Projects-grid {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  /* grid-template-columns: repeat( auto-fit, minmax(0, 1fr) ); */
-  gap: 1rem;
-  /* display: flex;
-  flex-wrap: wrap;
   gap: 1rem; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .Projects-content {
-  margin: auto;
+  margin: 1rem auto;
 }
