@@ -1,39 +1,44 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import AddProjectTile from "../components/AddProjectTile";
 import ProjectTile from "../components/ProjectTile";
 import NewProjectForm from "../components/NewProjectForm";
-import {getProjects, createNewProject} from "../utils.js";
+import {getProjects, createNewProject, removeProject} from "../utils.js";
 import "../styles/Projects.css";
 
 export default function Projects() {
   const [formShowing, setFormShowing] = useState(false);
   const [projects, setProjects] = useState(getProjects());
 
-  const addNewProject = () => {
-    setFormShowing(true);
-  };
-
   function createProject(name, desc) {
     createNewProject(name, desc);
     setProjects(getProjects());
-    setFormShowing(false);
+  }
+  
+  function deleteProject(confirmDelete, key) {
+    if(confirmDelete) {
+      removeProject(key);
+      setProjects(getProjects());
+    } 
   }
 
   return (
     <div className="Projects">
       <div className="Projects-content">
         {formShowing ? (
-          <NewProjectForm createProject={createProject} />
+          <NewProjectForm createProject={createProject} setFormShowing={setFormShowing} />
         ) : (
           <div className="Projects-grid">
-            <AddProjectTile addNewProject={addNewProject} />
+            <AddProjectTile showForm={()=> setFormShowing(true)} />
             {Object.keys(projects).map(key=> {
               const {name, desc} = projects[key];
+              console.log(key);
               return (
                 <ProjectTile
                   key={key}
+                  projKey={key}
                   projName={name}
                   projDesc={desc}
+                  deleteProject={deleteProject}
                 />
               );
             })}

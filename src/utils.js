@@ -17,6 +17,14 @@ function createNewProject(name, desc) {
     saveRootData(rootData);
 }
 
+function removeProject(key) {
+    const rootData = getRootData();
+
+    delete rootData.projects[key];
+
+    saveRootData(rootData);
+}
+
 function getProjects() {
     return getRootData().projects;
 }
@@ -30,5 +38,5 @@ function getRootData() {
     return (data) ? data : {projects:{}};
 }
 
-export {createNewProject, getProjects};
+export {createNewProject, getProjects, removeProject};
 

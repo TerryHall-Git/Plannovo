@@ -3,12 +3,16 @@
   flex-direction: column;
   background-color: #1b262c;
   width: 28rem;
-  height: 24rem;
+  height: 25rem;
   padding: 1rem;
   border-width: 4px;
   border-color: #8095a8;
   border-radius: 1rem;
   font-size: 1rem;
+}
+
+.NewProjectForm span {
+  color: rgb(255, 45, 45);
 }
 
 .NewProjectForm-header {
@@ -46,16 +50,31 @@
   color: #1b262c;
 }
 
-.NewProjectForm-btn {
+.NewProjectForm-submitBtn {
   width: 12rem;
   padding: 0.5rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   background-color: rgb(37, 99, 255);
   color: white;
   font-weight: bold;
   border-radius: 0.75rem;
 }
 
-.NewProjectForm-btn:hover {
+.NewProjectForm-submitBtn:hover {
   background-color: rgb(29, 78, 255);
 }
+
+.NewProjectForm-cancelBtn {
+  width: 12rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: rgb(255, 45, 45);
+  color: white;
+  font-weight: bold;
+  border-radius: 0.75rem;
+}
+
+.NewProjectForm-cancelBtn:hover {
+  background-color: rgb(236, 36, 36);
+}
+

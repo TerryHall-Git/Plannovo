@@ -1,0 +1,31 @@
+.ConfirmationBox {
+    background-color: #1b262c;
+    width: 10rem;
+    height: 6rem;
+    margin: 0 auto;
+    padding: 1rem;
+    border-width: 4px;
+    border-color: #8095a8;
+    border-radius: 1rem;
+    z-index: 1;
+}
+
+.ConfirmationBox-question {
+    margin-bottom: 1rem;
+}
+
+.ConfirmationBox-options {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+}
+
+.ConfirmationBox-option {
+    color: #9fb9d0;
+    transform: scale(2);
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.ConfirmationBox-option:hover {
+    color: white;
+}

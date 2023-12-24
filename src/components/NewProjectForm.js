@@ -2,11 +2,12 @@ import { useState } from "react";
 import "../styles/Animation.css";
 import "../styles/NewProjectForm.css";
 
-export default function NewProjectForm({createProject}) {
+export default function NewProjectForm({createProject,setFormShowing}) {
   const [formData, setFormData] = useState({
     projectName: "",
     projectDesc: "",
   });
+  const [showError, setShowError] = useState(false);
 
   function onChangeHandler(e) {
     let el = e.target;
@@ -25,7 +26,18 @@ export default function NewProjectForm({createProject}) {
 
   function onSubmitHandler(e) {
     e.preventDefault();
+    if(formData.projectName == "" || formData.projectDesc == ""){
+      setShowError(true);
+      return;
+    }
     createProject(formData.projectName, formData.projectDesc);
+    setShowError(false);
+    setFormShowing(false);
+  }
+
+  function onCancelHandler(e) {
+    setShowError(false);
+    setFormShowing(false);
   }
 
   return (
@@ -35,7 +47,7 @@ export default function NewProjectForm({createProject}) {
       </div>
       <form onSubmit={onSubmitHandler}>
         <div className="NewProjectForm-inputs">
-          <label htmlFor="projectName">Project Name:</label>
+          <label htmlFor="projectName">Project Name: <span>{formData.projectName == "" && showError ? "*Required" : ""}</span></label>
           <input
             id="projectName"
             name="projectName"
@@ -43,7 +55,7 @@ export default function NewProjectForm({createProject}) {
             value={formData.projectName}
             onChange={onChangeHandler}
           />
-          <label htmlFor="projectName">Project Description:</label>
+          <label htmlFor="projectDesc">Project Description: <span>{formData.projectDesc == "" && showError ? "*Required" : ""}</span></label>
           <textarea
             id="projectDesc"
             name="projectDesc"
@@ -53,7 +65,8 @@ export default function NewProjectForm({createProject}) {
           />
         </div>
         <div className="NewProjectForm-footer">
-          <input className="NewProjectForm-btn" type="submit" value="Submit" />
+          <input className="NewProjectForm-submitBtn" type="submit" value="Submit" />
+          <button className="NewProjectForm-cancelBtn" onClick={onCancelHandler}>Cancel</button>
         </div>
       </form>
     </div>
