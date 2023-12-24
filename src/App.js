@@ -1,10 +1,19 @@
+import { createContext } from "react";
 import RouteList from "./RouteList";
 import "./styles/App.css";
 
+const ProjectContext = createContext(undefined);
+
 function App() {
+
+  //Get active project id
+
+
   return (
-    <div className="bg-primary min-h-screen min-w-fit ml-72 text-highlight3">
-      <RouteList />
+    <div className="App">
+      <ProjectContext.Provider value={undefined}>
+        <RouteList />
+      </ProjectContext.Provider>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import AddProjectTile from "../components/AddProjectTile";
 import ProjectTile from "../components/ProjectTile";
 import NewProjectForm from "../components/NewProjectForm";

@@ -1,3 +1,10 @@
 body {
   background-color: #121c22;
+  color: #9fb9d0;
+  min-height: 100vh;
+  width: fit-content;
+}
+
+.App {
+  margin-left: 18rem;
 }
