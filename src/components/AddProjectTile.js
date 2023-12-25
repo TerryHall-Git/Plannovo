@@ -1,13 +1,18 @@
 import "../styles/Animation.css";
-import "../styles/ProjectTile.css";
+import "../styles/Tile.css";
 
-export default function AddProjectTile({ showForm }) {
+/**
+ *
+ * @param {function} param0
+ * @returns
+ */
+export default function AddProjectTile({ action }) {
   return (
     <div
-      className="ProjectTile appearAnimation enlargeOnHover"
-      onClick={showForm}
+      className="Tile Tile-inactive appearAnimation enlargeOnHover"
+      onClick={action}
     >
-      <div className="ProjectTile-add">
+      <div className="Tile-add">
         <p>+</p>
       </div>
     </div>

@@ -1,21 +1,25 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import RouteList from "./RouteList";
 import "./styles/App.css";
+import ProjectManager from "./utils";
 
 const ProjectContext = createContext(undefined);
 
 function App() {
-
-  //Get active project id
-
+  const projMgr = new ProjectManager();
+  const [activeProject, setActiveProject] = useState(
+    projMgr.getActiveProject()
+  );
 
   return (
     <div className="App">
-      <ProjectContext.Provider value={undefined}>
+      <ProjectContext.Provider
+        value={[activeProject, setActiveProject, new ProjectManager()]}
+      >
         <RouteList />
       </ProjectContext.Provider>
     </div>
   );
 }
 
-export default App;
+export { App as default, ProjectContext };

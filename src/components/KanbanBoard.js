@@ -1,10 +1,8 @@
-// import { Col, Container, Row } from 'react-bootstrap';
-import "../styles/KanbanBoard.css";
 import React, { useState, useEffect } from "react";
 import KanbanContainer from "./KanbanContainer";
-// import { v4 as uuidv4 } from 'uuid';
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import KanbanCard from "./KanbanCard";
+import "../styles/KanbanBoard.css";
 
 const KanbanBoard = () => {
   const [containers, setContainers] = useState([]);

@@ -1,10 +1,10 @@
-.Administration {
+.Settings {
   display: flex;
   height: 100vh;
   margin: auto;
 }
 
-.Administration-content {
+.Settings-content {
   margin: auto;
   font-weight: bold;
 }

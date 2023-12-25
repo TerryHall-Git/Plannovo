@@ -1,44 +1,59 @@
-import {useState} from "react";
+import { useContext, useState } from "react";
 import AddProjectTile from "../components/AddProjectTile";
-import ProjectTile from "../components/ProjectTile";
+import Tile from "../components/Tile";
 import NewProjectForm from "../components/NewProjectForm";
-import {getProjects, createNewProject, removeProject} from "../utils.js";
+import { ProjectContext } from "../App.js";
 import "../styles/Projects.css";
 
 export default function Projects() {
+  const [, setActiveProject, projMgr] = useContext(ProjectContext);
   const [formShowing, setFormShowing] = useState(false);
-  const [projects, setProjects] = useState(getProjects());
+  const [projects, setProjects] = useState(projMgr.getProjects());
 
-  function createProject(name, desc) {
-    createNewProject(name, desc);
-    setProjects(getProjects());
-  }
-  
-  function deleteProject(confirmDelete, key) {
-    if(confirmDelete) {
-      removeProject(key);
-      setProjects(getProjects());
-    } 
-  }
+  let tileCreated = (name, desc) => {
+    projMgr.createNewProject(name, desc);
+    setProjects(projMgr.getProjects());
+    setActiveProject(projMgr.getActiveProject());
+  };
+
+  let tileActivated = ({ key }) => {
+    projMgr.setActiveProject(key);
+    setActiveProject(projMgr.getActiveProject());
+  };
+
+  let tileDeleted = ({ key, confirmDelete }) => {
+    if (confirmDelete) {
+      projMgr.removeProject(key);
+    }
+    setProjects(projMgr.getProjects());
+    setActiveProject(projMgr.getActiveProject());
+  };
+
+  let activeProjectId = projMgr.getActiveProjectId();
 
   return (
     <div className="Projects">
       <div className="Projects-content">
         {formShowing ? (
-          <NewProjectForm createProject={createProject} setFormShowing={setFormShowing} />
+          <NewProjectForm
+            createProject={tileCreated}
+            setFormShowing={setFormShowing}
+          />
         ) : (
           <div className="Projects-grid">
-            <AddProjectTile showForm={()=> setFormShowing(true)} />
-            {Object.keys(projects).map(key=> {
-              const {name, desc} = projects[key];
+            <AddProjectTile action={() => setFormShowing(true)} />
+            {Object.keys(projects).map((key) => {
+              const { name, desc } = projects[key];
               console.log(key);
               return (
-                <ProjectTile
+                <Tile
                   key={key}
-                  projKey={key}
-                  projName={name}
-                  projDesc={desc}
-                  deleteProject={deleteProject}
+                  isActive={activeProjectId === key}
+                  title={name}
+                  desc={desc}
+                  tileDeleted={tileDeleted}
+                  tileActivated={tileActivated}
+                  tileCallbackData={{ key }}
                 />
               );
             })}

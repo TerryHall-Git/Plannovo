@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/Animation.css";
 import "../styles/NewProjectForm.css";
 
-export default function NewProjectForm({createProject,setFormShowing}) {
+export default function NewProjectForm({ createProject, setFormShowing }) {
   const [formData, setFormData] = useState({
     projectName: "",
     projectDesc: "",
@@ -13,10 +13,10 @@ export default function NewProjectForm({createProject,setFormShowing}) {
     let el = e.target;
 
     //limit text input
-    if (el.name === "projectName" && el.value.length > 30)
-      el = el.value.substring(0, 30);
-    if (el.name === "projectDesc" && el.value.length > 200)
-      el = el.value.substring(0, 200);
+    if (el.name === "projectName" && el.value.length > 25)
+      el = el.value.substring(0, 25);
+    if (el.name === "projectDesc" && el.value.length > 125)
+      el = el.value.substring(0, 125);
 
     setFormData({
       ...formData,
@@ -26,7 +26,7 @@ export default function NewProjectForm({createProject,setFormShowing}) {
 
   function onSubmitHandler(e) {
     e.preventDefault();
-    if(formData.projectName == "" || formData.projectDesc == ""){
+    if (formData.projectName === "" || formData.projectDesc === "") {
       setShowError(true);
       return;
     }
@@ -47,7 +47,12 @@ export default function NewProjectForm({createProject,setFormShowing}) {
       </div>
       <form onSubmit={onSubmitHandler}>
         <div className="NewProjectForm-inputs">
-          <label htmlFor="projectName">Project Name: <span>{formData.projectName == "" && showError ? "*Required" : ""}</span></label>
+          <label htmlFor="projectName">
+            Project Name:{" "}
+            <span>
+              {formData.projectName === "" && showError ? "*Required" : ""}
+            </span>
+          </label>
           <input
             id="projectName"
             name="projectName"
@@ -55,7 +60,12 @@ export default function NewProjectForm({createProject,setFormShowing}) {
             value={formData.projectName}
             onChange={onChangeHandler}
           />
-          <label htmlFor="projectDesc">Project Description: <span>{formData.projectDesc == "" && showError ? "*Required" : ""}</span></label>
+          <label htmlFor="projectDesc">
+            Project Description:{" "}
+            <span>
+              {formData.projectDesc === "" && showError ? "*Required" : ""}
+            </span>
+          </label>
           <textarea
             id="projectDesc"
             name="projectDesc"
@@ -65,8 +75,17 @@ export default function NewProjectForm({createProject,setFormShowing}) {
           />
         </div>
         <div className="NewProjectForm-footer">
-          <input className="NewProjectForm-submitBtn" type="submit" value="Submit" />
-          <button className="NewProjectForm-cancelBtn" onClick={onCancelHandler}>Cancel</button>
+          <input
+            className="NewProjectForm-submitBtn"
+            type="submit"
+            value="Submit"
+          />
+          <button
+            className="NewProjectForm-cancelBtn"
+            onClick={onCancelHandler}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

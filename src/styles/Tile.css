@@ -1,33 +1,43 @@
-.ProjectTile {
+.Tile {
   display: flex;
   flex-direction: column;
   width: 15rem;
   height: 15rem;
   padding: 1rem;
-  border-width: 4px;
-  border-color: #8095a8;
-  border-radius: 1rem;
   cursor: pointer;
 }
 
-.ProjectTile:hover {
+.Tile-inactive {
+  border-width: 4px;
+  border-color: #8095a8;
+  border-radius: 1rem;
+}
+
+.Tile-active {
+  border-width: 6px;
+  border-color: magenta;
+  border-radius: 1rem;
+  box-shadow: 0 0 8px 8px rgba(255, 0, 255, 0.271);
+}
+
+.Tile:hover {
   background-color: #1f2f37;
 }
 
-.ProjectTile-header {
+.Tile-header {
   display: grid;
   grid-template-columns: 9fr 1fr;
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.ProjectTile-add {
+.Tile-add {
   margin: auto;
   font-size: 6rem;
   text-align: center;
 }
 
-.ProjectTile-trashIcon:hover {
+.Tile-trashIcon:hover {
   color: rgb(255, 45, 45);
 }
 
