@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import AddProjectTile from "../components/AddProjectTile";
+import TileAdd from "../components/TileAdd.js";
 import Tile from "../components/Tile";
 import NewProjectForm from "../components/NewProjectForm";
 import { ProjectContext } from "../App.js";
@@ -41,15 +41,15 @@ export default function Projects() {
           />
         ) : (
           <div className="Projects-grid">
-            <AddProjectTile action={() => setFormShowing(true)} />
+            <TileAdd action={() => setFormShowing(true)} />
             {Object.keys(projects).map((key) => {
-              const { name, desc } = projects[key];
+              const { title, desc } = projects[key];
               console.log(key);
               return (
                 <Tile
                   key={key}
                   isActive={activeProjectId === key}
-                  title={name}
+                  title={title}
                   desc={desc}
                   tileDeleted={tileDeleted}
                   tileActivated={tileActivated}

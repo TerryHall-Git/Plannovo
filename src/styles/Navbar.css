@@ -1,15 +1,16 @@
 .Navbar-top {
+  display: flex;
+  flex-direction: row;
   background-color: #121c22;
   position: absolute;
   top: 0px;
   left: 0px;
   margin: 0px;
-  display: flex;
   border-bottom-width: 4px;
   border-color: #1b262c;
-  min-width: 100%;
+  width: 100%;
   height: 4rem;
-  cursor: pointer;
+  align-items: center;
 }
 
 .Navbar-icon {
@@ -17,29 +18,25 @@
   margin-right: 0.75rem;
 }
 
-.Navbar-homeIcon {
+.Navbar-home {
   display: inline-block;
-  padding: 0.75rem;
-  width: 4rem;
+  padding-left: 0.75rem;
+  min-width: 12rem;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-.Navbar-homeTitle {
+.Navbar-home svg {
   display: inline-block;
-  padding: 0.75rem;
-  width: 15rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  margin-top: 0.25rem;
 }
 
 .Navbar-projName {
-  display: inline-block;
-  padding: 0.75rem;
-  width: 100%;
+  align-self: center;
+  text-align: center;
+  padding-left: 0.75rem;
   font-size: 1.5rem;
   line-height: 2rem;
-  margin-top: 0.25rem;
-  text-align: center;
+  width: 100%;
 }
 
 .Navbar-left {

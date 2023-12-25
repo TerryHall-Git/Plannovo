@@ -61,16 +61,14 @@ export default function Navbar() {
   return (
     <div>
       <div className="Navbar-top" onClick={homeClickHandler}>
-        <div className="Navbar-homeIcon">
+        <div className="Navbar-home">
           <DeepThoughtsIcon />
-        </div>
-        <div className="Navbar-homeTitle">
           <span>Deep Thoughts</span>
         </div>
         <div className="Navbar-projName">
           <h3>
             {activeProject !== undefined
-              ? `Active Project: ${activeProject.name}`
+              ? `Active Project: ${activeProject.title}`
               : "- No Project Selected -"}
           </h3>
         </div>
