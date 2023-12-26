@@ -1,13 +1,10 @@
-.Projects {
+.TileGrid {
   display: flex;
   min-height: 100vh;
   margin: 4rem auto;
 }
 
-.Projects-grid {
-  /* display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem; */
+.TileGrid-grid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -15,6 +12,6 @@
   padding: 1rem;
 }
 
-.Projects-content {
+.TileGrid-content {
   margin: 1rem auto;
 }

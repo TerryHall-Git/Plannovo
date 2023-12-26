@@ -17,7 +17,8 @@
   border-width: 6px;
   border-color: magenta;
   border-radius: 1rem;
-  box-shadow: 0 0 8px 8px rgba(255, 0, 255, 0.271);
+  box-shadow: 0 0 6px 6px rgba(255, 0, 255, 0.271);
+  /* animation: pulsate 3s ease-out infinite; */
 }
 
 .Tile:hover {
@@ -39,6 +40,18 @@
 
 .Tile-trashIcon:hover {
   color: rgb(255, 45, 45);
+}
+
+@keyframes pulsate {
+  0% {
+    box-shadow: 0 0 0 0 #121c22;
+  }
+  50% {
+    box-shadow: 0 0 8px 8px rgba(255, 0, 255, 0.271);
+  }
+  100% {
+    box-shadow: 0 0 0 0 #121c22;
+  }
 }
 
 /*

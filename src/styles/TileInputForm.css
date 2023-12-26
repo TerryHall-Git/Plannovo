@@ -1,4 +1,4 @@
-.NewProjectForm {
+.TileInputForm {
   display: flex;
   flex-direction: column;
   background-color: #1b262c;
@@ -11,46 +11,46 @@
   font-size: 1rem;
 }
 
-.NewProjectForm span {
+.TileInputForm span {
   color: rgb(255, 45, 45);
 }
 
-.NewProjectForm-header {
+.TileInputForm-header {
   font-size: 2rem;
   text-align: center;
 }
 
-.NewProjectForm-footer {
+.TileInputForm-footer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.NewProjectForm form {
+.TileInputForm form {
   padding: 1rem;
 }
 
-.NewProjectForm-inputs {
+.TileInputForm-inputs {
   display: grid;
   text-align: left;
 }
 
-.NewProjectForm-inputs label {
+.TileInputForm-inputs label {
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
 }
 
-.NewProjectForm-inputs input {
+.TileInputForm-inputs input {
   padding: 0.25rem;
   color: #1b262c;
 }
 
-.NewProjectForm-inputs textarea {
+.TileInputForm-inputs textarea {
   padding: 0.25rem;
   color: #1b262c;
 }
 
-.NewProjectForm-submitBtn {
+.TileInputForm-submitBtn {
   width: 12rem;
   padding: 0.5rem;
   margin-top: 1rem;
@@ -60,11 +60,11 @@
   border-radius: 0.75rem;
 }
 
-.NewProjectForm-submitBtn:hover {
+.TileInputForm-submitBtn:hover {
   background-color: rgb(29, 78, 255);
 }
 
-.NewProjectForm-cancelBtn {
+.TileInputForm-cancelBtn {
   width: 12rem;
   padding: 0.5rem;
   margin-top: 1rem;
@@ -74,6 +74,6 @@
   border-radius: 0.75rem;
 }
 
-.NewProjectForm-cancelBtn:hover {
+.TileInputForm-cancelBtn:hover {
   background-color: rgb(236, 36, 36);
 }

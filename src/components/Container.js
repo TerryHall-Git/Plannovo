@@ -6,15 +6,15 @@ import {
   closestCorners,
 } from "@dnd-kit/core";
 import "../styles/KanbanContainer.css";
-import KanbanCard from "./KanbanCard";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import Card from "./Card";
 
-const KanbanContainer = (props) => {
+export default function Container(props) {
   const { setNodeRef } = useDroppable({
     id: props.id,
     data: props.data,
@@ -25,7 +25,7 @@ const KanbanContainer = (props) => {
 
   let cards = data.cards;
   let cardsMarkup = cards.map((card) => (
-    <KanbanCard
+    <Card
       key={card.name}
       id={card.name}
       title={card.title}
@@ -54,5 +54,4 @@ const KanbanContainer = (props) => {
       </SortableContext>
     </div>
   );
-};
-export default KanbanContainer;
+}

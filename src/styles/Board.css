@@ -1,0 +1,13 @@
+.Board {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem;
+  background-color: rgba(255, 0, 0, 0.315);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.Board-grid {
+  display: flex;
+  justify-content: start;
+}

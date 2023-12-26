@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import RouteList from "./RouteList";
 import "./styles/App.css";
 import ProjectManager from "./utils";
@@ -10,11 +10,18 @@ function App() {
   const [activeProject, setActiveProject] = useState(
     projMgr.getActiveProject()
   );
+  const [activeBoard, setActiveBoard] = useState(projMgr.getActiveBoard());
 
   return (
     <div className="App">
       <ProjectContext.Provider
-        value={[activeProject, setActiveProject, new ProjectManager()]}
+        value={{
+          activeProject: activeProject,
+          setActiveProject: setActiveProject,
+          activeBoard: activeBoard,
+          setActiveBoard: setActiveBoard,
+          projMgr: new ProjectManager(),
+        }}
       >
         <RouteList />
       </ProjectContext.Provider>

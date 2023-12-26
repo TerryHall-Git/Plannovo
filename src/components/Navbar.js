@@ -11,11 +11,11 @@ import "../styles/Navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const [activeProject] = useContext(ProjectContext);
+  const { activeProject, activeBoard } = useContext(ProjectContext);
 
   const [navLinks, setNavLinks] = useState([
-    { linkName: "projects", cls: "Navbar-deselected", icon: <ProjectsIcon /> },
     { linkName: "overview", cls: "Navbar-deselected", icon: <OverviewIcon /> },
+    { linkName: "projects", cls: "Navbar-deselected", icon: <ProjectsIcon /> },
     { linkName: "boards", cls: "Navbar-deselected", icon: <BoardsIcon /> },
     { linkName: "tasks", cls: "Navbar-deselected", icon: <TasksIcon /> },
     {
@@ -39,6 +39,15 @@ export default function Navbar() {
     });
     setNavLinks(updatedLinks);
   }
+
+  let projTitle =
+    activeProject !== undefined
+      ? `Active Project: ${activeProject.title}`
+      : "[No Project Selected]";
+  let boardTitle =
+    activeBoard !== undefined
+      ? `Active Board: ${activeBoard.title}`
+      : "[No Board Selected]";
 
   //create nav links
   let navLinkMarkup = navLinks.map(({ linkName, cls, icon }) => {
@@ -66,11 +75,7 @@ export default function Navbar() {
           <span>Deep Thoughts</span>
         </div>
         <div className="Navbar-projName">
-          <h3>
-            {activeProject !== undefined
-              ? `Active Project: ${activeProject.title}`
-              : "- No Project Selected -"}
-          </h3>
+          <h3>{projTitle + " - " + boardTitle}</h3>
         </div>
       </div>
       <div className="Navbar-left">

@@ -14,7 +14,13 @@ class ProjectManager {
     let uuid = uuidv4();
     rootData.projects = {
       ...rootData.projects,
-      [uuid]: { title: title, desc: desc, boards: {} },
+      [uuid]: {
+        id: uuid,
+        title: title,
+        desc: desc,
+        activeBoardId: undefined,
+        boards: {},
+      },
     };
 
     rootData.activeProjectId = uuid;
@@ -30,7 +36,7 @@ class ProjectManager {
     let uuid = uuidv4();
     rootData.projects[projId].boards = {
       ...rootData.projects[projId].boards,
-      [uuid]: { title: title, desc: desc, containers: [] },
+      [uuid]: { id: uuid, title: title, desc: desc, containers: [] },
     };
 
     this.saveRootData(rootData);
@@ -48,6 +54,7 @@ class ProjectManager {
       id: uuid,
       idx: containers.length,
       title: title,
+      type: "container",
       cards: [],
     });
 
@@ -65,8 +72,10 @@ class ProjectManager {
     let uuid = uuidv4();
     container.cards.push({
       id: uuid,
+      parentIdx: container.idx,
       idx: container.cards.length,
       title: title,
+      type: "card",
       desc: desc,
     });
 
@@ -95,6 +104,17 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  removeBoard(projId, boardId) {
+    const rootData = this.getRootData();
+
+    delete rootData.projects[projId].boards[boardId];
+
+    if (rootData.projects[projId].activeBoardId === boardId)
+      rootData.projects[projId].activeBoardId = undefined;
+
+    this.saveRootData(rootData);
+  }
+
   getActiveProject() {
     let rootData = this.getRootData();
     return rootData.projects[rootData.activeProjectId];
@@ -114,13 +134,14 @@ class ProjectManager {
 
   getActiveBoard() {
     let rootData = this.getRootData();
+    if (rootData.activeProjectId === undefined) return undefined;
     return rootData.projects[rootData.activeProjectId].boards[
-      rootData.activeBoardId
+      rootData.projects[rootData.activeProjectId].activeBoardId
     ];
   }
 
   getActiveBoardId() {
-    return this.getRootData().activeBoardId;
+    return this.getActiveProject().activeBoardId;
   }
 
   getBoard(projId, boardId) {
@@ -136,9 +157,13 @@ class ProjectManager {
 
   setActiveProject(id) {
     const rootData = this.getRootData();
-
     rootData.activeProjectId = id;
+    this.saveRootData(rootData);
+  }
 
+  setActiveBoard(id) {
+    const rootData = this.getRootData();
+    rootData.projects[rootData.activeProjectId].activeBoardId = id;
     this.saveRootData(rootData);
   }
 
@@ -152,10 +177,39 @@ class ProjectManager {
       ? data
       : {
           activeProjectId: undefined,
-          activeBoardId: undefined,
           projects: {},
         };
   }
 }
 
 export default ProjectManager;
+
+// "containers": [
+//   {
+//       "name": "container1",
+//       "type": "container",
+//       "idx": 0,
+//       "cards": [
+//           {
+//               "idx": 0,
+//               "parentIdx": 0,
+//               "name": "card1",
+//               "type": "card",
+//               "title": "Card 1"
+//           },
+//           {
+//               "idx": 1,
+//               "parentIdx": 0,
+//               "name": "card2",
+//               "type": "card",
+//               "title": "Card 2"
+//           },
+//           {
+//               "idx": 2,
+//               "parentIdx": 0,
+//               "name": "card3",
+//               "type": "card",
+//               "title": "Card 3"
+//           }
+//       ]
+//   },

@@ -2,7 +2,7 @@ import "../styles/KanbanCard.css";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const KanbanCard = (props) => {
+export default function Card(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: props.id,
@@ -36,5 +36,4 @@ const KanbanCard = (props) => {
       </div>
     </div>
   );
-};
-export default KanbanCard;
+}

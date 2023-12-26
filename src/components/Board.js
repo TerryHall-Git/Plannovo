@@ -1,20 +1,16 @@
-import React, { useState, useEffect } from "react";
-import KanbanContainer from "./KanbanContainer";
+import { useContext, useState } from "react";
+import { ProjectContext } from "../App";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import KanbanCard from "./KanbanCard";
-import "../styles/KanbanBoard.css";
+import Container from "./Container";
+import Card from "./Card";
+import ContainerAdd from "./ContainerAdd";
 
-const KanbanBoard = () => {
+import "../styles/Board.css";
+
+export default function Board() {
+  const { activeBoard } = useContext(ProjectContext);
   const [containers, setContainers] = useState([]);
   const [activeCard, setActiveCard] = useState(null);
-
-  useEffect(() => {
-    fetch("./containerData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setContainers(data.containers);
-      });
-  }, []);
 
   function handleDragEnd() {
     setActiveCard(null);
@@ -100,7 +96,7 @@ const KanbanBoard = () => {
 
   const containerMarkup = containers.map((container, idx) => {
     return (
-      <KanbanContainer
+      <Container
         key={container.name}
         id={container.name}
         parentIdx={idx}
@@ -111,30 +107,33 @@ const KanbanBoard = () => {
   });
 
   return (
-    <DndContext
-      onDragEnd={handleDragEnd}
-      onDragOver={handleDragOver}
-      onDragStart={handleDragStart}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100vw",
-          height: "100vh",
-        }}
-      >
-        {containerMarkup}
+    <div className="Board">
+      <div className="Board-grid">
+        <div className="Board-container">
+          <ContainerAdd />
+        </div>
+        {/* <DndContext
+          onDragEnd={handleDragEnd}
+          onDragOver={handleDragOver}
+          onDragStart={handleDragStart}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "100vw",
+              height: "100vh",
+            }}
+          >
+            {containerMarkup}
+          </div>
+          {activeCard && (
+            <DragOverlay adjustScale={false}>
+              <Card title={activeCard.title} classStyle="KanbanCardDragging" />
+            </DragOverlay>
+          )}
+        </DndContext> */}
       </div>
-      {activeCard && (
-        <DragOverlay adjustScale={false}>
-          <KanbanCard
-            title={activeCard.title}
-            classStyle="KanbanCardDragging"
-          />
-        </DragOverlay>
-      )}
-    </DndContext>
+    </div>
   );
-};
-export default KanbanBoard;
+}

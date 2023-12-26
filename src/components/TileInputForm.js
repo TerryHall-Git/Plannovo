@@ -1,8 +1,12 @@
 import { useState } from "react";
 import "../styles/Animation.css";
-import "../styles/NewProjectForm.css";
+import "../styles/TileInputForm.css";
 
-export default function NewProjectForm({ createProject, setFormShowing }) {
+export default function TileInputForm({
+  title,
+  createProject,
+  setFormShowing,
+}) {
   const [formData, setFormData] = useState({
     projectName: "",
     projectDesc: "",
@@ -41,14 +45,14 @@ export default function NewProjectForm({ createProject, setFormShowing }) {
   }
 
   return (
-    <div className="NewProjectForm appearAnimation">
-      <div className="NewProjectForm-header">
-        <p>Create New Project</p>
+    <div className="TileInputForm appearAnimation">
+      <div className="TileInputForm-header">
+        <p>{title}</p>
       </div>
       <form onSubmit={onSubmitHandler}>
-        <div className="NewProjectForm-inputs">
+        <div className="TileInputForm-inputs">
           <label htmlFor="projectName">
-            Project Name:{" "}
+            Title:
             <span>
               {formData.projectName === "" && showError ? "*Required" : ""}
             </span>
@@ -61,7 +65,7 @@ export default function NewProjectForm({ createProject, setFormShowing }) {
             onChange={onChangeHandler}
           />
           <label htmlFor="projectDesc">
-            Project Description:{" "}
+            Description:
             <span>
               {formData.projectDesc === "" && showError ? "*Required" : ""}
             </span>
@@ -74,16 +78,13 @@ export default function NewProjectForm({ createProject, setFormShowing }) {
             onChange={onChangeHandler}
           />
         </div>
-        <div className="NewProjectForm-footer">
+        <div className="TileInputForm-footer">
           <input
-            className="NewProjectForm-submitBtn"
+            className="TileInputForm-submitBtn"
             type="submit"
             value="Submit"
           />
-          <button
-            className="NewProjectForm-cancelBtn"
-            onClick={onCancelHandler}
-          >
+          <button className="TileInputForm-cancelBtn" onClick={onCancelHandler}>
             Cancel
           </button>
         </div>
