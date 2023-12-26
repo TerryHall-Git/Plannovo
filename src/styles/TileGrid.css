@@ -1,6 +1,5 @@
 .TileGrid {
   display: flex;
-  min-height: 100vh;
   margin: 4rem auto;
 }
 

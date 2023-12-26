@@ -9,7 +9,7 @@
   border-bottom-width: 4px;
   border-color: #1b262c;
   width: 100%;
-  height: 4rem;
+  height: 7vh;
   align-items: center;
 }
 
@@ -21,7 +21,7 @@
 .Navbar-home {
   display: inline-block;
   padding-left: 0.75rem;
-  min-width: 12rem;
+  min-width: 10vw;
   font-size: 1rem;
   cursor: pointer;
 }
@@ -47,7 +47,7 @@
   margin: 0px;
   border-right-width: 4px;
   border-color: #1b262c;
-  width: 12rem;
+  width: 10vw;
   min-height: 100%;
 }
 

@@ -5,7 +5,6 @@ import {
   KeyboardSensor,
   closestCorners,
 } from "@dnd-kit/core";
-import "../styles/KanbanContainer.css";
 import {
   SortableContext,
   verticalListSortingStrategy,
