@@ -9,3 +9,15 @@ body {
   width: calc(100vw - 12rem);
   height: calc(100vh - 4rem);
 }
+
+input,
+textarea {
+  color: #1b262c;
+}
+/* 
+primary: "#121c22",
+secondary: "#1b262c",
+highlight1: "#1f2f37",
+highlight2: "#8095a8",
+highlight3: "#9fb9d0",
+badge: "#ff865b", */
