@@ -1,9 +1,4 @@
 .Tasks {
-  display: flex;
-  margin: auto;
-}
-
-.Tasks-content {
-  margin: auto;
-  font-weight: bold;
+  min-width: calc(100vw - 12rem);
+  min-height: calc(100vh - 4rem);
 }

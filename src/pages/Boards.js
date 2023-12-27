@@ -43,20 +43,22 @@ export default function Boards() {
         ) : (
           <div className="TileGrid-grid">
             <TileAdd action={() => setFormShowing(true)} />
-            {Object.keys(boards).map((key) => {
-              const { title, desc } = boards[key];
-              return (
-                <Tile
-                  key={key}
-                  isActive={activeBoardId === key}
-                  title={title}
-                  desc={desc}
-                  tileDeleted={tileDeleted}
-                  tileActivated={tileActivated}
-                  tileCallbackData={{ key }}
-                />
-              );
-            })}
+            {boards !== undefined
+              ? Object.keys(boards).map((key) => {
+                  const { title, desc } = boards[key];
+                  return (
+                    <Tile
+                      key={key}
+                      isActive={activeBoardId === key}
+                      title={title}
+                      desc={desc}
+                      tileDeleted={tileDeleted}
+                      tileActivated={tileActivated}
+                      tileCallbackData={{ key }}
+                    />
+                  );
+                })
+              : ""}
           </div>
         )}
       </div>

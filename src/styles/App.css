@@ -1,11 +1,11 @@
 body {
   background-color: #121c22;
   color: #9fb9d0;
-  min-height: 89vh;
-  width: 100%;
 }
 
 .App {
-  margin-left: 12rem;
-  margin-top: 7vh;
+  margin-left: 12rem; /* 12rem = navbar-left width */
+  margin-top: 4rem; /* 4rem = navbar-top height */
+  width: calc(100vw - 12rem);
+  height: calc(100vh - 4rem);
 }

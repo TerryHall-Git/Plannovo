@@ -1,9 +1,8 @@
 .Board {
   display: flex;
   flex-direction: row;
-  background-color: rgba(255, 0, 0, 0.315);
-  min-width: 90vw;
-  min-height: 93vh;
+  min-width: calc(100vw - 12rem);
+  min-height: calc(100vh - 4rem);
 }
 
 .Board-grid {

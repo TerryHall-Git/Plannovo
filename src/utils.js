@@ -141,12 +141,14 @@ class ProjectManager {
   }
 
   getActiveBoardId() {
-    return this.getActiveProject().activeBoardId;
+    let activeProject = this.getActiveProject();
+    if (activeProject === undefined) return undefined;
+    return activeProject.activeBoardId;
   }
 
   getBoard(projId, boardId) {
     let rootData = this.getRootData();
-    if (!this.boardExists(projId, boardId)) return;
+    if (!this.boardExists(projId, boardId)) return undefined;
     return rootData.projects[projId].boards[boardId];
   }
 
