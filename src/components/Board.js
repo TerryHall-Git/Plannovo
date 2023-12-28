@@ -8,15 +8,9 @@ import ContainerAdd from "./ContainerAdd";
 import "../styles/Board.css";
 
 export default function Board() {
-  const {
-    activeProject,
-    activeProjectId,
-    activeBoard,
-    activeBoardId,
-    projMgr,
-  } = useContext(ProjectContext);
+  const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
-  const [containers, setContainers] = useState(projMgr.getContainers());
+  const [containers, setContainers] = useState(activeBoard.containers);
 
   function handleDragEnd() {
     setActiveCard(null);

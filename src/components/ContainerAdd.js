@@ -3,16 +3,16 @@ import { ProjectContext } from "../App";
 import "../styles/ContainerAdd.css";
 
 export default function ContainerAdd() {
-  const { activeProjectId, activeBoardId, projMgr } =
-    useContext(ProjectContext);
+  const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
   const [title, setTitle] = useState("");
   const [showInput, setShowInput] = useState(false);
 
   function createNewContainer() {
     console.log("title: " + title.trim());
     if (title.trim() === "") return;
-    projMgr.createNewContainer(activeProjectId, activeBoardId, title);
+    projMgr.createNewContainer(activeProject.id, activeBoard.id, title);
     setShowInput(false);
+    console.log("UPDATED");
   }
 
   return (

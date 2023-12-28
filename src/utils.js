@@ -45,14 +45,19 @@ class ProjectManager {
   createNewContainer(projId, boardId, title) {
     const rootData = this.getRootData();
 
-    if (!this.boardExists(projId, boardId)) return;
+    if (!this.boardExists(projId, boardId)) {
+      console.log(
+        "Board not found: projId [" + projId + "] boardId[" + boardId + "]"
+      );
+      return undefined;
+    }
 
-    const containers = rootData.projects[projId].boards[boardId].containers;
+    //const containers = rootData.projects[projId].boards[boardId].containers;
 
     let uuid = uuidv4();
-    containers.push({
+    rootData.projects[projId].boards[boardId].containers.push({
       id: uuid,
-      idx: containers.length,
+      idx: rootData.projects[projId].boards[boardId].containers.length,
       title: title,
       type: "container",
       cards: [],
