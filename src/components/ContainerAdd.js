@@ -5,19 +5,34 @@ export default function ContainerAdd() {
   const [title, setTitle] = useState("");
   const [showInput, setShowInput] = useState(false);
 
+  let onBlurHandler = (e) => {
+    // e.target.className = "ContainerAdd-input-shrink";
+    setShowInput(false);
+  };
+
+  let onClickHandler = (e) => {
+    // e.target.className = "ContainerAdd-input-grow";
+    setShowInput(true);
+  };
+
   return (
-    <div className="ContainerAdd" onMouseOut={() => setShowInput(false)}>
+    <div className="ContainerAdd" onClick={onClickHandler}>
       <div className="ContainerAdd-content">
         {showInput ? (
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onBlur={() => setShowInput(false)}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <div>
+            <input
+              autoFocus
+              type="text"
+              id="title"
+              className="ContainerAdd-input"
+              value={title}
+              onBlur={onBlurHandler}
+              onChange={() => setTitle()}
+            />
+            <button>Add</button>
+          </div>
         ) : (
-          <button onClick={() => setShowInput(true)}>+ Add New List</button>
+          <p>+ Add New List</p>
         )}
       </div>
     </div>
