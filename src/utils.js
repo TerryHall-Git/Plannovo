@@ -58,6 +58,7 @@ class ProjectManager {
       cards: [],
     });
 
+    console.log("Container added: " + title);
     this.saveRootData(rootData);
   }
 
@@ -155,6 +156,12 @@ class ProjectManager {
   getBoards() {
     if (this.getActiveProject() === undefined) return undefined;
     return this.getActiveProject().boards;
+  }
+
+  getContainers() {
+    let activeBoard = this.getActiveBoard();
+    if (activeBoard === undefined) return undefined;
+    return activeBoard.containers;
   }
 
   setActiveProject(id) {

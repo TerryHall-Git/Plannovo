@@ -8,9 +8,15 @@ import ContainerAdd from "./ContainerAdd";
 import "../styles/Board.css";
 
 export default function Board() {
-  const { activeBoard } = useContext(ProjectContext);
-  const [containers, setContainers] = useState([]);
+  const {
+    activeProject,
+    activeProjectId,
+    activeBoard,
+    activeBoardId,
+    projMgr,
+  } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
+  const [containers, setContainers] = useState(projMgr.getContainers());
 
   function handleDragEnd() {
     setActiveCard(null);
@@ -95,10 +101,11 @@ export default function Board() {
   }
 
   const containerMarkup = containers.map((container, idx) => {
+    console.log(container.title);
     return (
       <Container
-        key={container.name}
-        id={container.name}
+        key={container.id}
+        id={container.title}
         parentIdx={idx}
         data={container}
         activeCard={activeCard}
@@ -112,7 +119,7 @@ export default function Board() {
         <div className="Board-container">
           <ContainerAdd />
         </div>
-        {/* <DndContext
+        <DndContext
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}
           onDragStart={handleDragStart}
@@ -132,7 +139,7 @@ export default function Board() {
               <Card title={activeCard.title} classStyle="KanbanCardDragging" />
             </DragOverlay>
           )}
-        </DndContext> */}
+        </DndContext>
       </div>
     </div>
   );
