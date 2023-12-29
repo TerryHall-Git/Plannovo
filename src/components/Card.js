@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import "../styles/Card.css";
 
-export default function Card({ props }) {
+export default function Card(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: props.id,
@@ -17,17 +17,21 @@ export default function Card({ props }) {
     transition,
   };
 
-  let { title, isDragging } = props;
+  const { title, desc, isDragging, isOverlay } = props;
+
+  let cardStyle = isDragging ? `CardInset` : `CardIdle`;
+  cardStyle = isOverlay ? `CardDrag` : cardStyle;
 
   return (
     <div ref={setNodeRef} style={dndStyle} {...attributes} {...listeners}>
-      <div className={isDragging ? `CardDrag` : `CardIdle`}>
+      <div className={cardStyle}>
         <div className="wrapper">
           {isDragging ? (
             <div className="title"></div>
           ) : (
             <div className="title">
               <h3>{title}</h3>
+              <p>{desc}</p>
             </div>
           )}
         </div>

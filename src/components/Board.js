@@ -132,7 +132,7 @@ export default function Board() {
           </div>
           {activeCard && (
             <DragOverlay adjustScale={false}>
-              <Card title={activeCard.title} classStyle="KanbanCardDragging" />
+              <Card title={activeCard.title} isOverlay={true} />
             </DragOverlay>
           )}
         </DndContext>

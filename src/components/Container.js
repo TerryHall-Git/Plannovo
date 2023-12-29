@@ -30,8 +30,10 @@ export default function Container(props) {
       key={card.id}
       id={card.id}
       title={card.title}
-      isDragging={activeCard && activeCard.name === card.name ? true : false}
+      desc={card.desc}
+      isDragging={activeCard && activeCard.id === card.id ? true : false}
       data={card}
+      isOverlay={false}
     />
   ));
 
@@ -47,7 +49,7 @@ export default function Container(props) {
       <p>{title}</p>
       <CardAdd containerIdx={props.idx} />
       <SortableContext
-        items={cards.map((card) => card.name)}
+        items={cards.map((card) => card.id)}
         sensors={sensors}
         collisionDetection={closestCorners}
         strategy={verticalListSortingStrategy}
