@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { ProjectContext } from "../App";
-import "../styles/Card.css";
+import "../styles/CardAdd.css";
 
 export default function CardAdd({ containerIdx }) {
   const { activeProject, activeBoard, setActiveBoard, projMgr } =
@@ -38,7 +38,7 @@ export default function CardAdd({ containerIdx }) {
             <button onClick={createNewCard}>Add</button>
           </div>
         ) : (
-          <p>+ New Card</p>
+          <p>+ Add Card</p>
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import "../styles/Card.css";
 
-export default function Card(props) {
+export default function Card({ props }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: props.id,
@@ -19,11 +19,9 @@ export default function Card(props) {
 
   let { title, isDragging } = props;
 
-  let classStyle = isDragging ? "CardOutline" : "Card";
-
   return (
     <div ref={setNodeRef} style={dndStyle} {...attributes} {...listeners}>
-      <div className={classStyle}>
+      <div className={isDragging ? `CardDrag` : `CardIdle`}>
         <div className="wrapper">
           {isDragging ? (
             <div className="title"></div>

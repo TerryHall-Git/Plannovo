@@ -27,8 +27,8 @@ export default function Container(props) {
   let cards = data.cards;
   let cardsMarkup = cards.map((card) => (
     <Card
-      key={card.name}
-      id={card.name}
+      key={card.id}
+      id={card.id}
       title={card.title}
       isDragging={activeCard && activeCard.name === card.name ? true : false}
       data={card}
@@ -45,7 +45,7 @@ export default function Container(props) {
   return (
     <div ref={setNodeRef} className="Container">
       <p>{title}</p>
-      <CardAdd containerId={props.idx} />
+      <CardAdd containerIdx={props.idx} />
       <SortableContext
         items={cards.map((card) => card.name)}
         sensors={sensors}

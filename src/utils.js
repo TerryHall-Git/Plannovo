@@ -52,26 +52,34 @@ class ProjectManager {
       return undefined;
     }
 
-    //const containers = rootData.projects[projId].boards[boardId].containers;
+    const containers = rootData.projects[projId].boards[boardId].containers;
 
     let uuid = uuidv4();
-    rootData.projects[projId].boards[boardId].containers.push({
+    containers.push({
       id: uuid,
-      idx: rootData.projects[projId].boards[boardId].containers.length,
+      idx: containers.length,
       title: title,
       type: "container",
       cards: [],
     });
 
-    console.log("Container added: " + title);
     this.saveRootData(rootData);
   }
 
   createNewCard(projId, boardId, containerIdx, title, desc) {
     const rootData = this.getRootData();
 
-    if (!projId || !boardId) return;
-    if (!this.boardExists(projId, boardId)) return;
+    console.log(containerIdx);
+    if (
+      !projId ||
+      !boardId ||
+      isNaN(containerIdx) ||
+      !this.boardExists(projId, boardId)
+    ) {
+      console.log("Failed to create new card!");
+      console.log(projId, boardId, containerIdx);
+      return undefined;
+    }
 
     const container =
       rootData.projects[projId].boards[boardId].containers[containerIdx];

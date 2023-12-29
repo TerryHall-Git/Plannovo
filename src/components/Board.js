@@ -100,6 +100,7 @@ export default function Board() {
       <Container
         key={container.id}
         id={container.id}
+        idx={idx}
         title={container.title}
         parentIdx={idx}
         data={container}
