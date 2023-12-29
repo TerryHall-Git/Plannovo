@@ -12,6 +12,8 @@ import {
 import { useDroppable } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Card from "./Card";
+import "../styles/Container.css";
+import CardAdd from "./CardAdd";
 
 export default function Container(props) {
   const { setNodeRef } = useDroppable({
@@ -20,7 +22,7 @@ export default function Container(props) {
     parent: props.parent,
     idx: props.idx,
   });
-  const { data, activeCard } = props;
+  const { data, activeCard, title } = props;
 
   let cards = data.cards;
   let cardsMarkup = cards.map((card) => (
@@ -29,7 +31,6 @@ export default function Container(props) {
       id={card.name}
       title={card.title}
       isDragging={activeCard && activeCard.name === card.name ? true : false}
-      classStyle="KanbanCard"
       data={card}
     />
   ));
@@ -42,7 +43,9 @@ export default function Container(props) {
   );
 
   return (
-    <div ref={setNodeRef} className="KanbanContainer">
+    <div ref={setNodeRef} className="Container">
+      <p>{title}</p>
+      <CardAdd containerId={props.idx} />
       <SortableContext
         items={cards.map((card) => card.name)}
         sensors={sensors}

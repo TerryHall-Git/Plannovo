@@ -12,6 +12,7 @@ export default function Board() {
   const [activeCard, setActiveCard] = useState(null);
   const [containers, setContainers] = useState(activeBoard.containers);
 
+  console.log(containers);
   function handleDragEnd() {
     setActiveCard(null);
   }
@@ -95,11 +96,11 @@ export default function Board() {
   }
 
   const containerMarkup = containers.map((container, idx) => {
-    console.log(container.title);
     return (
       <Container
         key={container.id}
-        id={container.title}
+        id={container.id}
+        title={container.title}
         parentIdx={idx}
         data={container}
         activeCard={activeCard}

@@ -1,40 +1,44 @@
 import { useContext, useState } from "react";
 import { ProjectContext } from "../App";
-import "../styles/ContainerAdd.css";
+import "../styles/Card.css";
 
-export default function ContainerAdd() {
+export default function CardAdd({ containerIdx }) {
   const { activeProject, activeBoard, setActiveBoard, projMgr } =
     useContext(ProjectContext);
   const [title, setTitle] = useState("");
   const [showInput, setShowInput] = useState(false);
 
-  function createNewContainer() {
-    console.log("title: " + title.trim());
+  function createNewCard() {
     if (title.trim() === "") return;
-    projMgr.createNewContainer(activeProject.id, activeBoard.id, title);
+    projMgr.createNewCard(
+      activeProject.id,
+      activeBoard.id,
+      containerIdx,
+      title,
+      ""
+    );
     setActiveBoard(projMgr.getActiveBoard());
     setShowInput(false);
-    console.log("UPDATED");
   }
 
   return (
-    <div className="ContainerAdd" onClick={() => setShowInput(true)}>
-      <div className="ContainerAdd-content">
+    <div className="CardAdd" onClick={() => setShowInput(true)}>
+      <div className="CardAdd-content">
         {showInput ? (
           <div>
             <input
               autoFocus
               type="text"
               id="title"
-              className="ContainerAdd-input-grow"
+              className="CardAdd-input-grow"
               value={title}
               // onBlur={() => setShowInput(false)}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <button onClick={createNewContainer}>Add</button>
+            <button onClick={createNewCard}>Add</button>
           </div>
         ) : (
-          <p>+ Add New List</p>
+          <p>+ New Card</p>
         )}
       </div>
     </div>

@@ -70,6 +70,7 @@ class ProjectManager {
   createNewCard(projId, boardId, containerIdx, title, desc) {
     const rootData = this.getRootData();
 
+    if (!projId || !boardId) return;
     if (!this.boardExists(projId, boardId)) return;
 
     const container =
@@ -141,6 +142,11 @@ class ProjectManager {
   getActiveBoard() {
     let rootData = this.getRootData();
     if (rootData.activeProjectId === undefined) return undefined;
+
+    console.log(
+      "activeBoardId: " +
+        rootData.projects[rootData.activeProjectId].activeBoardId
+    );
     return rootData.projects[rootData.activeProjectId].boards[
       rootData.projects[rootData.activeProjectId].activeBoardId
     ];

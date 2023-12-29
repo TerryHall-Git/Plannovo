@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import "../styles/Card.css";
 
 export default function Card(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -16,9 +17,9 @@ export default function Card(props) {
     transition,
   };
 
-  let { title, isDragging, classStyle } = props;
+  let { title, isDragging } = props;
 
-  if (isDragging) classStyle = "KanbanCardOutline";
+  let classStyle = isDragging ? "CardOutline" : "Card";
 
   return (
     <div ref={setNodeRef} style={dndStyle} {...attributes} {...listeners}>
