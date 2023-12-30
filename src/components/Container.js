@@ -14,17 +14,35 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import Card from "./Card";
 import "../styles/Container.css";
 import CardAdd from "./CardAdd";
+import { useContext, useEffect, useState } from "react";
+import { ProjectContext } from "../App";
 
-export default function Container(props) {
+export default function Container({
+  id,
+  idx,
+  parent,
+  data,
+  activeCard,
+  title,
+  refresh,
+  cards,
+}) {
+  const { projMgr } = useContext(ProjectContext);
   const { setNodeRef } = useDroppable({
-    id: props.id,
-    data: props.data,
-    parent: props.parent,
-    idx: props.idx,
+    id: id,
+    data: data,
+    parent: parent,
+    idx: idx,
   });
-  const { data, activeCard, title } = props;
+  // const [cards, setCards] = useState(data.cards);
+  // const { data, activeCard, title, refresh } = props;
 
-  let cards = data.cards;
+  // useEffect(() => {
+  //   setCards(data.cards);
+  // }, [data.cards]);
+
+  // let cards = data.cards;
+
   let cardsMarkup = cards.map((card) => (
     <Card
       key={card.id}
@@ -47,7 +65,7 @@ export default function Container(props) {
   return (
     <div ref={setNodeRef} className="Container">
       <p>{title}</p>
-      <CardAdd containerIdx={props.idx} />
+      <CardAdd containerIdx={idx} refresh={refresh} />
       <SortableContext
         items={cards.map((card) => card.id)}
         sensors={sensors}

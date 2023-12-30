@@ -8,11 +8,14 @@ import ContainerAdd from "./ContainerAdd";
 import "../styles/Board.css";
 
 export default function Board() {
-  const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
+  const { activeBoard, setActiveBoard, projMgr } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
   const [containers, setContainers] = useState(activeBoard.containers);
 
-  console.log(containers);
+  function refresh() {
+    setContainers(projMgr.getActiveContainers());
+  }
+
   function handleDragEnd() {
     setActiveCard(null);
   }
@@ -104,7 +107,9 @@ export default function Board() {
         title={container.title}
         parentIdx={idx}
         data={container}
+        cards={container.cards}
         activeCard={activeCard}
+        refresh={refresh}
       />
     );
   });

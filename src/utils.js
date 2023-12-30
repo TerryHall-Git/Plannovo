@@ -177,10 +177,25 @@ class ProjectManager {
     return this.getActiveProject().boards;
   }
 
-  getContainers() {
+  getActiveContainer(idx) {
+    let activeBoard = this.getActiveBoard();
+    if (activeBoard === undefined) return undefined;
+    if (idx < 0 || idx > activeBoard.getContainers.length - 1) return undefined;
+    return activeBoard.containers[idx];
+  }
+
+  getActiveContainers() {
     let activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return undefined;
     return activeBoard.containers;
+  }
+
+  getActiveCards(containerIdx) {
+    let activeBoard = this.getActiveBoard();
+    if (activeBoard === undefined) return undefined;
+    if (containerIdx < 0 || containerIdx > activeBoard.containers.length - 1)
+      return undefined;
+    return activeBoard.containers[containerIdx].cards;
   }
 
   setActiveProject(id) {

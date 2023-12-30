@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { ProjectContext } from "../App";
 import "../styles/CardAdd.css";
 
-export default function CardAdd({ containerIdx }) {
+export default function CardAdd({ containerIdx, refresh }) {
   const { activeProject, activeBoard, setActiveBoard, projMgr } =
     useContext(ProjectContext);
   const [title, setTitle] = useState("");
@@ -19,6 +19,7 @@ export default function CardAdd({ containerIdx }) {
     );
     setActiveBoard(projMgr.getActiveBoard());
     setShowInput(false);
+    refresh();
   }
 
   return (
