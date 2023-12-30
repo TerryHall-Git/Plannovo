@@ -16,6 +16,7 @@ import "../styles/Container.css";
 import CardAdd from "./CardAdd";
 import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Container({
   id,
@@ -54,8 +55,18 @@ export default function Container({
   );
 
   return (
-    <div ref={setNodeRef} className="Container  appearAnimation">
-      <p>{title}</p>
+    <div ref={setNodeRef} className="Container appearAnimation">
+      <div className="Container-header">
+        <div>
+          <p>{title}</p>
+        </div>
+        <div>
+          <FontAwesomeIcon
+            className="Container-grip"
+            icon="fa-solid fa-grip-vertical"
+          />
+        </div>
+      </div>
       <CardAdd containerIdx={idx} refresh={refresh} />
       <SortableContext
         items={data.cards.map((card) => card.id)}
