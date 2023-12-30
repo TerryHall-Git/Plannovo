@@ -116,36 +116,25 @@ export default function Board() {
   return (
     <div className="Board">
       <div className="Board-grid">
-        {activeBoard !== undefined ? (
-          <div className="Board-container">
-            <ContainerAdd refresh={refresh} />
-          </div>
-        ) : (
-          <div className="Board-warning">
-            <p>No active board. Click on "Boards" to activate one.</p>
-          </div>
-        )}
         <DndContext
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}
           onDragStart={handleDragStart}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100vw",
-              height: "100vh",
-            }}
-          >
-            {containerMarkup}
-          </div>
+          {containerMarkup}
           {activeCard && (
             <DragOverlay adjustScale={false}>
               <Card title={activeCard.title} isOverlay={true} />
             </DragOverlay>
           )}
         </DndContext>
+        {activeBoard !== undefined ? (
+          <ContainerAdd refresh={refresh} />
+        ) : (
+          <div className="Board-warning">
+            <p>No active board. Click on "Boards" to activate one.</p>
+          </div>
+        )}
       </div>
     </div>
   );

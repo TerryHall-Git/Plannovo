@@ -39,6 +39,8 @@ class ProjectManager {
       [uuid]: { id: uuid, title: title, desc: desc, containers: [] },
     };
 
+    rootData.projects[projId].activeBoardId = uuid;
+
     this.saveRootData(rootData);
   }
 
@@ -202,7 +204,7 @@ class ProjectManager {
 
   setActiveBoard(id) {
     const rootData = this.getRootData();
-    rootData.projects[rootData.activeProjectId].activeBoardId = id;
+    rootData.activeProject.activeBoardId = id;
     this.saveRootData(rootData);
   }
 
