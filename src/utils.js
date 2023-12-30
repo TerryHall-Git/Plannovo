@@ -227,33 +227,3 @@ class ProjectManager {
 }
 
 export default ProjectManager;
-
-// "containers": [
-//   {
-//       "name": "container1",
-//       "type": "container",
-//       "idx": 0,
-//       "cards": [
-//           {
-//               "idx": 0,
-//               "parentIdx": 0,
-//               "name": "card1",
-//               "type": "card",
-//               "title": "Card 1"
-//           },
-//           {
-//               "idx": 1,
-//               "parentIdx": 0,
-//               "name": "card2",
-//               "type": "card",
-//               "title": "Card 2"
-//           },
-//           {
-//               "idx": 2,
-//               "parentIdx": 0,
-//               "name": "card3",
-//               "type": "card",
-//               "title": "Card 3"
-//           }
-//       ]
-//   },

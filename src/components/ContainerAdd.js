@@ -31,7 +31,7 @@ export default function ContainerAdd({ refresh }) {
   }
 
   function keyPress(e) {
-    if (e.keyCode === 13) createNewContainer();
+    if (e.keyCode === 13) createNewContainer(); //on-Enter
   }
 
   return (
