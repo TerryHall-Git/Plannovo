@@ -12,8 +12,7 @@ export default function CardAdd({ containerIdx, refresh }) {
 
   useEffect(() => {
     if (mouseLeft && showInput && lostFocus) {
-      setTitle("");
-      setShowInput(false);
+      reset();
     }
   }, [mouseLeft, showInput, lostFocus]);
 
@@ -29,6 +28,16 @@ export default function CardAdd({ containerIdx, refresh }) {
     setActiveBoard(projMgr.getActiveBoard());
     refresh();
     setShowInput(false);
+    reset();
+  }
+
+  function reset() {
+    setTitle("");
+    setShowInput(false);
+  }
+
+  function keyPress(e) {
+    if (e.keyCode === 13) createNewCard();
   }
 
   return (
@@ -48,6 +57,7 @@ export default function CardAdd({ containerIdx, refresh }) {
             onFocus={() => setLostFocus(false)}
             onBlur={() => setLostFocus(true)}
             onChange={(e) => setTitle(e.target.value)}
+            onKeyUp={keyPress}
           />
           <button onClick={createNewCard}>Add</button>
         </div>

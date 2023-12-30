@@ -54,7 +54,7 @@ export default function Container({
   );
 
   return (
-    <div ref={setNodeRef} className="Container">
+    <div ref={setNodeRef} className="Container  appearAnimation">
       <p>{title}</p>
       <CardAdd containerIdx={idx} refresh={refresh} />
       <SortableContext

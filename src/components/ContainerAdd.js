@@ -12,8 +12,7 @@ export default function ContainerAdd({ refresh }) {
 
   useEffect(() => {
     if (mouseLeft && showInput && lostFocus) {
-      setTitle("");
-      setShowInput(false);
+      reset();
     }
   }, [mouseLeft, showInput, lostFocus]);
 
@@ -23,11 +22,21 @@ export default function ContainerAdd({ refresh }) {
     setActiveBoard(projMgr.getActiveBoard());
     setShowInput(false);
     refresh();
+    reset();
+  }
+
+  function reset() {
+    setTitle("");
+    setShowInput(false);
+  }
+
+  function keyPress(e) {
+    if (e.keyCode === 13) createNewContainer();
   }
 
   return (
     <div
-      className="ContainerAdd"
+      className="ContainerAdd appearAnimation"
       onMouseLeave={() => setMouseLeft(true)}
       onMouseEnter={() => setMouseLeft(false)}
     >
@@ -42,6 +51,7 @@ export default function ContainerAdd({ refresh }) {
             onFocus={() => setLostFocus(false)}
             onBlur={() => setLostFocus(true)}
             onChange={(e) => setTitle(e.target.value)}
+            onKeyUp={keyPress}
           />
           <button onClick={createNewContainer}>Add</button>
         </div>
