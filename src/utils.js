@@ -151,10 +151,6 @@ class ProjectManager {
     let rootData = this.getRootData();
     if (rootData.activeProjectId === undefined) return undefined;
 
-    console.log(
-      "activeBoardId: " +
-        rootData.projects[rootData.activeProjectId].activeBoardId
-    );
     return rootData.projects[rootData.activeProjectId].boards[
       rootData.projects[rootData.activeProjectId].activeBoardId
     ];
@@ -186,7 +182,7 @@ class ProjectManager {
 
   getActiveContainers() {
     let activeBoard = this.getActiveBoard();
-    if (activeBoard === undefined) return undefined;
+    if (activeBoard === undefined) return [];
     return activeBoard.containers;
   }
 

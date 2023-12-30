@@ -8,9 +8,9 @@ import ContainerAdd from "./ContainerAdd";
 import "../styles/Board.css";
 
 export default function Board() {
-  const { activeBoard, setActiveBoard, projMgr } = useContext(ProjectContext);
+  const { activeBoard, projMgr } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
-  const [containers, setContainers] = useState(activeBoard.containers);
+  const [containers, setContainers] = useState(projMgr.getActiveContainers());
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
@@ -107,7 +107,6 @@ export default function Board() {
         title={container.title}
         parentIdx={idx}
         data={container}
-        cards={container.cards}
         activeCard={activeCard}
         refresh={refresh}
       />
@@ -117,9 +116,15 @@ export default function Board() {
   return (
     <div className="Board">
       <div className="Board-grid">
-        <div className="Board-container">
-          <ContainerAdd />
-        </div>
+        {activeBoard !== undefined ? (
+          <div className="Board-container">
+            <ContainerAdd refresh={refresh} />
+          </div>
+        ) : (
+          <div className="Board-warning">
+            <p>No active board. Click on "Boards" to activate one.</p>
+          </div>
+        )}
         <DndContext
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}

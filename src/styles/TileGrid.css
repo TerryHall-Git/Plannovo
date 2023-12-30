@@ -1,6 +1,6 @@
 .TileGrid {
   display: flex;
-  margin: 4rem auto;
+  margin: auto;
 }
 
 .TileGrid-grid {
@@ -13,4 +13,10 @@
 
 .TileGrid-content {
   margin: 1rem auto;
+}
+
+.TileGrid-warning {
+  margin: 2rem;
+  width: 50rem;
+  color: rgb(233, 85, 85);
 }

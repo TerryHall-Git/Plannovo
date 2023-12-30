@@ -25,7 +25,6 @@ export default function Container({
   activeCard,
   title,
   refresh,
-  cards,
 }) {
   const { projMgr } = useContext(ProjectContext);
   const { setNodeRef } = useDroppable({
@@ -34,16 +33,8 @@ export default function Container({
     parent: parent,
     idx: idx,
   });
-  // const [cards, setCards] = useState(data.cards);
-  // const { data, activeCard, title, refresh } = props;
 
-  // useEffect(() => {
-  //   setCards(data.cards);
-  // }, [data.cards]);
-
-  // let cards = data.cards;
-
-  let cardsMarkup = cards.map((card) => (
+  let cardsMarkup = data.cards.map((card) => (
     <Card
       key={card.id}
       id={card.id}
@@ -67,7 +58,7 @@ export default function Container({
       <p>{title}</p>
       <CardAdd containerIdx={idx} refresh={refresh} />
       <SortableContext
-        items={cards.map((card) => card.id)}
+        items={data.cards.map((card) => card.id)}
         sensors={sensors}
         collisionDetection={closestCorners}
         strategy={verticalListSortingStrategy}

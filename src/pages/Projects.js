@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import TileAdd from "../components/TileAdd.js";
 import Tile from "../components/Tile";
-import NewProjectForm from "../components/TileInputForm.js";
+import TileInputForm from "../components/TileInputForm.js";
 import { ProjectContext } from "../App.js";
 import "../styles/TileGrid.css";
 
@@ -39,7 +39,7 @@ export default function Projects() {
     <div className="TileGrid">
       <div className="TileGrid-content">
         {formShowing ? (
-          <NewProjectForm
+          <TileInputForm
             title="Create New Project"
             createProject={tileCreated}
             setFormShowing={setFormShowing}

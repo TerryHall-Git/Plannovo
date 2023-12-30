@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import TileAdd from "../components/TileAdd.js";
 import Tile from "../components/Tile";
-import NewProjectForm from "../components/TileInputForm.js";
+import TileInputForm from "../components/TileInputForm.js";
 import { ProjectContext } from "../App.js";
 import "../styles/TileGrid.css";
 
@@ -34,31 +34,37 @@ export default function Boards() {
   return (
     <div className="TileGrid">
       <div className="TileGrid-content">
-        {formShowing ? (
-          <NewProjectForm
-            title="Create New Board"
-            createProject={tileCreated}
-            setFormShowing={setFormShowing}
-          />
+        {activeProject !== undefined ? (
+          formShowing ? (
+            <TileInputForm
+              title="Create New Board"
+              createProject={tileCreated}
+              setFormShowing={setFormShowing}
+            />
+          ) : (
+            <div className="TileGrid-grid">
+              <TileAdd action={() => setFormShowing(true)} />
+              {boards !== undefined
+                ? Object.keys(boards).map((key) => {
+                    const { title, desc } = boards[key];
+                    return (
+                      <Tile
+                        key={key}
+                        isActive={activeBoardId === key}
+                        title={title}
+                        desc={desc}
+                        tileDeleted={tileDeleted}
+                        tileActivated={tileActivated}
+                        tileCallbackData={{ key }}
+                      />
+                    );
+                  })
+                : ""}
+            </div>
+          )
         ) : (
-          <div className="TileGrid-grid">
-            <TileAdd action={() => setFormShowing(true)} />
-            {boards !== undefined
-              ? Object.keys(boards).map((key) => {
-                  const { title, desc } = boards[key];
-                  return (
-                    <Tile
-                      key={key}
-                      isActive={activeBoardId === key}
-                      title={title}
-                      desc={desc}
-                      tileDeleted={tileDeleted}
-                      tileActivated={tileActivated}
-                      tileCallbackData={{ key }}
-                    />
-                  );
-                })
-              : ""}
+          <div className="TileGrid-warning">
+            <p>No active project. Click on "Projects" to activate one.</p>
           </div>
         )}
       </div>

@@ -9,3 +9,9 @@
   display: flex;
   justify-content: start;
 }
+
+.Board-warning {
+  margin: 3rem;
+  width: 50rem;
+  color: rgb(233, 85, 85);
+}

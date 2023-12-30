@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../App";
 import "../styles/CardAdd.css";
 
@@ -7,6 +7,15 @@ export default function CardAdd({ containerIdx, refresh }) {
     useContext(ProjectContext);
   const [title, setTitle] = useState("");
   const [showInput, setShowInput] = useState(false);
+  const [mouseLeft, setMouseLeft] = useState(false);
+  const [lostFocus, setLostFocus] = useState(false);
+
+  useEffect(() => {
+    if (mouseLeft && showInput && lostFocus) {
+      setTitle("");
+      setShowInput(false);
+    }
+  }, [mouseLeft, showInput, lostFocus]);
 
   function createNewCard() {
     if (title.trim() === "") return;
@@ -18,30 +27,40 @@ export default function CardAdd({ containerIdx, refresh }) {
       ""
     );
     setActiveBoard(projMgr.getActiveBoard());
-    setShowInput(false);
     refresh();
+    setShowInput(false);
   }
 
   return (
-    <div className="CardAdd" onClick={() => setShowInput(true)}>
-      <div className="CardAdd-content">
-        {showInput ? (
-          <div>
-            <input
-              autoFocus
-              type="text"
-              id="title"
-              className="CardAdd-input-grow"
-              value={title}
-              // onBlur={() => setShowInput(false)}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <button onClick={createNewCard}>Add</button>
-          </div>
-        ) : (
+    <div
+      className="CardAdd"
+      onMouseLeave={() => setMouseLeft(true)}
+      onMouseEnter={() => setMouseLeft(false)}
+    >
+      {showInput ? (
+        <div className="CardAdd-content">
+          <input
+            autoFocus
+            type="text"
+            id="title"
+            className="CardAdd-input-grow"
+            value={title}
+            onFocus={() => setLostFocus(false)}
+            onBlur={() => setLostFocus(true)}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <button onClick={createNewCard}>Add</button>
+        </div>
+      ) : (
+        <div
+          className="CardAdd-content"
+          onClick={() => {
+            if (!showInput) setShowInput(true);
+          }}
+        >
           <p>+ Add Card</p>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
