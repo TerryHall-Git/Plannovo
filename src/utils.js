@@ -133,7 +133,7 @@ class ProjectManager {
   }
 
   getActiveProject() {
-    let rootData = this.getRootData();
+    const rootData = this.getRootData();
     return rootData.projects[rootData.activeProjectId];
   }
 
@@ -159,13 +159,13 @@ class ProjectManager {
   }
 
   getActiveBoardId() {
-    let activeProject = this.getActiveProject();
+    const activeProject = this.getActiveProject();
     if (activeProject === undefined) return undefined;
     return activeProject.activeBoardId;
   }
 
   getBoard(projId, boardId) {
-    let rootData = this.getRootData();
+    const rootData = this.getRootData();
     if (!this.boardExists(projId, boardId)) return undefined;
     return rootData.projects[projId].boards[boardId];
   }
@@ -176,20 +176,20 @@ class ProjectManager {
   }
 
   getActiveContainer(idx) {
-    let activeBoard = this.getActiveBoard();
+    const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return undefined;
     if (idx < 0 || idx > activeBoard.getContainers.length - 1) return undefined;
     return activeBoard.containers[idx];
   }
 
   getActiveContainers() {
-    let activeBoard = this.getActiveBoard();
+    const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return [];
     return activeBoard.containers;
   }
 
   getActiveCards(containerIdx) {
-    let activeBoard = this.getActiveBoard();
+    const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return undefined;
     if (containerIdx < 0 || containerIdx > activeBoard.containers.length - 1)
       return undefined;
@@ -203,8 +203,11 @@ class ProjectManager {
   }
 
   setActiveBoard(id) {
-    const rootData = this.getRootData();
-    rootData.activeProject.activeBoardId = id;
+    let rootData = this.getRootData();
+    if (rootData.activeProjectId === undefined) return;
+    const activeProject = rootData.projects[rootData.activeProjectId];
+    if (activeProject === undefined) return;
+    activeProject.activeBoardId = id;
     this.saveRootData(rootData);
   }
 

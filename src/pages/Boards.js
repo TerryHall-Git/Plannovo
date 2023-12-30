@@ -33,9 +33,9 @@ export default function Boards() {
 
   return (
     <div className="TileGrid">
-      <div className="TileGrid-content">
-        {activeProject !== undefined ? (
-          formShowing ? (
+      {activeProject !== undefined ? (
+        <div className="TileGrid-content">
+          {formShowing ? (
             <TileInputForm
               title="Create New Board"
               createProject={tileCreated}
@@ -61,13 +61,13 @@ export default function Boards() {
                   })
                 : ""}
             </div>
-          )
-        ) : (
-          <div className="TileGrid-warning">
-            <p>No active project. Click on "Projects" to activate one.</p>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        <div className="TileGrid-warning">
+          <p>No active project. Click on "Projects" to activate one.</p>
+        </div>
+      )}
     </div>
   );
 }
