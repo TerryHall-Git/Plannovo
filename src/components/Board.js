@@ -1,6 +1,20 @@
+import {
+  useSensors,
+  useSensor,
+  PointerSensor,
+  KeyboardSensor,
+  closestCorners,
+  DndContext,
+  DragOverlay,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  horizontalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { useDroppable } from "@dnd-kit/core";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { useContext, useState } from "react";
 import { ProjectContext } from "../App";
-import { DndContext, DragOverlay } from "@dnd-kit/core";
 import Container from "./Container";
 import Card from "./Card";
 import ContainerAdd from "./ContainerAdd";
@@ -78,6 +92,8 @@ export default function Board() {
   }
 
   function handleDragOver({ active, over }) {
+    if (active.data.current.type === "container") return;
+
     //Different container actions
     if (!over) {
       console.log("no over");
@@ -95,6 +111,9 @@ export default function Board() {
   }
 
   function handleDragStart({ active }) {
+    console.log(active);
+    if (active.data.current.type === "container") return;
+
     setActiveCard(active.data.current);
   }
 
@@ -113,6 +132,13 @@ export default function Board() {
     );
   });
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   return (
     <div className="Board">
       <div className="Board-grid">
@@ -121,7 +147,14 @@ export default function Board() {
           onDragOver={handleDragOver}
           onDragStart={handleDragStart}
         >
-          {containerMarkup}
+          <SortableContext
+            items={containers.map((container) => container.id)}
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            strategy={horizontalListSortingStrategy}
+          >
+            {containerMarkup}
+          </SortableContext>
           {activeCard && (
             <DragOverlay adjustScale={false}>
               <Card title={activeCard.title} isOverlay={true} />

@@ -7,10 +7,12 @@ import {
 } from "@dnd-kit/core";
 import {
   SortableContext,
+  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useDroppable } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import Card from "./Card";
 import "../styles/Container.css";
 import CardAdd from "./CardAdd";
@@ -34,6 +36,23 @@ export default function Container({
     parent: parent,
     idx: idx,
   });
+  const {
+    attributes,
+    listeners,
+    setNodeRef: setDragRef,
+    transform,
+    transition,
+  } = useSortable({
+    id: id,
+    data: data,
+    parent: parent,
+    idx: idx,
+  });
+
+  const dndStyle = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   let cardsMarkup = data.cards.map((card) => (
     <Card
@@ -55,12 +74,18 @@ export default function Container({
   );
 
   return (
-    <div ref={setNodeRef} className="Container appearAnimation">
+    <div
+      ref={setNodeRef}
+      style={dndStyle}
+      {...attributes}
+      {...listeners}
+      className="Container appearAnimation"
+    >
       <div className="Container-header">
         <div>
           <p>{title}</p>
         </div>
-        <div>
+        <div ref={setDragRef}>
           <FontAwesomeIcon
             className="Container-grip"
             icon="fa-solid fa-grip-vertical"
