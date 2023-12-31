@@ -27,7 +27,7 @@ export default function Container({
   title,
   refresh,
 }) {
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef: setDropRef } = useDroppable({
     id: id,
     data: data,
     parent: parent,
@@ -78,7 +78,7 @@ export default function Container({
         transform: CSS.Translate.toString(transform),
       }}
     >
-      <div ref={setNodeRef}>
+      <div>
         <div {...listeners} className="Container-header">
           <FontAwesomeIcon
             className="Container-grip"
@@ -99,7 +99,7 @@ export default function Container({
           collisionDetection={closestCorners}
           strategy={verticalListSortingStrategy}
         >
-          {cardsMarkup}
+          <div ref={setDropRef}>{cardsMarkup}</div>
         </SortableContext>
       </div>
     </div>

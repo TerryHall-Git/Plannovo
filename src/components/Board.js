@@ -33,13 +33,20 @@ export default function Board() {
   function handleDragEnd({ active, over }) {
     setActiveCard(null);
 
-    // over = over.data.current;
-    // active = active.data.current;
+    over = over.data.current;
+    active = active.data.current;
 
     // if (active.type === "container" && over.type === "container") {
     //   //dragging container
     //   swapContainerLocations(active, over);
     // }
+
+    if (active.type === "card") {
+      //dragging card
+      if (over.type === "card" && active.parentIdx === over.parentIdx) {
+        moveCards_SameContainer(active, over);
+      }
+    }
   }
 
   function moveCards_SameContainer(active, over) {
@@ -122,7 +129,7 @@ export default function Board() {
     if (active.type === "card") {
       //dragging card
       if (over.type === "card" && active.parentIdx === over.parentIdx) {
-        moveCards_SameContainer(active, over);
+        // moveCards_SameContainer(active, over);
       } else {
         moveCards_DifferentContainer(active, over);
       }
