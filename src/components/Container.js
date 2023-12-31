@@ -27,7 +27,7 @@ export default function Container({
   title,
   refresh,
 }) {
-  const { setNodeRef: setDropRef } = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: id,
     data: data,
     parent: parent,
@@ -78,30 +78,28 @@ export default function Container({
         transform: CSS.Translate.toString(transform),
       }}
     >
-      <div>
-        <div {...listeners} className="Container-header">
-          <FontAwesomeIcon
-            className="Container-grip"
-            icon="fa-solid fa-grip-vertical"
-          />
-          <div>
-            <p>{title}</p>
-          </div>
-          <FontAwesomeIcon
-            className="Container-grip"
-            icon="fa-solid fa-grip-vertical"
-          />
+      <div {...listeners} className="Container-header">
+        <FontAwesomeIcon
+          className="Container-grip"
+          icon="fa-solid fa-grip-vertical"
+        />
+        <div>
+          <p>{title}</p>
         </div>
-        <CardAdd containerIdx={idx} refresh={refresh} />
-        <SortableContext
-          items={data.cards.map((card) => card.id)}
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          strategy={verticalListSortingStrategy}
-        >
-          <div ref={setDropRef}>{cardsMarkup}</div>
-        </SortableContext>
+        <FontAwesomeIcon
+          className="Container-grip"
+          icon="fa-solid fa-grip-vertical"
+        />
       </div>
+      <CardAdd containerIdx={idx} refresh={refresh} />
+      <SortableContext
+        items={data.cards.map((card) => card.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <div className="Container-cards" ref={setNodeRef}>
+          {cardsMarkup}
+        </div>
+      </SortableContext>
     </div>
   );
 }

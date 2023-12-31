@@ -13,6 +13,10 @@
   background-color: #121c22;
 }
 
+.Container-cards {
+  min-height: 4rem;
+}
+
 .Container-drag {
   border-color: #44c7ff;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);

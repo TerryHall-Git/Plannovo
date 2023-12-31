@@ -33,20 +33,24 @@ export default function Board() {
   function handleDragEnd({ active, over }) {
     setActiveCard(null);
 
-    over = over.data.current;
-    active = active.data.current;
-
-    // if (active.type === "container" && over.type === "container") {
-    //   //dragging container
-    //   swapContainerLocations(active, over);
-    // }
-
-    if (active.type === "card") {
-      //dragging card
-      if (over.type === "card" && active.parentIdx === over.parentIdx) {
-        moveCards_SameContainer(active, over);
-      }
+    if (!over) {
+      return;
     }
+
+    // over = over.data.current;
+    // active = active.data.current;
+
+    // // if (active.type === "container" && over.type === "container") {
+    // //   //dragging container
+    // //   swapContainerLocations(active, over);
+    // // }
+
+    // if (active.type === "card") {
+    //   //dragging card
+    //   if (active.parentIdx === over.parentIdx) {
+    //     moveCards_SameContainer(active, over);
+    //   }
+    // }
   }
 
   function moveCards_SameContainer(active, over) {
@@ -107,13 +111,11 @@ export default function Board() {
   }
 
   function swapContainerLocations(active, over) {
-    let updatedContainers = arrayMove([...containers], active.idx, over.idx);
+    if (active.id !== over.id) {
+      const updatedContainers = arrayMove(containers, active.idx, over.idx);
 
-    // let tmp = updatedContainers[active.idx];
-    // updatedContainers[active.idx] = updatedContainers[over.idx];
-    // updatedContainers[over.idx] = tmp;
-
-    setContainers(updatedContainers);
+      setContainers(updatedContainers);
+    }
   }
 
   function handleDragOver({ active, over }) {
@@ -123,19 +125,22 @@ export default function Board() {
       return;
     }
 
-    over = over.data.current;
-    active = active.data.current;
+    const overData = over.data.current;
+    const activeData = active.data.current;
 
-    if (active.type === "card") {
-      //dragging card
-      if (over.type === "card" && active.parentIdx === over.parentIdx) {
-        // moveCards_SameContainer(active, over);
+    if (activeData.type === "card") {
+      if (activeData.parentIdx !== overData.parentIdx) {
+        moveCards_DifferentContainer(activeData, overData);
       } else {
-        moveCards_DifferentContainer(active, over);
+        moveCards_SameContainer(activeData, overData);
       }
-    } else if (active.type === "container" && over.type === "container") {
+    } else if (
+      activeData.type === "container" &&
+      overData.type === "container"
+    ) {
       //dragging container
-      swapContainerLocations(active, over);
+      console.log("move container");
+      swapContainerLocations(activeData, overData);
     }
   }
 
