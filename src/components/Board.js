@@ -24,14 +24,16 @@ import "../styles/Board.css";
 export default function Board() {
   const { activeBoard, projMgr } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
+  const [activeContainer, setActiveContainer] = useState(null);
   const [containers, setContainers] = useState(projMgr.getActiveContainers());
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
   }
 
-  function handleDragEnd({ active, over }) {
+  function handleDragEnd() {
     setActiveCard(null);
+    setActiveContainer(null);
   }
 
   function moveCards_SameContainer(active, over) {
@@ -93,7 +95,7 @@ export default function Board() {
 
   function swapContainerLocations(active, over) {
     if (active.id === over.id) return;
-    // const updatedContainers = arrayMove(containers, active.idx, over.idx);
+
     let updatedContainers = [...containers];
 
     //clone container
@@ -101,8 +103,6 @@ export default function Board() {
 
     //delete container
     updatedContainers.splice(active.idx, 1);
-
-    console.log("before ", containers);
 
     //insert cloned container position
     updatedContainers = [
@@ -112,9 +112,11 @@ export default function Board() {
     ];
 
     //update index info
-    updatedContainers.forEach((container, idx) => (container.idx = idx));
+    updatedContainers.forEach((container, idx) => {
+      container.idx = idx;
+      container.cards.forEach((card) => (card.parentIdx = idx));
+    });
 
-    console.log("after: ", updatedContainers);
     setContainers(updatedContainers);
   }
 
@@ -145,9 +147,11 @@ export default function Board() {
   }
 
   function handleDragStart({ active }) {
-    if (active.data.current.type === "container") return;
-
-    setActiveCard(active.data.current);
+    if (active.data.current.type === "container") {
+      setActiveContainer(active.data.current);
+    } else {
+      setActiveCard(active.data.current);
+    }
   }
 
   const containerMarkup = containers.map((container, idx) => {
@@ -160,7 +164,9 @@ export default function Board() {
         parentIdx={idx}
         data={container}
         activeCard={activeCard}
+        activeContainer={activeContainer}
         refresh={refresh}
+        isOverlay={false}
       />
     );
   });
@@ -182,8 +188,8 @@ export default function Board() {
         >
           <SortableContext
             items={containers.map((container) => container.id)}
-            // sensors={sensors}
-            // collisionDetection={closestCorners}
+            sensors={sensors}
+            collisionDetection={closestCorners}
             strategy={horizontalListSortingStrategy}
           >
             {containerMarkup}
@@ -191,6 +197,22 @@ export default function Board() {
           {activeCard && (
             <DragOverlay adjustScale={false}>
               <Card title={activeCard.title} isOverlay={true} />
+            </DragOverlay>
+          )}
+          {activeContainer && (
+            <DragOverlay adjustScale={false}>
+              <Container
+                key={activeContainer.id}
+                id={activeContainer.id}
+                idx={activeContainer.idx}
+                title={activeContainer.title}
+                parentIdx={activeContainer.idx}
+                data={activeContainer}
+                activeCard={null}
+                activeContainer={null}
+                refresh={refresh}
+                isOverlay={true}
+              />
             </DragOverlay>
           )}
         </DndContext>

@@ -24,8 +24,10 @@ export default function Container({
   parent,
   data,
   activeCard,
+  activeContainer,
   title,
   refresh,
+  isOverlay,
 }) {
   const { setNodeRef: setDropRef } = useDroppable({
     id: id,
@@ -68,9 +70,10 @@ export default function Container({
 
   let styles = isDragging ? "Container Container-drag" : "Container";
 
+  let makeShadow = activeContainer && activeContainer.id === id;
+
   return (
     <div
-      className={styles}
       {...attributes}
       ref={setDragRef}
       style={{
@@ -78,28 +81,34 @@ export default function Container({
         transform: CSS.Translate.toString(transform),
       }}
     >
-      <div {...listeners} className="Container-header">
-        <FontAwesomeIcon
-          className="Container-grip"
-          icon="fa-solid fa-grip-vertical"
-        />
-        <div>
-          <p>{title}</p>
+      {makeShadow ? (
+        <div className="Container-overlay"></div>
+      ) : (
+        <div className={styles}>
+          <div {...listeners} className="Container-header">
+            <FontAwesomeIcon
+              className="Container-grip"
+              icon="fa-solid fa-grip-vertical"
+            />
+            <div>
+              <p>{title}</p>
+            </div>
+            <FontAwesomeIcon
+              className="Container-grip"
+              icon="fa-solid fa-grip-vertical"
+            />
+          </div>
+          <CardAdd containerIdx={idx} refresh={refresh} />
+          <SortableContext
+            items={data.cards.map((card) => card.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="Container-cards" ref={setDropRef}>
+              {cardsMarkup}
+            </div>
+          </SortableContext>
         </div>
-        <FontAwesomeIcon
-          className="Container-grip"
-          icon="fa-solid fa-grip-vertical"
-        />
-      </div>
-      <CardAdd containerIdx={idx} refresh={refresh} />
-      <SortableContext
-        items={data.cards.map((card) => card.id)}
-        strategy={verticalListSortingStrategy}
-      >
-        <div className="Container-cards" ref={setDropRef}>
-          {cardsMarkup}
-        </div>
-      </SortableContext>
+      )}
     </div>
   );
 }
