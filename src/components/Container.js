@@ -16,8 +16,6 @@ import { CSS } from "@dnd-kit/utilities";
 import Card from "./Card";
 import "../styles/Container.css";
 import CardAdd from "./CardAdd";
-import { useContext, useEffect, useState } from "react";
-import { ProjectContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Container({
@@ -29,7 +27,6 @@ export default function Container({
   title,
   refresh,
 }) {
-  const { projMgr } = useContext(ProjectContext);
   const { setNodeRef } = useDroppable({
     id: id,
     data: data,
@@ -42,6 +39,7 @@ export default function Container({
     setNodeRef: setDragRef,
     transform,
     transition,
+    isDragging,
   } = useSortable({
     id: id,
     data: data,
@@ -68,9 +66,13 @@ export default function Container({
     })
   );
 
+  let styles = isDragging
+    ? "Container Container-drag"
+    : "Container appearAnimation";
+
   return (
     <div
-      className="Container appearAnimation"
+      className={styles}
       {...attributes}
       ref={setDragRef}
       style={{
@@ -79,16 +81,18 @@ export default function Container({
       }}
     >
       <div ref={setNodeRef}>
-        <div className="Container-header">
+        <div {...listeners} className="Container-header">
+          <FontAwesomeIcon
+            className="Container-grip"
+            icon="fa-solid fa-grip-vertical"
+          />
           <div>
             <p>{title}</p>
           </div>
-          <button {...listeners}>
-            <FontAwesomeIcon
-              className="Container-grip"
-              icon="fa-solid fa-grip-vertical"
-            />
-          </button>
+          <FontAwesomeIcon
+            className="Container-grip"
+            icon="fa-solid fa-grip-vertical"
+          />
         </div>
         <CardAdd containerIdx={idx} refresh={refresh} />
         <SortableContext

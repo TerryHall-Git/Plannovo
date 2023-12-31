@@ -10,21 +10,35 @@
   border-color: #8095a8;
   border-radius: 0.5rem;
   margin: 1rem;
-  text-align: center;
   background-color: #121c22;
+}
+
+.Container-drag {
+  border-color: #44c7ff;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  z-index: 1;
 }
 
 .Container-header {
   display: grid;
-  grid-template-columns: 9fr 1fr;
+  grid-template-columns: 1fr 8fr 1fr;
+  align-items: center;
+  padding: 0.25rem;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  color: #8095a8;
+  background-color: #1b262c;
+  width: 100%;
+  height: 3rem;
+}
+
+.Container-header p {
+  text-align: center;
+}
+
+.Container-header:hover {
+  color: white;
 }
 
 .Container-grip {
-  color: #8095a8;
-}
-
-.Container-grip:hover {
-  color: white;
+  justify-self: center;
 }
