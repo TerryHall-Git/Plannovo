@@ -111,7 +111,6 @@ export default function Board() {
   }
 
   function handleDragStart({ active }) {
-    console.log(active);
     if (active.data.current.type === "container") return;
 
     setActiveCard(active.data.current);

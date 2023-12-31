@@ -49,11 +49,6 @@ export default function Container({
     idx: idx,
   });
 
-  const dndStyle = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
   let cardsMarkup = data.cards.map((card) => (
     <Card
       key={card.id}
@@ -75,32 +70,36 @@ export default function Container({
 
   return (
     <div
-      ref={setNodeRef}
-      style={dndStyle}
-      {...attributes}
-      {...listeners}
       className="Container appearAnimation"
+      {...attributes}
+      ref={setDragRef}
+      style={{
+        transition,
+        transform: CSS.Translate.toString(transform),
+      }}
     >
-      <div className="Container-header">
-        <div>
-          <p>{title}</p>
+      <div ref={setNodeRef}>
+        <div className="Container-header">
+          <div>
+            <p>{title}</p>
+          </div>
+          <button {...listeners}>
+            <FontAwesomeIcon
+              className="Container-grip"
+              icon="fa-solid fa-grip-vertical"
+            />
+          </button>
         </div>
-        <div ref={setDragRef}>
-          <FontAwesomeIcon
-            className="Container-grip"
-            icon="fa-solid fa-grip-vertical"
-          />
-        </div>
+        <CardAdd containerIdx={idx} refresh={refresh} />
+        <SortableContext
+          items={data.cards.map((card) => card.id)}
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          strategy={verticalListSortingStrategy}
+        >
+          {cardsMarkup}
+        </SortableContext>
       </div>
-      <CardAdd containerIdx={idx} refresh={refresh} />
-      <SortableContext
-        items={data.cards.map((card) => card.id)}
-        sensors={sensors}
-        collisionDetection={closestCorners}
-        strategy={verticalListSortingStrategy}
-      >
-        {cardsMarkup}
-      </SortableContext>
     </div>
   );
 }

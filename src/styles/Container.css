@@ -9,9 +9,9 @@
   border-width: 4px;
   border-color: #8095a8;
   border-radius: 0.5rem;
-  transition: 0.5s;
   margin: 1rem;
   text-align: center;
+  background-color: #121c22;
 }
 
 .Container-header {
