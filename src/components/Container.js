@@ -66,9 +66,7 @@ export default function Container({
     })
   );
 
-  let styles = isDragging
-    ? "Container Container-drag"
-    : "Container appearAnimation";
+  let styles = isDragging ? "Container Container-drag" : "Container";
 
   return (
     <div

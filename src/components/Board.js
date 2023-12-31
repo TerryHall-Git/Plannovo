@@ -8,6 +8,7 @@ import {
   DragOverlay,
 } from "@dnd-kit/core";
 import {
+  arrayMove,
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -29,8 +30,16 @@ export default function Board() {
     setContainers(projMgr.getActiveContainers());
   }
 
-  function handleDragEnd() {
+  function handleDragEnd({ active, over }) {
     setActiveCard(null);
+
+    // over = over.data.current;
+    // active = active.data.current;
+
+    // if (active.type === "container" && over.type === "container") {
+    //   //dragging container
+    //   swapContainerLocations(active, over);
+    // }
   }
 
   function moveCards_SameContainer(active, over) {
@@ -90,9 +99,17 @@ export default function Board() {
     setContainers(updatedContainers);
   }
 
-  function handleDragOver({ active, over }) {
-    if (active.data.current.type === "container") return;
+  function swapContainerLocations(active, over) {
+    let updatedContainers = arrayMove([...containers], active.idx, over.idx);
 
+    // let tmp = updatedContainers[active.idx];
+    // updatedContainers[active.idx] = updatedContainers[over.idx];
+    // updatedContainers[over.idx] = tmp;
+
+    setContainers(updatedContainers);
+  }
+
+  function handleDragOver({ active, over }) {
     //Different container actions
     if (!over) {
       console.log("no over");
@@ -102,10 +119,16 @@ export default function Board() {
     over = over.data.current;
     active = active.data.current;
 
-    if (over.type === "card" && active.parentIdx === over.parentIdx) {
-      moveCards_SameContainer(active, over);
-    } else {
-      moveCards_DifferentContainer(active, over);
+    if (active.type === "card") {
+      //dragging card
+      if (over.type === "card" && active.parentIdx === over.parentIdx) {
+        moveCards_SameContainer(active, over);
+      } else {
+        moveCards_DifferentContainer(active, over);
+      }
+    } else if (active.type === "container" && over.type === "container") {
+      //dragging container
+      swapContainerLocations(active, over);
     }
   }
 
