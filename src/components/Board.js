@@ -32,25 +32,6 @@ export default function Board() {
 
   function handleDragEnd({ active, over }) {
     setActiveCard(null);
-
-    if (!over) {
-      return;
-    }
-
-    // over = over.data.current;
-    // active = active.data.current;
-
-    // // if (active.type === "container" && over.type === "container") {
-    // //   //dragging container
-    // //   swapContainerLocations(active, over);
-    // // }
-
-    // if (active.type === "card") {
-    //   //dragging card
-    //   if (active.parentIdx === over.parentIdx) {
-    //     moveCards_SameContainer(active, over);
-    //   }
-    // }
   }
 
   function moveCards_SameContainer(active, over) {
@@ -111,11 +92,30 @@ export default function Board() {
   }
 
   function swapContainerLocations(active, over) {
-    if (active.id !== over.id) {
-      const updatedContainers = arrayMove(containers, active.idx, over.idx);
+    if (active.id === over.id) return;
+    // const updatedContainers = arrayMove(containers, active.idx, over.idx);
+    let updatedContainers = [...containers];
 
-      setContainers(updatedContainers);
-    }
+    //clone container
+    const clonedContainer = { ...updatedContainers[active.idx] };
+
+    //delete container
+    updatedContainers.splice(active.idx, 1);
+
+    console.log("before ", containers);
+
+    //insert cloned container position
+    updatedContainers = [
+      ...updatedContainers.slice(0, over.idx),
+      clonedContainer,
+      ...updatedContainers.slice(over.idx),
+    ];
+
+    //update index info
+    updatedContainers.forEach((container, idx) => (container.idx = idx));
+
+    console.log("after: ", updatedContainers);
+    setContainers(updatedContainers);
   }
 
   function handleDragOver({ active, over }) {
@@ -182,8 +182,8 @@ export default function Board() {
         >
           <SortableContext
             items={containers.map((container) => container.id)}
-            sensors={sensors}
-            collisionDetection={closestCorners}
+            // sensors={sensors}
+            // collisionDetection={closestCorners}
             strategy={horizontalListSortingStrategy}
           >
             {containerMarkup}

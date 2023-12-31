@@ -27,7 +27,7 @@ export default function Container({
   title,
   refresh,
 }) {
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef: setDropRef } = useDroppable({
     id: id,
     data: data,
     parent: parent,
@@ -96,7 +96,7 @@ export default function Container({
         items={data.cards.map((card) => card.id)}
         strategy={verticalListSortingStrategy}
       >
-        <div className="Container-cards" ref={setNodeRef}>
+        <div className="Container-cards" ref={setDropRef}>
           {cardsMarkup}
         </div>
       </SortableContext>
