@@ -75,6 +75,7 @@ export default function Board() {
       over.type === "container" ? over.idx : over.parentIdx;
     let overCardIdx = over.type === "card" ? over.idx : -1;
     const updatedContainers = [...containers];
+
     const clonedCard = {
       ...updatedContainers[active.parentIdx].cards[active.idx],
     };

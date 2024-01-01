@@ -38,13 +38,13 @@
   width: 14rem;
   height: 4.5rem;
   cursor: pointer;
-  border-width: 4px;
+  /* border-width: 4px; */
   border-radius: 0.5rem;
   margin: 0.5rem;
-  border-color: #0091ff;
+  /* border-color: #0091ff; */
   background-color: #10191f;
   padding: 0.25rem;
-  box-shadow: inset 0 0 60px #44c7ff, 0 0 10px #44c7ff;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .CardDrag {
@@ -57,7 +57,7 @@
   border-width: 4px;
   border-radius: 0.5rem;
   margin: 0.5rem;
-  border-color: #44c7ff;
+  border-color: white;
   background-color: #1b262c;
   padding: 0.25rem;
   animation: cardAnim-pickup 0.25s ease-out;
@@ -72,14 +72,14 @@
   }
   100% {
     transform: scale(1.1);
-    border-color: #44c7ff;
+    border-color: white;
   }
 }
 
 @keyframes cardAnim-drop {
   0% {
     transform: scale(1.1);
-    border-color: #44c7ff;
+    border-color: white;
   }
   100% {
     transform: scale(1);
