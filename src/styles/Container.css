@@ -13,18 +13,15 @@
   background-color: #121c22;
 }
 
-.Container-overlay {
+.Container-inset {
   display: flex;
   flex-direction: column;
   width: 16.5rem;
-  height: 18rem;
+  height: 15rem;
   border-radius: 0.5rem;
   margin: 1rem;
-  box-shadow: inset 0 150px 100px -100px #44c7ff;
-}
-
-.Container-cards {
-  min-height: 4rem;
+  box-shadow: inset 0 150px 100px -100px #44c7ff, -30px -30px 50px -30px #44c7ff,
+    30px -30px 50px -30px #44c7ff;
 }
 
 .Container-drag {

@@ -13,7 +13,7 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../App";
 import Container from "./Container";
 import Card from "./Card";
@@ -26,6 +26,16 @@ export default function Board() {
   const [activeCard, setActiveCard] = useState(null);
   const [activeContainer, setActiveContainer] = useState(null);
   const [containers, setContainers] = useState(projMgr.getActiveContainers());
+  // const [showAppearAnim, setShowAppearAnim] = useState(false);
+
+  // useEffect(() => {
+  //   async function completeAnim() {
+  //     await new Promise((res) => setTimeout(res, 1000)).then(() => {
+  //       setShowAppearAnim(false);
+  //     });
+  //   }
+  //   completeAnim();
+  // }, []);
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
@@ -141,7 +151,6 @@ export default function Board() {
       overData.type === "container"
     ) {
       //dragging container
-      console.log("move container");
       swapContainerLocations(activeData, overData);
     }
   }
@@ -167,6 +176,7 @@ export default function Board() {
         activeContainer={activeContainer}
         refresh={refresh}
         isOverlay={false}
+        showAppearAnim={false}
       />
     );
   });
@@ -212,6 +222,7 @@ export default function Board() {
                 activeContainer={null}
                 refresh={refresh}
                 isOverlay={true}
+                showAppearAnim={false}
               />
             </DragOverlay>
           )}

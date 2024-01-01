@@ -17,6 +17,7 @@ import Card from "./Card";
 import "../styles/Container.css";
 import CardAdd from "./CardAdd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 
 export default function Container({
   id,
@@ -28,6 +29,7 @@ export default function Container({
   title,
   refresh,
   isOverlay,
+  showAppearAnim,
 }) {
   const { setNodeRef: setDropRef } = useDroppable({
     id: id,
@@ -68,7 +70,8 @@ export default function Container({
     })
   );
 
-  let styles = isDragging ? "Container Container-drag" : "Container";
+  let anim = showAppearAnim ? " appearAnimation" : "";
+  let styles = isDragging ? "Container Container-drag" : "Container" + anim;
 
   let makeShadow = activeContainer && activeContainer.id === id;
 
@@ -82,7 +85,7 @@ export default function Container({
       }}
     >
       {makeShadow ? (
-        <div className="Container-overlay"></div>
+        <div className="Container-inset"></div>
       ) : (
         <div className={styles}>
           <div {...listeners} className="Container-header">
@@ -101,6 +104,8 @@ export default function Container({
           <CardAdd containerIdx={idx} refresh={refresh} />
           <SortableContext
             items={data.cards.map((card) => card.id)}
+            sensors={sensors}
+            collisionDetection={closestCorners}
             strategy={verticalListSortingStrategy}
           >
             <div className="Container-cards" ref={setDropRef}>
