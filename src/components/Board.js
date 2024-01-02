@@ -25,6 +25,7 @@ export default function Board() {
   const types = { CONTAINER: "container", CARD: "card" };
   const { activeBoard, projMgr } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
+  const [lastActiveCard, setLastActiveCard] = useState(null);
   const [activeContainer, setActiveContainer] = useState(null);
   const [containers, setContainers] = useState(projMgr.getActiveContainers());
   const [dragStatus, setDragStatus] = useState({
@@ -38,6 +39,7 @@ export default function Board() {
   }
 
   function handleDragEnd() {
+    setLastActiveCard({ ...activeCard });
     setActiveCard(null);
     setActiveContainer(null);
 
@@ -166,11 +168,15 @@ export default function Board() {
         parentIdx={idx}
         data={container}
         activeCard={activeCard}
+        lastActiveCard={lastActiveCard}
         activeContainer={activeContainer}
         refresh={refresh}
         isOverlay={false}
         dragStatus={dragStatus}
         interacted={interacted}
+        isActive={
+          activeContainer && activeContainer.id === container.id ? true : false
+        }
       />
     );
   });

@@ -25,12 +25,14 @@ export default function Container({
   parent,
   data,
   activeCard,
+  lastActiveCard,
   activeContainer,
   title,
   refresh,
   isOverlay,
   dragStatus,
   interacted,
+  isActive,
 }) {
   const { setNodeRef: setDropRef } = useDroppable({
     id: id,
@@ -58,10 +60,12 @@ export default function Container({
       id={card.id}
       title={card.title}
       desc={card.desc}
-      isDragging={activeCard && activeCard.id === card.id ? true : false}
+      isActive={activeCard && activeCard.id === card.id ? true : false}
+      previouslyActive={
+        lastActiveCard && lastActiveCard.id === card.id ? true : false
+      }
       data={card}
       isOverlay={false}
-      dragStatus={dragStatus}
     />
   ));
 
@@ -72,7 +76,6 @@ export default function Container({
     })
   );
 
-  let isActiveContainer = activeContainer && activeContainer.id === id;
   let anim = !interacted.current ? " appearAnimation" : "";
   let styles =
     dragStatus.draggingContainer && isOverlay
@@ -88,7 +91,7 @@ export default function Container({
         transform: CSS.Translate.toString(transform),
       }}
     >
-      {isActiveContainer ? (
+      {isActive ? (
         <div className="Container-inset"></div>
       ) : (
         <div className={styles}>
