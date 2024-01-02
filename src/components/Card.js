@@ -17,10 +17,11 @@ export default function Card(props) {
     transition,
   };
 
-  const { title, desc, isDragging, isOverlay } = props;
+  const { title, desc, isDragging, isOverlay, dragStatus } = props;
 
-  let cardStyle = isDragging ? `CardInset` : `CardIdle`;
-  cardStyle = isOverlay ? `CardDrag` : cardStyle;
+  let anim = dragStatus && !dragStatus.draggingContainer ? " Card-drop" : "";
+  let cardStyle = isDragging ? "Card-inset" : "Card-idle" + anim;
+  cardStyle = isOverlay ? "Card-drag" : cardStyle;
 
   return (
     <div ref={setNodeRef} style={dndStyle} {...attributes} {...listeners}>

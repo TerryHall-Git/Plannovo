@@ -1,4 +1,4 @@
-.CardIdle {
+.Card-idle {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -11,10 +11,13 @@
   border-color: #8095a8;
   background-color: #1b262c;
   padding: 0.25rem;
+}
+
+.Card-drop {
   animation: cardAnim-drop 0.25s ease-in;
 }
 
-.CardIdle:hover {
+.Card-idle:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -28,26 +31,23 @@
   background-color: #1f2f37;
   color: white;
   padding: 0.25rem;
-  animation: cardAnim-drop 0.25s ease-in;
 }
 
-.CardInset {
+.Card-inset {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 14rem;
   height: 4.5rem;
   cursor: pointer;
-  /* border-width: 4px; */
   border-radius: 0.5rem;
   margin: 0.5rem;
-  /* border-color: #0091ff; */
   background-color: #10191f;
   padding: 0.25rem;
   box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.CardDrag {
+.Card-drag {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -62,7 +62,7 @@
   padding: 0.25rem;
   animation: cardAnim-pickup 0.25s ease-out;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 @keyframes cardAnim-pickup {
@@ -71,14 +71,14 @@
     border-color: #8095a8;
   }
   100% {
-    transform: scale(1.1);
+    transform: scale(1.05);
     border-color: white;
   }
 }
 
 @keyframes cardAnim-drop {
   0% {
-    transform: scale(1.1);
+    transform: scale(1.05);
     border-color: white;
   }
   100% {

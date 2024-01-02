@@ -13,7 +13,7 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ProjectContext } from "../App";
 import Container from "./Container";
 import Card from "./Card";
@@ -22,20 +22,16 @@ import ContainerAdd from "./ContainerAdd";
 import "../styles/Board.css";
 
 export default function Board() {
+  const types = { CONTAINER: "container", CARD: "card" };
   const { activeBoard, projMgr } = useContext(ProjectContext);
   const [activeCard, setActiveCard] = useState(null);
   const [activeContainer, setActiveContainer] = useState(null);
   const [containers, setContainers] = useState(projMgr.getActiveContainers());
-  // const [showAppearAnim, setShowAppearAnim] = useState(false);
-
-  // useEffect(() => {
-  //   async function completeAnim() {
-  //     await new Promise((res) => setTimeout(res, 1000)).then(() => {
-  //       setShowAppearAnim(false);
-  //     });
-  //   }
-  //   completeAnim();
-  // }, []);
+  const [dragStatus, setDragStatus] = useState({
+    draggingContainer: false,
+    draggingCard: false,
+  });
+  const interacted = useRef(false);
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
@@ -44,62 +40,65 @@ export default function Board() {
   function handleDragEnd() {
     setActiveCard(null);
     setActiveContainer(null);
+
+    setDragStatus({ draggingContainer: false, draggingCard: false });
   }
 
   function moveCards_SameContainer(active, over) {
-    const overCardIdx = over.idx;
-    const activeCardIdx = active.idx;
+    if (active.id === over.id) return;
+
     const updatedContainers = [...containers];
-    const clonedCard = {
-      ...updatedContainers[active.parentIdx].cards[activeCardIdx],
-    };
-    updatedContainers[active.parentIdx].cards.splice(activeCardIdx, 1);
-    updatedContainers[over.parentIdx].cards = [
-      ...updatedContainers[over.parentIdx].cards.slice(0, overCardIdx),
-      clonedCard,
-      ...updatedContainers[over.parentIdx].cards.slice(overCardIdx),
-    ];
-    clonedCard.idx = overCardIdx;
+    const activeContainer = updatedContainers[active.parentIdx];
+
+    //remove @active-index & get element
+    const draggedCard = activeContainer.cards.splice(active.idx, 1)[0];
+
+    //insert draggedCard @over-index
+    activeContainer.cards.splice(over.idx, 0, draggedCard);
+
+    //update card idx
+    draggedCard.idx = over.idx;
 
     //update index info
-    activeCard.parentIdx = updatedContainers[over.parentIdx].idx;
-    updatedContainers[active.parentIdx].cards.forEach(
-      (card, idx) => (card.idx = idx)
-    );
+    draggedCard.parentIdx = activeContainer.idx;
+    activeContainer.cards.forEach((card, idx) => (card.idx = idx));
 
     setContainers(updatedContainers);
   }
 
   function moveCards_DifferentContainer(active, over) {
-    let overContainerIdx =
-      over.type === "container" ? over.idx : over.parentIdx;
-    let overCardIdx = over.type === "card" ? over.idx : -1;
-    const updatedContainers = [...containers];
+    if (active.id === over.id) return;
 
-    const clonedCard = {
-      ...updatedContainers[active.parentIdx].cards[active.idx],
-    };
-    updatedContainers[active.parentIdx].cards.splice(active.idx, 1);
+    const overContainerIdx =
+      over.type === types.CONTAINER ? over.idx : over.parentIdx;
+    const updatedContainers = [...containers];
+    const activeContainer = updatedContainers[active.parentIdx];
+    const overContainer = updatedContainers[overContainerIdx];
+
+    //remove @active-index & get element
+    const draggedCard = activeContainer.cards.splice(active.idx, 1)[0];
+
     if (
-      overCardIdx >= 0 &&
-      overCardIdx < updatedContainers[overContainerIdx].cards.length - 1
+      overContainer.cards.length &&
+      over.idx < overContainer.cards.length &&
+      over.type === types.CARD
     ) {
-      updatedContainers[overContainerIdx].cards = [
-        ...updatedContainers[overContainerIdx].cards.slice(0, overCardIdx),
-        clonedCard,
-        ...updatedContainers[overContainerIdx].cards.slice(overCardIdx),
-      ];
-      clonedCard.idx = overCardIdx;
+      //insert draggedCard @over-index
+      overContainer.cards.splice(over.idx, 0, draggedCard);
+
+      //update card idx
+      draggedCard.idx = over.idx;
     } else {
-      clonedCard.idx =
-        updatedContainers[overContainerIdx].cards.push(clonedCard) - 1;
+      //dragging over container or last card
+
+      //add card to end and update card idx
+      draggedCard.idx = overContainer.cards.push(draggedCard) - 1;
     }
 
     //update index info
-    clonedCard.parentIdx = updatedContainers[overContainerIdx].idx;
-    updatedContainers[active.parentIdx].cards.forEach(
-      (card, idx) => (card.idx = idx)
-    );
+    draggedCard.parentIdx = overContainer.idx;
+    activeContainer.cards.forEach((card, idx) => (card.idx = idx));
+    overContainer.cards.forEach((card, idx) => (card.idx = idx));
 
     setContainers(updatedContainers);
   }
@@ -109,47 +108,37 @@ export default function Board() {
 
     let updatedContainers = [...containers];
 
-    //clone container
-    const clonedContainer = { ...updatedContainers[active.idx] };
+    //remove @active-index & get element
+    const draggedContainer = updatedContainers.splice(active.idx, 1)[0];
 
-    //delete container
-    updatedContainers.splice(active.idx, 1);
+    //insert draggedContainer @over-index
+    updatedContainers.splice(over.idx, 0, draggedContainer);
 
-    //insert cloned container position
-    updatedContainers = [
-      ...updatedContainers.slice(0, over.idx),
-      clonedContainer,
-      ...updatedContainers.slice(over.idx),
-    ];
-
-    //update index info
-    updatedContainers.forEach((container, idx) => {
-      container.idx = idx;
-      container.cards.forEach((card) => (card.parentIdx = idx));
-    });
-
+    //update index info (only update those that need it)
+    const lowestIndex = over.idx < active.idx ? over.idx : active.idx;
+    for (let i = lowestIndex; i < updatedContainers.length; i++) {
+      let container = updatedContainers[i];
+      container.idx = i;
+      container.cards.forEach((card) => (card.parentIdx = i));
+    }
     setContainers(updatedContainers);
   }
 
   function handleDragOver({ active, over }) {
-    //Different container actions
-    if (!over) {
-      console.log("no over");
-      return;
-    }
+    if (!over) return;
 
     const overData = over.data.current;
     const activeData = active.data.current;
 
-    if (activeData.type === "card") {
+    if (activeData.type === types.CARD) {
       if (activeData.parentIdx !== overData.parentIdx) {
         moveCards_DifferentContainer(activeData, overData);
       } else {
         moveCards_SameContainer(activeData, overData);
       }
     } else if (
-      activeData.type === "container" &&
-      overData.type === "container"
+      activeData.type === types.CONTAINER &&
+      overData.type === types.CONTAINER
     ) {
       //dragging container
       swapContainerLocations(activeData, overData);
@@ -157,11 +146,14 @@ export default function Board() {
   }
 
   function handleDragStart({ active }) {
-    if (active.data.current.type === "container") {
+    if (active.data.current.type === types.CONTAINER) {
       setActiveContainer(active.data.current);
+      setDragStatus({ draggingContainer: true, draggingCard: false });
     } else {
       setActiveCard(active.data.current);
+      setDragStatus({ draggingContainer: false, draggingCard: true });
     }
+    if (!interacted.current) interacted.current = true;
   }
 
   const containerMarkup = containers.map((container, idx) => {
@@ -177,7 +169,8 @@ export default function Board() {
         activeContainer={activeContainer}
         refresh={refresh}
         isOverlay={false}
-        showAppearAnim={false}
+        dragStatus={dragStatus}
+        interacted={interacted}
       />
     );
   });
@@ -223,7 +216,8 @@ export default function Board() {
                 activeContainer={null}
                 refresh={refresh}
                 isOverlay={true}
-                showAppearAnim={false}
+                dragStatus={dragStatus}
+                interacted={interacted}
               />
             </DragOverlay>
           )}
