@@ -196,6 +196,20 @@ class ProjectManager {
     return activeBoard.containers[containerIdx].cards;
   }
 
+  setActiveContainers(containers) {
+    let rootData = this.getRootData();
+    if (rootData.activeProjectId === undefined) return undefined;
+
+    let activeBoard =
+      rootData.projects[rootData.activeProjectId].boards[
+        rootData.projects[rootData.activeProjectId].activeBoardId
+      ];
+
+    activeBoard.containers = containers;
+
+    this.saveRootData(rootData);
+  }
+
   setActiveProject(id) {
     const rootData = this.getRootData();
     rootData.activeProjectId = id;

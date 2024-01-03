@@ -20,6 +20,7 @@ import Card from "./Card";
 import ContainerAdd from "./ContainerAdd";
 
 import "../styles/Board.css";
+import CardForm from "./CardForm";
 
 export default function Board() {
   const types = { CONTAINER: "container", CARD: "card" };
@@ -32,18 +33,31 @@ export default function Board() {
     draggingContainer: false,
     draggingCard: false,
   });
+  const [dragged, setDragged] = useState(false);
   const interacted = useRef(false);
+  const [showCardForm, setShowCardForm] = useState(false);
+  const [cardFormData, setCardFormData] = useState(null);
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
+  }
+
+  function save() {
+    projMgr.setActiveContainers(containers);
   }
 
   function handleDragEnd() {
     setLastActiveCard({ ...activeCard });
     setActiveCard(null);
     setActiveContainer(null);
-
+    setDragged(false);
     setDragStatus({ draggingContainer: false, draggingCard: false });
+    if (containers !== undefined) save();
+
+    //if !dragged, then card clicked (onKeyUp)
+    if (!dragged) {
+      showCardInfo(activeCard);
+    }
   }
 
   function moveCards_SameContainer(active, over) {
@@ -147,15 +161,31 @@ export default function Board() {
     }
   }
 
-  function handleDragStart({ active }) {
-    if (active.data.current.type === types.CONTAINER) {
-      setActiveContainer(active.data.current);
-      setDragStatus({ draggingContainer: true, draggingCard: false });
-    } else {
-      setActiveCard(active.data.current);
-      setDragStatus({ draggingContainer: false, draggingCard: true });
+  // function handleDragStart({ active }) {
+  //   console.log(dragged);
+  //   if (!dragged) return;
+  //   if (active.data.current.type === types.CONTAINER) {
+  //     setActiveContainer(active.data.current);
+  //     setDragStatus({ draggingContainer: true, draggingCard: false });
+  //   } else {
+  //     setActiveCard(active.data.current);
+  //     setDragStatus({ draggingContainer: false, draggingCard: true });
+  //   }
+  //   if (!interacted.current) interacted.current = true;
+  // }
+
+  function handleDragMove({ active }) {
+    if (!dragged) {
+      if (active.data.current.type === types.CONTAINER) {
+        setActiveContainer(active.data.current);
+        setDragStatus({ draggingContainer: true, draggingCard: false });
+      } else {
+        setActiveCard(active.data.current);
+        setDragStatus({ draggingContainer: false, draggingCard: true });
+      }
+      if (!interacted.current) interacted.current = true;
     }
-    if (!interacted.current) interacted.current = true;
+    setDragged(true);
   }
 
   const containerMarkup = containers.map((container, idx) => {
@@ -177,9 +207,15 @@ export default function Board() {
         isActive={
           activeContainer && activeContainer.id === container.id ? true : false
         }
+        showCardInfo={showCardInfo}
       />
     );
   });
+
+  function showCardInfo(card) {
+    setShowCardForm(true);
+    setCardFormData(card);
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -190,11 +226,13 @@ export default function Board() {
 
   return (
     <div className="Board">
+      {showCardForm && <CardForm />}
       <div className="Board-grid">
         <DndContext
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}
-          onDragStart={handleDragStart}
+          // onDragStart={handleDragStart}
+          onDragMove={handleDragMove}
         >
           <SortableContext
             items={containers.map((container) => container.id)}
@@ -224,6 +262,7 @@ export default function Board() {
                 isOverlay={true}
                 dragStatus={dragStatus}
                 interacted={interacted}
+                showCardInfo={null}
               />
             </DragOverlay>
           )}

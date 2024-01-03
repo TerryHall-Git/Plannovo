@@ -42,9 +42,9 @@
   cursor: pointer;
   border-radius: 0.5rem;
   margin: 0.5rem;
-  background-color: #10191f;
   padding: 0.25rem;
-  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
+  /* background-color: #10191f; */
+  /* box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .Card-drag {
