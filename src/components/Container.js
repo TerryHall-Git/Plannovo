@@ -33,6 +33,7 @@ export default function Container({
   dragStatus,
   interacted,
   isActive,
+  toggleShowCard,
 }) {
   const { setNodeRef: setDropRef } = useDroppable({
     id: id,

@@ -36,7 +36,7 @@ export default function Board() {
   const [dragged, setDragged] = useState(false);
   const interacted = useRef(false);
   const [showCardForm, setShowCardForm] = useState(false);
-  const [cardFormData, setCardFormData] = useState(null);
+  // const [cardFormData, setCardFormData] = useState(null);
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
@@ -56,7 +56,7 @@ export default function Board() {
 
     //if !dragged, then card clicked (onKeyUp)
     if (!dragged) {
-      showCardInfo(activeCard);
+      setShowCardForm(true);
     }
   }
 
@@ -207,15 +207,9 @@ export default function Board() {
         isActive={
           activeContainer && activeContainer.id === container.id ? true : false
         }
-        showCardInfo={showCardInfo}
       />
     );
   });
-
-  function showCardInfo(card) {
-    setShowCardForm(true);
-    setCardFormData(card);
-  }
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -226,7 +220,9 @@ export default function Board() {
 
   return (
     <div className="Board">
-      {showCardForm && <CardForm />}
+      {showCardForm && (
+        <CardForm cardData={lastActiveCard} setShowCardForm={setShowCardForm} />
+      )}
       <div className="Board-grid">
         <DndContext
           onDragEnd={handleDragEnd}

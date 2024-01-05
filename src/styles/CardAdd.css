@@ -27,8 +27,7 @@
 }
 
 .CardAdd-content button {
-  border-width: 1px;
-  border-color: #8095a8;
+  border: 1px solid #8095a8;
   padding-left: 0.1rem;
   padding-right: 0.1rem;
 }

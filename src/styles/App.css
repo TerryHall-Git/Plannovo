@@ -1,19 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap");
+
 body {
   background-color: #121c22;
   color: #9fb9d0;
 }
 
 .App {
+  font-family: "Inter", sans-serif;
   margin-left: 12rem; /* 12rem = navbar-left width */
   margin-top: 4rem; /* 4rem = navbar-top height */
-  width: calc(100vw - 12rem);
-  height: calc(100vh - 4rem);
+  /* width: calc(100% - 12rem);
+  height: calc(100% - 4rem); */
 }
 
 input,
 textarea {
   color: #1b262c;
 }
+
+button {
+  display: inline-block;
+  text-align: center;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 /* 
 primary: "#121c22",
 secondary: "#1b262c",

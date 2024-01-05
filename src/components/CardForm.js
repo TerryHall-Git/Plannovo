@@ -1,8 +1,11 @@
 import { useState } from "react";
+
 import "../styles/Animation.css";
 import "../styles/CardForm.css";
+import BlockEditor from "./BlockEditor";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function CardForm({ cardData }) {
+export default function CardForm({ cardData, setShowCardForm }) {
   const [formData, setFormData] = useState({
     projectName: "",
     projectDesc: "",
@@ -22,17 +25,26 @@ export default function CardForm({ cardData }) {
     e.preventDefault();
   }
 
-  function onCancelHandler(e) {
-    // setFormShowing(false);
+  function onCloseHandler(e) {
+    setShowCardForm(false);
   }
 
   return (
     <div className="CardForm-background">
       <div className="CardForm appearAnimation">
-        <div className="CardForm-topPanel"></div>
-        <div className="CardForm-panels">
-          <div className="CardForm-leftPanel">test</div>
-          <div className="CardForm-rightPanel">test</div>
+        <div className="CardForm-topPanel">
+          <button>
+            <FontAwesomeIcon icon="fa-regular fa-copy" />
+          </button>
+          <button onClick={onCloseHandler}>
+            <FontAwesomeIcon icon="fa-solid fa-xmark" />
+          </button>
+        </div>
+        <div className="CardForm-bodyPanels">
+          <div className="CardForm-leftPanel"></div>
+          <div className="CardForm-rightPanel">
+            <BlockEditor />
+          </div>
         </div>
       </div>
     </div>
