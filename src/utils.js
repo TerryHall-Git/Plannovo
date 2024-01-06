@@ -34,6 +34,12 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Creates a new board under the provided project id
+   * @param {string} projId
+   * @param {string} title
+   * @param {string} desc
+   */
   createNewBoard(projId, title, desc) {
     const rootData = this.getRootData();
 
@@ -50,6 +56,12 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Creates a new container under the provided project & board id
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {string} title
+   */
   createNewContainer(projId, boardId, title) {
     const rootData = this.getRootData();
 
@@ -74,6 +86,14 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Creates a new card under the given project, board, and container
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   * @param {string} title
+   * @param {string} desc
+   */
   createNewCard(projId, boardId, containerIdx, title, desc) {
     const rootData = this.getRootData();
 
@@ -117,8 +137,16 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Creates a new task under the given project, board, container, and card
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   * @param {string} title
+   */
   createNewTask(projId, boardId, containerIdx, cardIdx, title) {
-    const rootData = this.getRootData();
+    const rootData = cloneDeep(this.getRootData());
 
     if (!projId || !boardId || isNaN(containerIdx) || isNaN(cardIdx)) {
       throw new Error("[utils.js] Failed to create new task!");
@@ -146,13 +174,22 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
-  // createNewSubTask() {}
-
+  /**
+   * Checks if the given project id exists
+   * @param {string} id
+   * @returns {boolean}
+   */
   projectExists(id) {
     const rootData = this.getRootData();
     return rootData.projects[id] !== undefined;
   }
 
+  /**
+   * Checks if the given board id exists under the given project
+   * @param {string} projId
+   * @param {string} boardId
+   * @returns {boolean}
+   */
   boardExists(projId, boardId) {
     const rootData = this.getRootData();
     if (rootData.projects[projId] === undefined) return false;
@@ -160,6 +197,10 @@ class ProjectManager {
     return rootData.projects[projId].boards[boardId] !== undefined;
   }
 
+  /**
+   * Removes a given project
+   * @param {string} id
+   */
   removeProject(id) {
     const rootData = this.getRootData();
 
@@ -170,6 +211,11 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Removes a given board from a given project
+   * @param {*} projId
+   * @param {*} boardId
+   */
   removeBoard(projId, boardId) {
     const rootData = this.getRootData();
 
@@ -181,19 +227,36 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Gets the currently active project object
+   * @returns {object}
+   */
   getActiveProject() {
     const rootData = this.getRootData();
     return cloneDeep(rootData.projects[rootData.activeProjectId]);
   }
 
+  /**
+   * Gets the currently active project id
+   * @returns {string}
+   */
   getActiveProjectId() {
     return this.getRootData().activeProjectId;
   }
 
+  /**
+   * Gets the project object based on a given project id
+   * @param {string} id
+   * @returns {object}
+   */
   getProject(id) {
     return cloneDeep(this.getRootData().projects[id]);
   }
 
+  /**
+   * Gets the full list of all projects
+   * @returns {array}
+   */
   getProjects() {
     return cloneDeep(this.getRootData().projects);
   }
@@ -303,11 +366,11 @@ class ProjectManager {
   }
 
   saveRootData(data) {
-    localStorage.setItem(this.SITE_KEY, JSON.stringify(data));
+    window.localStorage.setItem(this.SITE_KEY, JSON.stringify(data));
   }
 
   getRootData() {
-    const data = JSON.parse(localStorage.getItem(this.SITE_KEY));
+    const data = JSON.parse(window.localStorage.getItem(this.SITE_KEY));
     return data
       ? data
       : {
