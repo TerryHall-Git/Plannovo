@@ -91,13 +91,24 @@ class ProjectManager {
     const container =
       rootData.projects[projId].boards[boardId].containers[containerIdx];
 
-    let uuid = uuidv4();
     container.cards.push({
-      id: uuid,
+      id: uuidv4(),
       parentIdx: container.idx,
       idx: container.cards.length,
       title: title,
-      tasks: [],
+      tasks: [
+        {
+          id: uuidv4(),
+          parentIdx: container.cards.length,
+          idx: 0,
+          title: "General",
+          subTasks: [],
+          removeable: false,
+          complete: false,
+          type: "task",
+          docHtml: "<p>Enter anything you want...</p>",
+        },
+      ],
       complete: false,
       type: "card",
       desc: desc,
@@ -106,7 +117,7 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
-  createNewTask(projId, boardId, containerIdx, cardIdx, title, removable) {
+  createNewTask(projId, boardId, containerIdx, cardIdx, title) {
     const rootData = this.getRootData();
 
     if (!projId || !boardId || isNaN(containerIdx) || isNaN(cardIdx)) {
@@ -118,14 +129,13 @@ class ProjectManager {
         cardIdx
       ];
 
-    let uuid = uuidv4();
     card.tasks.push({
-      id: uuid,
+      id: uuidv4(),
       parentIdx: card.idx,
       idx: card.tasks.length,
       title: title,
       subTasks: [],
-      removeable: removable,
+      removeable: true,
       complete: false,
       type: "task",
       docHtml: "<p>Enter anything you want...</p>",

@@ -13,11 +13,11 @@ export default function CardForm({ cardData, setShowCardForm }) {
     projMgr.getActiveTasks(cardData.parentIdx, cardData.idx)
   );
 
-  useEffect(() => {
-    if (!taskArr || !taskArr.length) {
-      createTask("General", false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!taskArr || !taskArr.length) {
+  //     createTask("General", false);
+  //   }
+  // }, []);
 
   // function onChangeHandler(e) {
   //   let el = e.target;
@@ -59,15 +59,14 @@ export default function CardForm({ cardData, setShowCardForm }) {
     );
   });
 
-  function createTask(taskTitle, removeable = true) {
+  function createTask(taskTitle) {
     console.log("creating new task...");
     projMgr.createNewTask(
       activeProject.id,
       activeBoard.id,
       cardData.parentIdx,
       cardData.idx,
-      taskTitle,
-      removeable
+      taskTitle
     );
     refreshTaskList();
   }
