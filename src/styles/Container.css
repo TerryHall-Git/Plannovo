@@ -42,6 +42,8 @@
   background-color: #1b262c;
   width: 100%;
   height: 3rem;
+  overflow-wrap: break-word;
+  overflow: hidden;
 }
 
 .Container-header p {

@@ -1,0 +1,69 @@
+.Task {
+  display: grid;
+  grid-template-columns: 6fr 3fr 1fr;
+  width: 100%;
+  height: 2.8rem;
+  cursor: pointer;
+  border: 1px solid #8095a8;
+  border-radius: 0.5rem;
+  background-color: #1b262c;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.Task:hover {
+  transform: scale(1.02);
+}
+
+.Task-completedBorder {
+  color: rgb(118, 247, 120);
+  border: 2px solid rgb(118, 247, 120);
+  /* background-color: rgba(118, 247, 120, 0.129); */
+}
+
+.Task-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: start;
+  justify-content: center;
+}
+
+.Task-complete {
+  color: rgb(118, 247, 120);
+}
+
+.Task-btn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: end;
+  justify-content: center;
+  padding-right: 0.25rem;
+}
+
+.Task-progresInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.Task-progressBar {
+  width: 100%;
+  height: 0.8rem;
+  background-color: #949494;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+}
+
+.Task-progress {
+  width: 50%; /*TODO: modify this dynamically later*/
+  height: 0.75rem;
+  background-color: #11ff00;
+  border-radius: 0.5rem;
+}

@@ -1,5 +1,11 @@
+import { cloneDeep } from "lodash";
 import { v4 as uuidv4 } from "uuid";
 
+/**
+ * This class is used to store all project data in client-side localStorage.
+ * It would be preferable to move this all to a server-side database at
+ * some point due to the localStorage limitations.
+ */
 class ProjectManager {
   constructor() {
     this.SITE_KEY = "DEEP_THOUGHTS";
@@ -71,7 +77,6 @@ class ProjectManager {
   createNewCard(projId, boardId, containerIdx, title, desc) {
     const rootData = this.getRootData();
 
-    console.log(containerIdx);
     if (
       !projId ||
       !boardId ||
@@ -92,12 +97,46 @@ class ProjectManager {
       parentIdx: container.idx,
       idx: container.cards.length,
       title: title,
+      tasks: [],
+      complete: false,
       type: "card",
       desc: desc,
     });
 
     this.saveRootData(rootData);
   }
+
+  createNewTask(projId, boardId, containerIdx, cardIdx, title, removable) {
+    const rootData = this.getRootData();
+
+    if (!projId || !boardId || isNaN(containerIdx) || isNaN(cardIdx)) {
+      throw new Error("[utils.js] Failed to create new task!");
+    }
+
+    const card =
+      rootData.projects[projId].boards[boardId].containers[containerIdx].cards[
+        cardIdx
+      ];
+
+    let uuid = uuidv4();
+    card.tasks.push({
+      id: uuid,
+      parentIdx: card.idx,
+      idx: card.tasks.length,
+      title: title,
+      subTasks: [],
+      removeable: removable,
+      complete: false,
+      type: "task",
+      docHtml: "<p>Enter anything you want...</p>",
+    });
+
+    console.log("Task Created!");
+    console.log("Before save: ", card.tasks);
+    this.saveRootData(rootData);
+  }
+
+  // createNewSubTask() {}
 
   projectExists(id) {
     const rootData = this.getRootData();
@@ -134,7 +173,7 @@ class ProjectManager {
 
   getActiveProject() {
     const rootData = this.getRootData();
-    return rootData.projects[rootData.activeProjectId];
+    return cloneDeep(rootData.projects[rootData.activeProjectId]);
   }
 
   getActiveProjectId() {
@@ -142,20 +181,22 @@ class ProjectManager {
   }
 
   getProject(id) {
-    return this.getRootData().projects[id];
+    return cloneDeep(this.getRootData().projects[id]);
   }
 
   getProjects() {
-    return this.getRootData().projects;
+    return cloneDeep(this.getRootData().projects);
   }
 
   getActiveBoard() {
     let rootData = this.getRootData();
     if (rootData.activeProjectId === undefined) return undefined;
 
-    return rootData.projects[rootData.activeProjectId].boards[
-      rootData.projects[rootData.activeProjectId].activeBoardId
-    ];
+    return cloneDeep(
+      rootData.projects[rootData.activeProjectId].boards[
+        rootData.projects[rootData.activeProjectId].activeBoardId
+      ]
+    );
   }
 
   getActiveBoardId() {
@@ -167,33 +208,59 @@ class ProjectManager {
   getBoard(projId, boardId) {
     const rootData = this.getRootData();
     if (!this.boardExists(projId, boardId)) return undefined;
-    return rootData.projects[projId].boards[boardId];
+    return cloneDeep(rootData.projects[projId].boards[boardId]);
   }
 
   getBoards() {
     if (this.getActiveProject() === undefined) return undefined;
-    return this.getActiveProject().boards;
+    return cloneDeep(this.getActiveProject().boards);
   }
 
   getActiveContainer(idx) {
     const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return undefined;
     if (idx < 0 || idx > activeBoard.getContainers.length - 1) return undefined;
-    return activeBoard.containers[idx];
+    return cloneDeep(activeBoard.containers[idx]);
   }
 
   getActiveContainers() {
     const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return [];
-    return activeBoard.containers;
+    return cloneDeep(activeBoard.containers);
   }
 
   getActiveCards(containerIdx) {
     const activeBoard = this.getActiveBoard();
-    if (activeBoard === undefined) return undefined;
-    if (containerIdx < 0 || containerIdx > activeBoard.containers.length - 1)
+    if (!activeBoard) return undefined;
+    if (
+      !activeBoard.containers ||
+      containerIdx < 0 ||
+      containerIdx > activeBoard.containers.length
+    )
       return undefined;
-    return activeBoard.containers[containerIdx].cards;
+    const container = activeBoard.containers[containerIdx];
+    if (!container || !container.cards) return undefined;
+    return cloneDeep(container.cards);
+  }
+
+  getActiveCard(containerIdx, cardIdx) {
+    const activeCards = this.getActiveCards(containerIdx);
+    if (!activeCards || cardIdx > activeCards.length || cardIdx < 0)
+      return undefined;
+    return cloneDeep(activeCards[cardIdx]);
+  }
+
+  getActiveTasks(containerIdx, cardIdx) {
+    const card = this.getActiveCard(containerIdx, cardIdx);
+    if (!card) return undefined;
+    return cloneDeep(card.tasks);
+  }
+
+  getActiveTask(cardIdx, taskIdx) {
+    const card = this.getActiveCard(cardIdx);
+    if (card.tasks === undefined) return undefined;
+    if (taskIdx > card.tasks.length || taskIdx < 0) return undefined;
+    return cloneDeep(card.tasks[taskIdx]);
   }
 
   setActiveContainers(containers) {

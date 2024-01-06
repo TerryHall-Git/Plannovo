@@ -174,6 +174,12 @@ export default function Board() {
   //   if (!interacted.current) interacted.current = true;
   // }
 
+  function handleDragStart({ active }) {
+    if (active.data.current.type === types.CARD) {
+      setActiveCard(active.data.current);
+    }
+  }
+
   function handleDragMove({ active }) {
     if (!dragged) {
       if (active.data.current.type === types.CONTAINER) {
@@ -220,14 +226,14 @@ export default function Board() {
 
   return (
     <div className="Board">
-      {showCardForm && (
+      {showCardForm && lastActiveCard && (
         <CardForm cardData={lastActiveCard} setShowCardForm={setShowCardForm} />
       )}
       <div className="Board-grid">
         <DndContext
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}
-          // onDragStart={handleDragStart}
+          onDragStart={handleDragStart}
           onDragMove={handleDragMove}
         >
           <SortableContext
