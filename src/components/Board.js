@@ -40,10 +40,12 @@ export default function Board() {
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
+    console.log("refresh");
   }
 
   function save() {
     projMgr.setActiveContainers(containers);
+    console.log("save");
   }
 
   function handleDragEnd() {
@@ -58,6 +60,8 @@ export default function Board() {
     if (!dragged) {
       setShowCardForm(true);
     }
+
+    console.log("handleDragEnd");
   }
 
   function moveCards_SameContainer(active, over) {
@@ -159,6 +163,7 @@ export default function Board() {
       //dragging container
       swapContainerLocations(activeData, overData);
     }
+    console.log("handleDragOver");
   }
 
   // function handleDragStart({ active }) {
@@ -178,6 +183,7 @@ export default function Board() {
     if (active.data.current.type === types.CARD) {
       setActiveCard(active.data.current);
     }
+    console.log("handleDragStart");
   }
 
   function handleDragMove({ active }) {
@@ -192,6 +198,7 @@ export default function Board() {
       if (!interacted.current) interacted.current = true;
     }
     setDragged(true);
+    console.log("handleDragMove");
   }
 
   const containerMarkup = containers.map((container, idx) => {
@@ -224,10 +231,15 @@ export default function Board() {
     })
   );
 
+  function closeCardForm() {
+    refresh();
+    setShowCardForm(false);
+  }
+
   return (
     <div className="Board">
       {showCardForm && lastActiveCard && (
-        <CardForm cardData={lastActiveCard} setShowCardForm={setShowCardForm} />
+        <CardForm cardData={lastActiveCard} closeCardForm={closeCardForm} />
       )}
       <div className="Board-grid">
         <DndContext

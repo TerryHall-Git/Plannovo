@@ -7,30 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Task from "./Task";
 import { ProjectContext } from "../App";
 
-export default function CardForm({ cardData, setShowCardForm }) {
+export default function CardForm({ cardData, closeCardForm }) {
   const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
   const [taskArr, setTaskArr] = useState(
     projMgr.getActiveTasks(cardData.parentIdx, cardData.idx)
   );
 
-  // useEffect(() => {
-  //   if (!taskArr || !taskArr.length) {
-  //     createTask("General", false);
-  //   }
-  // }, []);
-
-  // function onChangeHandler(e) {
-  //   let el = e.target;
-
-  //   setFormData({
-  //     ...formData,
-  //     [el.name]: el.value,
-  //   });
-  // }
-
-  // function onSubmitHandler(e) {
-  //   e.preventDefault();
-  // }
   function refreshTaskList() {
     let tasks = projMgr.getActiveTasks(cardData.parentIdx, cardData.idx);
     if (!tasks.length)
@@ -39,10 +21,6 @@ export default function CardForm({ cardData, setShowCardForm }) {
       );
     setTaskArr(tasks);
     console.log("After update: ", tasks);
-  }
-
-  function onCloseHandler() {
-    setShowCardForm(false);
   }
 
   const tasksMarkup = taskArr.map((task) => {
@@ -88,7 +66,7 @@ export default function CardForm({ cardData, setShowCardForm }) {
             <button>
               <FontAwesomeIcon icon="fa-regular fa-copy" />
             </button>
-            <button onClick={onCloseHandler}>
+            <button onClick={closeCardForm}>
               <FontAwesomeIcon icon="fa-solid fa-xmark" />
             </button>
           </div>

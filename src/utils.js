@@ -10,6 +10,7 @@ class ProjectManager {
   constructor() {
     this.SITE_KEY = "DEEP_THOUGHTS";
   }
+
   /**
    * Creates a new Project.
    * @param {string} title
@@ -172,6 +173,8 @@ class ProjectManager {
     console.log("Task Created!");
     console.log("Before save: ", card.tasks);
     this.saveRootData(rootData);
+
+    console.log("ROOTDATA: ", this.getRootData());
   }
 
   /**
