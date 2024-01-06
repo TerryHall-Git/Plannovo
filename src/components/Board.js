@@ -231,15 +231,14 @@ export default function Board() {
     })
   );
 
-  function closeCardForm() {
-    refresh();
-    setShowCardForm(false);
-  }
-
   return (
     <div className="Board">
       {showCardForm && lastActiveCard && (
-        <CardForm cardData={lastActiveCard} closeCardForm={closeCardForm} />
+        <CardForm
+          cardData={lastActiveCard}
+          refresh={refresh}
+          setShowCardForm={setShowCardForm}
+        />
       )}
       <div className="Board-grid">
         <DndContext

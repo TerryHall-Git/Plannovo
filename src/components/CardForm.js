@@ -6,8 +6,9 @@ import BlockEditor from "./BlockEditor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Task from "./Task";
 import { ProjectContext } from "../App";
+import TaskAdd from "./TaskAdd";
 
-export default function CardForm({ cardData, closeCardForm }) {
+export default function CardForm({ cardData, setShowCardForm, refresh }) {
   const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
   const [taskArr, setTaskArr] = useState(
     projMgr.getActiveTasks(cardData.parentIdx, cardData.idx)
@@ -20,7 +21,7 @@ export default function CardForm({ cardData, closeCardForm }) {
         "[CardForm.js] Tasks array should never be empty! Should have 'General'"
       );
     setTaskArr(tasks);
-    console.log("After update: ", tasks);
+    refresh();
   }
 
   const tasksMarkup = taskArr.map((task) => {
@@ -37,23 +38,28 @@ export default function CardForm({ cardData, closeCardForm }) {
     );
   });
 
-  function createTask(taskTitle) {
-    console.log("creating new task...");
-    projMgr.createNewTask(
-      activeProject.id,
-      activeBoard.id,
-      cardData.parentIdx,
-      cardData.idx,
-      taskTitle
-    );
-    refreshTaskList();
-  }
+  // function createTask(taskTitle) {
+  //   console.log("creating new task...");
+  //   projMgr.createNewTask(
+  //     activeProject.id,
+  //     activeBoard.id,
+  //     cardData.parentIdx,
+  //     cardData.idx,
+  //     taskTitle
+  //   );
+  //   refreshTaskList();
+  // }
 
   function createNewSubTask() {
     // projMgr.createNewTask(cardData.idx);
   }
 
   function updateTask(taskId) {}
+
+  function closeCardForm() {
+    refresh();
+    setShowCardForm(false);
+  }
 
   return (
     <div className="CardForm-background">
@@ -73,15 +79,11 @@ export default function CardForm({ cardData, closeCardForm }) {
         </div>
         <div className="CardForm-bodyPanels">
           <div className="CardForm-leftPanel">
-            <div className="CardForm-addTaskArea">
-              <button
-                className="CardForm-addTask"
-                onClick={() => createTask("TEST", false)}
-              >
-                <FontAwesomeIcon icon="fa-solid fa-plus" />
-              </button>
+            {/* <div className="CardForm-addTaskArea"></div> */}
+            <div className="CardForm-tasks">
+              {tasksMarkup}{" "}
+              <TaskAdd cardData={cardData} refreshTaskList={refreshTaskList} />
             </div>
-            <div className="CardForm-tasks">{tasksMarkup}</div>
           </div>
           <div className="CardForm-rightPanel">
             <BlockEditor />
