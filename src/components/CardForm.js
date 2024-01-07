@@ -10,9 +10,16 @@ import TaskAdd from "./TaskAdd";
 
 export default function CardForm({ cardData, setShowCardForm, refresh }) {
   const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
+  const [activeTask, setActiveTask] = useState(undefined);
   const [taskArr, setTaskArr] = useState(
     projMgr.getActiveTasks(cardData.parentIdx, cardData.idx)
   );
+
+  useEffect(() => {
+    if (!activeTask && taskArr && taskArr.length > 0) {
+      setActiveTask(taskArr[0]);
+    }
+  }, []);
 
   function refreshTaskList() {
     let tasks = projMgr.getActiveTasks(cardData.parentIdx, cardData.idx);
@@ -24,42 +31,51 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
     refresh();
   }
 
-  const tasksMarkup = taskArr.map((task) => {
+  function toggleTask(taskIdx, isComplete) {
+    projMgr.toggleTask(
+      activeProject.id,
+      activeBoard.id,
+      cardData.parentIdx,
+      cardData.idx,
+      taskIdx,
+      isComplete
+    );
+    refreshTaskList();
+  }
+
+  function updateTaskDocHtml(taskIdx, docHtml) {
+    projMgr.updateTaskInfo(
+      activeProject.id,
+      activeBoard.id,
+      cardData.parentIdx,
+      cardData.idx,
+      taskIdx,
+      docHtml
+    );
+    refreshTaskList();
+  }
+
+  const tasksMarkup = taskArr.map((task, idx) => {
     return (
       <Task
         key={task.id}
-        title={task.title}
-        complete={task.complete}
-        subTasks={task.subTasks}
-        removable={task.removable}
-        createNewSubTask={createNewSubTask}
-        updateTask={updateTask}
+        cardData={cardData}
+        taskData={task}
+        toggleTask={toggleTask}
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
       />
     );
   });
-
-  // function createTask(taskTitle) {
-  //   console.log("creating new task...");
-  //   projMgr.createNewTask(
-  //     activeProject.id,
-  //     activeBoard.id,
-  //     cardData.parentIdx,
-  //     cardData.idx,
-  //     taskTitle
-  //   );
-  //   refreshTaskList();
-  // }
-
-  function createNewSubTask() {
-    // projMgr.createNewTask(cardData.idx);
-  }
-
-  function updateTask(taskId) {}
 
   function closeCardForm() {
     refresh();
     setShowCardForm(false);
   }
+
+  let percentComplete = Math.round(
+    (taskArr.filter((task) => task.complete).length / taskArr.length) * 100
+  );
 
   return (
     <div className="CardForm-background">
@@ -79,14 +95,30 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
         </div>
         <div className="CardForm-bodyPanels">
           <div className="CardForm-leftPanel">
-            {/* <div className="CardForm-addTaskArea"></div> */}
+            <div className="CardForm-leftPanelHeader">
+              <div className="CardForm-progressInfo">
+                <div className="CardForm-progressBar">
+                  <div
+                    className="CardForm-progress"
+                    style={{ width: `${percentComplete}%` }}
+                  ></div>
+                  <p>{percentComplete}% Complete</p>
+                </div>
+              </div>
+            </div>
             <div className="CardForm-tasks">
-              {tasksMarkup}{" "}
+              {tasksMarkup}
               <TaskAdd cardData={cardData} refreshTaskList={refreshTaskList} />
             </div>
           </div>
           <div className="CardForm-rightPanel">
-            <BlockEditor />
+            {activeTask && activeTask.docHtml && (
+              <BlockEditor
+                taskIdx={activeTask.idx}
+                content={activeTask.docHtml}
+                updateTaskDocHtml={updateTaskDocHtml}
+              />
+            )}
           </div>
         </div>
       </div>

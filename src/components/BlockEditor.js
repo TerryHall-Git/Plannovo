@@ -2,14 +2,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
-import { EditorProvider, useCurrentEditor } from "@tiptap/react";
+import {
+  EditorContent,
+  EditorProvider,
+  useCurrentEditor,
+  useEditor,
+} from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Dropcursor from "@tiptap/extension-dropcursor";
 import Image from "@tiptap/extension-image";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import StarterKit from "@tiptap/starter-kit";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BubbleMenu from "@tiptap/extension-bubble-menu";
 import { Tooltip } from "react-tooltip";
 
@@ -39,9 +44,7 @@ const extensions = [
   }),
 ];
 
-const MenuBar = () => {
-  const { editor } = useCurrentEditor();
-
+const MenuBar = ({ editor }) => {
   if (!editor) {
     return null;
   }
@@ -141,12 +144,33 @@ const MenuBar = () => {
   );
 };
 
-export default function BlockEditor() {
+export default function BlockEditor({ taskIdx, content, updateTaskDocHtml }) {
+  function handleChange({ editor }) {
+    updateTaskDocHtml(taskIdx, editor.getHTML());
+  }
+
+  const editor = useEditor({
+    onUpdate: handleChange,
+    content: content,
+    extensions: extensions,
+  });
+
+  useEffect(() => {
+    if (!editor) {
+      return undefined;
+    }
+
+    editor.commands.setContent(content);
+  }, [editor, content]);
+
+  if (!editor) {
+    return null;
+  }
+
   return (
-    <EditorProvider
-      slotBefore={<MenuBar />}
-      extensions={extensions}
-      content={`<p>Enter anything you want...</p>`}
-    ></EditorProvider>
+    <>
+      <MenuBar editor={editor} />
+      <EditorContent editor={editor} />
+    </>
   );
 }

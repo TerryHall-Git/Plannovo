@@ -147,7 +147,7 @@ class ProjectManager {
    * @param {string} title
    */
   createNewTask(projId, boardId, containerIdx, cardIdx, title) {
-    const rootData = cloneDeep(this.getRootData());
+    const rootData = this.getRootData();
 
     if (!projId || !boardId || isNaN(containerIdx) || isNaN(cardIdx)) {
       throw new Error("[utils.js] Failed to create new task!");
@@ -170,11 +170,7 @@ class ProjectManager {
       docHtml: "<p>Enter anything you want...</p>",
     });
 
-    console.log("Task Created!");
-    console.log("Before save: ", card.tasks);
     this.saveRootData(rootData);
-
-    console.log("ROOTDATA: ", this.getRootData());
   }
 
   /**
@@ -365,6 +361,46 @@ class ProjectManager {
     const activeProject = rootData.projects[rootData.activeProjectId];
     if (activeProject === undefined) return;
     activeProject.activeBoardId = id;
+    this.saveRootData(rootData);
+  }
+
+  toggleTask(projId, boardId, containerIdx, cardIdx, taskIdx, isComplete) {
+    const rootData = this.getRootData();
+
+    if (
+      !projId ||
+      !boardId ||
+      isNaN(containerIdx) ||
+      isNaN(cardIdx) ||
+      isNaN(taskIdx)
+    ) {
+      throw new Error("[utils.js] Failed to toggle task!");
+    }
+
+    rootData.projects[projId].boards[boardId].containers[containerIdx].cards[
+      cardIdx
+    ].tasks[taskIdx].complete = isComplete;
+
+    this.saveRootData(rootData);
+  }
+
+  updateTaskInfo(projId, boardId, containerIdx, cardIdx, taskIdx, docHtml) {
+    const rootData = this.getRootData();
+
+    if (
+      !projId ||
+      !boardId ||
+      isNaN(containerIdx) ||
+      isNaN(cardIdx) ||
+      isNaN(taskIdx)
+    ) {
+      throw new Error("[utils.js] Failed to update task docHtml!");
+    }
+
+    rootData.projects[projId].boards[boardId].containers[containerIdx].cards[
+      cardIdx
+    ].tasks[taskIdx].docHtml = docHtml;
+
     this.saveRootData(rootData);
   }
 
