@@ -10,7 +10,7 @@ import TaskAdd from "./TaskAdd";
 
 export default function CardForm({ cardData, setShowCardForm, refresh }) {
   const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
-  const [activeTask, setActiveTask] = useState(undefined);
+  const [activeTask, setActiveTask] = useState(null);
   const [taskArr, setTaskArr] = useState(
     projMgr.getActiveTasks(cardData.parentIdx, cardData.idx)
   );
@@ -55,7 +55,20 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
     refreshTaskList();
   }
 
-  const tasksMarkup = taskArr.map((task, idx) => {
+  function deleteTask(taskIdx) {
+    if (taskArr.length <= 1) return;
+    projMgr.removeTask(
+      activeProject.id,
+      activeBoard.id,
+      cardData.parentIdx,
+      cardData.idx,
+      taskIdx
+    );
+    setActiveTask(null);
+    refreshTaskList();
+  }
+
+  const tasksMarkup = taskArr.map((task) => {
     return (
       <Task
         key={task.id}
@@ -81,13 +94,13 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
     <div className="CardForm-background">
       <div className="CardForm appearAnimation">
         <div className="CardForm-topPanel">
-          <div className="CardForm-topPanelHeader">
+          <div className="CardForm-topPanelLeft">
             <h2>{cardData.title}</h2>
-          </div>
-          <div className="CardForm-topPanelBtns">
-            <button>
-              <FontAwesomeIcon icon="fa-regular fa-copy" />
+            <button className="CardForm-trashIcon">
+              <FontAwesomeIcon icon="fa-solid fa-trash-can" />
             </button>
+          </div>
+          <div className="CardForm-topPanelRight">
             <button onClick={closeCardForm}>
               <FontAwesomeIcon icon="fa-solid fa-xmark" />
             </button>
@@ -117,6 +130,7 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
                 taskIdx={activeTask.idx}
                 content={activeTask.docHtml}
                 updateTaskDocHtml={updateTaskDocHtml}
+                deleteTask={deleteTask}
               />
             )}
           </div>

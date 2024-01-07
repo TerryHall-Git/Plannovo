@@ -283,9 +283,16 @@ class ProjectManager {
     return cloneDeep(rootData.projects[projId].boards[boardId]);
   }
 
-  getBoards() {
-    if (this.getActiveProject() === undefined) return undefined;
-    return cloneDeep(this.getActiveProject().boards);
+  getBoards(projId) {
+    const proj = this.getProject(projId);
+    if (proj === undefined) return undefined;
+    return cloneDeep(proj.boards);
+  }
+
+  getActiveProjBoards() {
+    const proj = this.getActiveProject();
+    if (proj === undefined) return undefined;
+    return cloneDeep(proj.boards);
   }
 
   getActiveContainer(idx) {
@@ -400,6 +407,33 @@ class ProjectManager {
     rootData.projects[projId].boards[boardId].containers[containerIdx].cards[
       cardIdx
     ].tasks[taskIdx].docHtml = docHtml;
+
+    this.saveRootData(rootData);
+  }
+
+  removeTask(projId, boardId, containerIdx, cardIdx, taskIdx) {
+    const rootData = this.getRootData();
+
+    if (
+      !projId ||
+      !boardId ||
+      isNaN(containerIdx) ||
+      isNaN(cardIdx) ||
+      isNaN(taskIdx)
+    ) {
+      throw new Error("[utils.js] Failed to remove task!");
+    }
+
+    let tasks =
+      rootData.projects[projId].boards[boardId].containers[containerIdx].cards[
+        cardIdx
+      ].tasks;
+
+    //remove task from array
+    tasks.splice(taskIdx, 1);
+
+    //update index info
+    tasks = tasks.map((task, idx) => (task.idx = idx));
 
     this.saveRootData(rootData);
   }

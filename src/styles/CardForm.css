@@ -21,32 +21,46 @@
 }
 
 .CardForm-topPanel {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   min-height: 8%;
-  min-width: 99%;
-  padding: 0.5%;
   border-bottom: 4px solid #1f2f37;
   background-color: rgba(0, 0, 0, 0.41);
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }
 
-.CardForm-topPanelHeader {
-  display: flex;
-  justify-content: left;
+.CardForm-topPanelLeft {
+  display: grid;
+  grid-template-columns: 11fr 1fr;
+  align-items: center;
   width: 100%;
-  padding: 0.5rem;
+  padding: 1rem;
   font-weight: bold;
   font-size: large;
+  border-right: 4px solid #1f2f37;
+  border-top-left-radius: 1rem;
 }
 
-.CardForm-topPanelBtns {
+.CardForm-trashIcon {
+  font-size: larger;
+  margin: 0;
+  padding: 0;
+}
+
+.CardForm-trashIcon:hover {
+  color: rgb(255, 45, 45);
+}
+
+.CardForm-topPanelRight {
   display: flex;
   justify-content: right;
   width: 100%;
+  padding-right: 1rem;
+  border-top-right-radius: 1rem;
 }
 
-.CardForm-topPanel button {
+.CardForm-topPanelRight button {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   padding-top: 0.1rem;
@@ -54,7 +68,7 @@
   font-size: x-large;
 }
 
-.CardForm-topPanel button:hover {
+.CardForm-topPanelRight button:hover {
   color: white;
 }
 

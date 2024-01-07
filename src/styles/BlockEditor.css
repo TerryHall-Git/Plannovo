@@ -1,16 +1,16 @@
 .tiptap {
   color: white;
-  margin-top: 0.25rem;
   border-radius: 0.1rem;
 }
 
 .MenuBar {
-  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 11fr 1fr;
+  padding: 0.25rem;
   background-color: #0b1113;
 }
 
 .MenuBar button {
-  border: 2px solid #8095a8;
   border-radius: 0.2rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -20,8 +20,30 @@
   margin: 0.25rem;
 }
 
-.MenuBar button:hover {
+.MenuBar-right {
+  margin-left: 2rem;
+}
+
+.MenuBar-inactive {
+  border: 2px solid #8095a8;
+}
+
+.MenuBar-active {
   color: white;
+  border: 2px solid white;
+}
+
+.MenuBar-inactive:hover {
+  color: white;
+}
+
+.BlockEditor-trashIcon {
+  font-size: larger;
+}
+
+.BlockEditor-trashIcon:hover {
+  color: rgb(255, 45, 45);
+  /* border: 2px solid rgb(255, 45, 45); */
 }
 
 .tiptap ul,

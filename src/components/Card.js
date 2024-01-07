@@ -1,6 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import "../styles/Card.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Card({
   id,
@@ -34,13 +35,20 @@ export default function Card({
   return (
     <div ref={setNodeRef} style={dndStyle} {...attributes} {...listeners}>
       <div className={cardStyle}>
-        <div className="wrapper">
+        <div>
           {isActive ? (
-            <div className="title"></div>
+            <div></div>
           ) : (
-            <div className="title">
-              <h3>{title}</h3>
-              <p>{desc}</p>
+            <div className="Card-info">
+              <div className="Card-header">
+                <h3>{title}</h3>
+                <button className="Card-edit">
+                  <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+                </button>
+              </div>
+              <div className="Card-body">
+                <p>{desc}</p>
+              </div>
             </div>
           )}
         </div>

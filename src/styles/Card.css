@@ -12,6 +12,20 @@
   padding: 0.25rem;
 }
 
+.Card-edit:hover {
+  color: white;
+}
+
+.Card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.Card-header {
+  display: grid;
+  grid-template-columns: 11fr 1fr;
+}
+
 .Card-drop {
   animation: cardAnim-drop 0.25s ease-in;
 }

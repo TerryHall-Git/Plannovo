@@ -31,7 +31,7 @@ export default function Tile({
         <div>
           <p>{title}</p>
         </div>
-        <div>
+        <button>
           <FontAwesomeIcon
             className="Tile-trashIcon"
             icon="fa-solid fa-trash-can"
@@ -40,7 +40,7 @@ export default function Tile({
               setShowConfirmBox(true);
             }}
           />
-        </div>
+        </button>
       </div>
       {showConfirmBox ? (
         <ConfirmationBox

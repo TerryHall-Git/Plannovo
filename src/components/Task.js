@@ -12,7 +12,9 @@ export default function Task({
   //add 'completed' style?
   cls = taskData.complete && !isActive ? cls + " Task-completed" : cls;
   //add 'active' style?
-  cls = isActive ? cls + " Task-active" : cls;
+  cls = !taskData.complete && isActive ? cls + " Task-active" : cls;
+  //add 'active-completed' style?
+  cls = taskData.complete && isActive ? cls + " Task-active-completed" : cls;
 
   return (
     <div className={cls} onClick={() => setActiveTask(taskData)}>

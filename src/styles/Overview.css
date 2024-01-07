@@ -1,9 +1,30 @@
 .Overview {
-  display: flex;
-  margin: auto;
+  width: 100%;
+  margin-top: 5rem;
+  margin-left: 1rem;
 }
 
 .Overview-content {
-  margin: auto;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Overview-boardDetails {
+  max-width: 50%;
+  min-width: 17rem;
+  min-height: 10rem;
+  border: 4px solid #8095a8;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  background-color: #1b262c;
+  padding: 0.25rem;
+}
+
+.Overview-containerDetails {
+  border: 4px solid #8095a8;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  background-color: #1b262c;
+  padding: 0.25rem;
 }

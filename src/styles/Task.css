@@ -25,6 +25,12 @@
   border: 2px solid rgb(118, 247, 120);
 }
 
+.Task-active-completed {
+  color: rgb(118, 247, 120);
+  border: 2px solid white;
+  box-shadow: inset 0px 0px 0px 2px rgb(118, 247, 120);
+}
+
 .Task-header {
   display: flex;
   flex-direction: column;
