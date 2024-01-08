@@ -19,13 +19,26 @@ function ContainerDetails({ container }) {
     });
   }
 
+  let percentComplete =
+    numTasks > 0 ? Math.round((numTasksCompleted / numTasks) * 100) : 100;
+  let remPercent = 100 - percentComplete;
+  console.log(
+    `linear-gradient(to right, red ${remPercent}%, yellow, green ${percentComplete}%)`
+  );
+  const percentStyle = {
+    backgroundColor: `rgb(${remPercent}%, ${percentComplete}%, 0%)`,
+    width: `${percentComplete}%`,
+  };
+
   return (
     <div className="Overview-containerDetails">
-      <p>Container [{container.title}]:</p>
-      <p style={{ marginLeft: "1rem" }}>
-        Cards: {numCardsCompleted}/{numCards} completed | Tasks:{" "}
-        {numTasksCompleted}/{numTasks} completed
+      <p>
+        <b>{container.title}</b>: Cards: {numCardsCompleted}/{numCards}{" "}
+        completed | Tasks: {numTasksCompleted}/{numTasks} completed
       </p>
+      <div className="Overview-progressBackground">
+        <div className="Overview-progress" style={percentStyle}></div>
+      </div>
     </div>
   );
 }

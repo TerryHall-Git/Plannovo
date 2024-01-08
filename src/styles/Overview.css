@@ -22,9 +22,18 @@
 }
 
 .Overview-containerDetails {
-  border: 4px solid #8095a8;
+  border: 4px solid white;
   border-radius: 0.5rem;
   margin: 0.5rem;
   background-color: #1b262c;
   padding: 0.25rem;
+}
+
+.Overview-progressBackground {
+  height: 1rem;
+  background-color: lightgray;
+}
+
+.Overview-progress {
+  height: 100%;
 }

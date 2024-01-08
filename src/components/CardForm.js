@@ -24,9 +24,7 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
   function refreshTaskList() {
     let tasks = projMgr.getActiveTasks(cardData.parentIdx, cardData.idx);
     if (!tasks.length)
-      throw new Error(
-        "[CardForm.js] Tasks array should never be empty! Should have 'General'"
-      );
+      throw new Error("[CardForm.js] Tasks array should never be empty!");
     setTaskArr(tasks);
     refresh();
   }
