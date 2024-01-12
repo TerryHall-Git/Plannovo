@@ -6,7 +6,7 @@ import "../styles/Task.css";
  */
 export default function Task({
   taskData,
-  toggleTask,
+  setTaskStatus,
   activeTask,
   setActiveTask,
 }) {
@@ -28,7 +28,7 @@ export default function Task({
           className="Task-btn Task-complete"
           onClick={(e) => {
             e.stopPropagation();
-            toggleTask(taskData.idx, false);
+            setTaskStatus(taskData.idx, false);
           }}
         >
           <FontAwesomeIcon icon="fa-solid fa-circle-check" />
@@ -38,7 +38,7 @@ export default function Task({
           className="Task-btn"
           onClick={(e) => {
             e.stopPropagation();
-            toggleTask(taskData.idx, true);
+            setTaskStatus(taskData.idx, true);
           }}
         >
           <FontAwesomeIcon icon="fa-regular fa-circle" />

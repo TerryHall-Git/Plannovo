@@ -31,8 +31,8 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
     refresh();
   }
 
-  function toggleTask(taskIdx, isComplete) {
-    projMgr.toggleTask(
+  function setTaskStatus(taskIdx, isComplete) {
+    projMgr.setTaskStatus(
       activeProject.id,
       activeBoard.id,
       cardData.parentIdx,
@@ -74,7 +74,7 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
         key={task.id}
         cardData={cardData}
         taskData={task}
-        toggleTask={toggleTask}
+        setTaskStatus={setTaskStatus}
         activeTask={activeTask}
         setActiveTask={setActiveTask}
       />

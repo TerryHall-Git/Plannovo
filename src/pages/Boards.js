@@ -37,6 +37,8 @@ export default function Boards() {
     }
   }
 
+  let activeBoardId = projMgr.getActiveBoardId();
+
   return (
     <div className="TileGrid">
       {activeProject !== undefined ? (
@@ -57,7 +59,7 @@ export default function Boards() {
                     return (
                       <Tile
                         key={boardId}
-                        isActive={activeBoard.id === boardId}
+                        isActive={activeBoardId === boardId}
                         title={title}
                         desc={desc}
                         tileDeleted={tileDeleted}

@@ -212,8 +212,8 @@ class ProjectManager {
 
   /**
    * Removes a given board from a given project
-   * @param {*} projId
-   * @param {*} boardId
+   * @param {string} projId
+   * @param {string} boardId
    */
   removeBoard(projId, boardId) {
     const rootData = this.getRootData();
@@ -228,7 +228,7 @@ class ProjectManager {
 
   /**
    * Gets the currently active project object
-   * @returns {object}
+   * @returns {Object}
    */
   getActiveProject() {
     const rootData = this.getRootData();
@@ -246,7 +246,7 @@ class ProjectManager {
   /**
    * Gets the project object based on a given project id
    * @param {string} id
-   * @returns {object}
+   * @returns {Object}
    */
   getProject(id) {
     return cloneDeep(this.getRootData().projects[id]);
@@ -254,12 +254,16 @@ class ProjectManager {
 
   /**
    * Gets the full list of all projects
-   * @returns {array}
+   * @returns {Array}
    */
   getProjects() {
     return cloneDeep(this.getRootData().projects);
   }
 
+  /**
+   * Gets the currently active board
+   * @returns {Object}
+   */
   getActiveBoard() {
     let rootData = this.getRootData();
     if (rootData.activeProjectId === undefined) return undefined;
@@ -271,30 +275,54 @@ class ProjectManager {
     );
   }
 
+  /**
+   * Gets the currently active board ID
+   * @returns {string}
+   */
   getActiveBoardId() {
     const activeProject = this.getActiveProject();
     if (activeProject === undefined) return undefined;
     return activeProject.activeBoardId;
   }
 
+  /**
+   * Gets a board based on the given project and board id
+   * @param {string} projId
+   * @param {string} boardId
+   * @returns {Object}
+   */
   getBoard(projId, boardId) {
     const rootData = this.getRootData();
     if (!this.boardExists(projId, boardId)) return undefined;
     return cloneDeep(rootData.projects[projId].boards[boardId]);
   }
 
+  /**
+   * Gets all boards based on a given project id
+   * @param {string} projId
+   * @returns {Object}
+   */
   getBoards(projId) {
     const proj = this.getProject(projId);
     if (proj === undefined) return undefined;
     return cloneDeep(proj.boards);
   }
 
+  /**
+   * Gets all boards based on the currently active project
+   * @returns {Object}
+   */
   getActiveProjBoards() {
     const proj = this.getActiveProject();
     if (proj === undefined) return undefined;
     return cloneDeep(proj.boards);
   }
 
+  /**
+   * Get's an active container based on a given container index
+   * @param {number} idx
+   * @returns {Object}
+   */
   getActiveContainer(idx) {
     const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return undefined;
@@ -302,12 +330,21 @@ class ProjectManager {
     return cloneDeep(activeBoard.containers[idx]);
   }
 
+  /**
+   * Gets all containers based on the currently active board
+   * @returns {Array}
+   */
   getActiveContainers() {
     const activeBoard = this.getActiveBoard();
     if (activeBoard === undefined) return [];
     return cloneDeep(activeBoard.containers);
   }
 
+  /**
+   * Gets all cards based on an active container index
+   * @param {number} containerIdx
+   * @returns {Array}
+   */
   getActiveCards(containerIdx) {
     const activeBoard = this.getActiveBoard();
     if (!activeBoard) return undefined;
@@ -322,6 +359,12 @@ class ProjectManager {
     return cloneDeep(container.cards);
   }
 
+  /**
+   * Gets a card based on a given container and card index  (uses active board)
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   * @returns {Object}
+   */
   getActiveCard(containerIdx, cardIdx) {
     const activeCards = this.getActiveCards(containerIdx);
     if (!activeCards || cardIdx > activeCards.length || cardIdx < 0)
@@ -329,22 +372,42 @@ class ProjectManager {
     return cloneDeep(activeCards[cardIdx]);
   }
 
+  /**
+   * Gets all tasks based on a given container and card index (uses active board)
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   * @returns {Array}
+   */
   getActiveTasks(containerIdx, cardIdx) {
     const card = this.getActiveCard(containerIdx, cardIdx);
     if (!card) return undefined;
     return cloneDeep(card.tasks);
   }
 
-  getActiveTask(cardIdx, taskIdx) {
-    const card = this.getActiveCard(cardIdx);
+  /**
+   * Gets a task based on the given container, card, and task index (uses active board)
+   * @param {*} cardIdx
+   * @param {*} taskIdx
+   * @returns
+   */
+  getActiveTask(containerIdx, cardIdx, taskIdx) {
+    const card = this.getActiveCard(containerIdx, cardIdx);
     if (card.tasks === undefined) return undefined;
     if (taskIdx > card.tasks.length || taskIdx < 0) return undefined;
     return cloneDeep(card.tasks[taskIdx]);
   }
 
+  /**
+   * Sets the active containers
+   * @param {Array} containers
+   */
   setActiveContainers(containers) {
     let rootData = this.getRootData();
-    if (rootData.activeProjectId === undefined) return undefined;
+    if (
+      rootData.activeProjectId === undefined ||
+      rootData.projects[rootData.activeProjectId].activeBoardId === undefined
+    )
+      throw new Error("[utils.js] Failed to set active containers.");
 
     let activeBoard =
       rootData.projects[rootData.activeProjectId].boards[
@@ -356,12 +419,20 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Sets a project to active based on a given id
+   * @param {string} id
+   */
   setActiveProject(id) {
     const rootData = this.getRootData();
     rootData.activeProjectId = id;
     this.saveRootData(rootData);
   }
 
+  /**
+   * Sets an active board based on a given id
+   * @param {string} id
+   */
   setActiveBoard(id) {
     let rootData = this.getRootData();
     if (rootData.activeProjectId === undefined) return;
@@ -371,7 +442,16 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
-  toggleTask(projId, boardId, containerIdx, cardIdx, taskIdx, isComplete) {
+  /**
+   * Sets the completion status of a task based on index for a given card
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   * @param {number} taskIdx
+   * @param {boolean} isComplete
+   */
+  setTaskStatus(projId, boardId, containerIdx, cardIdx, taskIdx, isComplete) {
     const rootData = this.getRootData();
 
     if (
@@ -391,6 +471,15 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Updates the task document information based on a given task index for a card
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   * @param {number} taskIdx
+   * @param {string} docHtml
+   */
   updateTaskInfo(projId, boardId, containerIdx, cardIdx, taskIdx, docHtml) {
     const rootData = this.getRootData();
 
@@ -411,6 +500,14 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Removes a task based on index from a given card
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   * @param {number} taskIdx
+   */
   removeTask(projId, boardId, containerIdx, cardIdx, taskIdx) {
     const rootData = this.getRootData();
 
@@ -438,10 +535,16 @@ class ProjectManager {
     this.saveRootData(rootData);
   }
 
+  /**
+   * Saves all data to local storage
+   */
   saveRootData(data) {
     window.localStorage.setItem(this.SITE_KEY, JSON.stringify(data));
   }
 
+  /**
+   * Gets all data from local storage
+   */
   getRootData() {
     const data = JSON.parse(window.localStorage.getItem(this.SITE_KEY));
     return data
