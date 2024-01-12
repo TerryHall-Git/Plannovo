@@ -2,12 +2,16 @@ import { useContext } from "react";
 import { ProjectContext } from "../App";
 import "../styles/Overview.css";
 
+/**
+ * Container details - Calculates the totals associates with each container
+ */
 function ContainerDetails({ container }) {
   let numCards = container.cards.length;
   let numTasks = 0;
   let numTasksCompleted = 0;
   let numCardsCompleted = 0;
 
+  //Get a count of cards, tasks, and completed tasks
   if (container.cards.length > 0) {
     container.cards.forEach((card) => {
       console.log(card);
@@ -19,12 +23,12 @@ function ContainerDetails({ container }) {
     });
   }
 
+  //Percent of completed tasks
   let percentComplete =
     numTasks > 0 ? Math.round((numTasksCompleted / numTasks) * 100) : 100;
   let remPercent = 100 - percentComplete;
-  console.log(
-    `linear-gradient(to right, red ${remPercent}%, yellow, green ${percentComplete}%)`
-  );
+
+  //Progress bar color based on completed percent
   const percentStyle = {
     backgroundColor: `rgb(${remPercent}%, ${percentComplete}%, 0%)`,
     width: `${percentComplete}%`,
@@ -43,6 +47,9 @@ function ContainerDetails({ container }) {
   );
 }
 
+/**
+ * Board details - List each container associated with this board
+ */
 function BoardDetails({ board }) {
   const containersMarkup = board.containers.map((container) => {
     return <ContainerDetails key={container.id} container={container} />;
@@ -56,8 +63,11 @@ function BoardDetails({ board }) {
   );
 }
 
+/**
+ * Overview page - details for every board of the selected project
+ */
 export default function Overview() {
-  const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
+  const { projMgr } = useContext(ProjectContext);
 
   let allBoards = projMgr.getActiveProjBoards();
   const boardDetailsMarkup = Object.keys(allBoards).map((boardId) => {
