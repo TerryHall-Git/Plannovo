@@ -2,6 +2,9 @@ import { useState } from "react";
 import "../styles/Animation.css";
 import "../styles/TileInputForm.css";
 
+/**
+ * This component is used to display the input form for adding a new tile
+ */
 export default function TileInputForm({
   title,
   createProject,

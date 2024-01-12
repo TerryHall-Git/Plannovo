@@ -2,13 +2,16 @@ import { ReactComponent as TasksIcon } from "../assets/TasksIcon.svg";
 import { ReactComponent as BoardsIcon } from "../assets/BoardsIcon.svg";
 import { ReactComponent as ProjectsIcon } from "../assets/ProjectsIcon.svg";
 import { ReactComponent as OverviewIcon } from "../assets/OverviewIcon.svg";
-import { ReactComponent as SettingsIcon } from "../assets/SettingsIcon.svg";
 import { ReactComponent as DeepThoughtsIcon } from "../assets/DeepThoughtsIcon.svg";
+// import { ReactComponent as SettingsIcon } from "../assets/SettingsIcon.svg";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProjectContext } from "../App";
 import "../styles/Navbar.css";
 
+/**
+ * This component displays the top and left-side navbar links
+ */
 export default function Navbar() {
   const navigate = useNavigate();
   const { activeProject, activeBoard } = useContext(ProjectContext);
@@ -18,11 +21,11 @@ export default function Navbar() {
     { linkName: "projects", cls: "Navbar-deselected", icon: <ProjectsIcon /> },
     { linkName: "boards", cls: "Navbar-deselected", icon: <BoardsIcon /> },
     { linkName: "tasks", cls: "Navbar-deselected", icon: <TasksIcon /> },
-    {
-      linkName: "settings",
-      cls: "Navbar-deselected",
-      icon: <SettingsIcon />,
-    },
+    // {
+    //   linkName: "settings",
+    //   cls: "Navbar-deselected",
+    //   icon: <SettingsIcon />,
+    // },
   ]);
 
   function homeClickHandler() {

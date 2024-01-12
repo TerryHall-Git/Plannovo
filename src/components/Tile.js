@@ -4,6 +4,9 @@ import { useState } from "react";
 import "../styles/Animation.css";
 import "../styles/Tile.css";
 
+/**
+ * This component is used to display a tile - used on the projects & boards pages
+ */
 export default function Tile({
   isActive,
   title,

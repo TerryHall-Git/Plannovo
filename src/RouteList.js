@@ -5,7 +5,7 @@ import Projects from "./pages/Projects";
 import Overview from "./pages/Overview";
 import Boards from "./pages/Boards";
 import Tasks from "./pages/Tasks";
-import Settings from "./pages/Settings";
+// import Settings from "./pages/Settings";
 
 export default function RouteList() {
   return (
@@ -17,7 +17,7 @@ export default function RouteList() {
         <Route path="/overview" element={<Overview />} />
         <Route path="/boards" element={<Boards />} />
         <Route path="/tasks" element={<Tasks />} />
-        <Route path="/settings" element={<Settings />} />
+        {/* <Route path="/settings" element={<Settings />} /> */}
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -5,31 +5,37 @@ import TileInputForm from "../components/TileInputForm.js";
 import { ProjectContext } from "../App.js";
 import "../styles/TileGrid.css";
 
+/**
+ * This page allows users to create new boards, change the active board,
+ * and lists all boards for the active project
+ */
 export default function Boards() {
-  const { activeProject, setActiveBoard, projMgr } = useContext(ProjectContext);
+  const { activeProject, activeBoard, setActiveBoard, projMgr } =
+    useContext(ProjectContext);
   const [formShowing, setFormShowing] = useState(false);
   const [boards, setBoards] = useState(projMgr.getBoards(activeProject.id));
 
-  let tileCreated = (name, desc) => {
+  //Event listener: create new board
+  function tileCreated(name, desc) {
     projMgr.createNewBoard(activeProject.id, name, desc);
     setBoards(projMgr.getBoards(activeProject.id));
     setActiveBoard(projMgr.getActiveBoard());
-  };
+  }
 
-  let tileActivated = ({ boardId }) => {
+  //Event listener: activate board
+  function tileActivated({ boardId }) {
     projMgr.setActiveBoard(boardId);
     setActiveBoard(projMgr.getActiveBoard());
-  };
+  }
 
-  let tileDeleted = ({ boardId, confirmDelete }) => {
+  //Event listener: delete board
+  function tileDeleted({ boardId, confirmDelete }) {
     if (confirmDelete) {
       projMgr.removeBoard(activeProject.id, boardId);
       setBoards(projMgr.getBoards(activeProject.id));
       setActiveBoard(projMgr.getActiveBoard());
     }
-  };
-
-  let activeBoardId = projMgr.getActiveBoardId();
+  }
 
   return (
     <div className="TileGrid">
@@ -51,7 +57,7 @@ export default function Boards() {
                     return (
                       <Tile
                         key={boardId}
-                        isActive={activeBoardId === boardId}
+                        isActive={activeBoard.id === boardId}
                         title={title}
                         desc={desc}
                         tileDeleted={tileDeleted}

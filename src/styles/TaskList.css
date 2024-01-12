@@ -1,4 +1,4 @@
-.CardForm {
+.TaskList {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -11,7 +11,7 @@
   border-radius: 1rem;
 }
 
-.CardForm-background {
+.TaskList-background {
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +20,7 @@
   background-color: rgba(0, 0, 0, 0.47);
 }
 
-.CardForm-topPanel {
+.TaskList-topPanel {
   display: grid;
   grid-template-columns: 1fr 2fr;
   min-height: 8%;
@@ -30,7 +30,7 @@
   border-top-right-radius: 1rem;
 }
 
-.CardForm-topPanelLeft {
+.TaskList-topPanelLeft {
   display: grid;
   grid-template-columns: 11fr 1fr;
   align-items: center;
@@ -42,17 +42,17 @@
   border-top-left-radius: 1rem;
 }
 
-.CardForm-trashIcon {
+.TaskList-trashIcon {
   font-size: larger;
   margin: 0;
   padding: 0;
 }
 
-.CardForm-trashIcon:hover {
+.TaskList-trashIcon:hover {
   color: rgb(255, 45, 45);
 }
 
-.CardForm-topPanelRight {
+.TaskList-topPanelRight {
   display: flex;
   justify-content: right;
   width: 100%;
@@ -60,7 +60,7 @@
   border-top-right-radius: 1rem;
 }
 
-.CardForm-topPanelRight button {
+.TaskList-topPanelRight button {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   padding-top: 0.1rem;
@@ -68,11 +68,11 @@
   font-size: x-large;
 }
 
-.CardForm-topPanelRight button:hover {
+.TaskList-topPanelRight button:hover {
   color: white;
 }
 
-.CardForm-bodyPanels {
+.TaskList-bodyPanels {
   display: grid;
   grid-template-columns: 1fr 2fr;
   /* min-height: 100%;
@@ -80,7 +80,7 @@
   height: 90%;
 }
 
-.CardForm-leftPanel {
+.TaskList-leftPanel {
   height: 100%;
   padding: 0.25rem;
   border-right: 4px solid #1f2f37;
@@ -88,18 +88,18 @@
   border-bottom-left-radius: 1rem;
 }
 
-.CardForm-rightPanel {
+.TaskList-rightPanel {
   height: 100%;
   padding: 0.5%;
   background-color: rgba(0, 0, 0, 0.41);
   border-bottom-right-radius: 1rem;
 }
 
-.CardForm-tasks {
+.TaskList-tasks {
   margin: 0.25rem;
 }
 
-.CardForm-leftPanelHeader {
+.TaskList-leftPanelHeader {
   display: flex;
   flex-direction: row;
   font-size: x-large;
@@ -110,12 +110,12 @@
   background-color: #0b1113;
 }
 
-.CardForm-leftPanelHeader p {
+.TaskList-leftPanelHeader p {
   font-size: large;
   font-weight: bold;
 }
 
-.CardForm-progressInfo {
+.TaskList-progressInfo {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -124,7 +124,7 @@
   justify-content: start;
 }
 
-.CardForm-progressBar {
+.TaskList-progressBar {
   width: 100%;
   height: 0.8rem;
   background-color: #949494;
@@ -132,7 +132,7 @@
   border-radius: 0.5rem;
 }
 
-.CardForm-progress {
+.TaskList-progress {
   height: 0.75rem;
   background-color: #11ff00;
   border-radius: 0.5rem;

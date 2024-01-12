@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-
-import "../styles/Animation.css";
-import "../styles/CardForm.css";
-import BlockEditor from "./BlockEditor";
+import { ProjectContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Task from "./Task";
-import { ProjectContext } from "../App";
 import TaskAdd from "./TaskAdd";
+import BlockEditor from "./BlockEditor";
+import "../styles/Animation.css";
+import "../styles/TaskList.css";
 
-export default function CardForm({ cardData, setShowCardForm, refresh }) {
+/**
+ * This component is used to display a list of editable tasks
+ */
+export default function TaskList({ cardData, setShowTaskList, refresh }) {
   const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
   const [activeTask, setActiveTask] = useState(null);
   const [taskArr, setTaskArr] = useState(
@@ -24,7 +26,7 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
   function refreshTaskList() {
     let tasks = projMgr.getActiveTasks(cardData.parentIdx, cardData.idx);
     if (!tasks.length)
-      throw new Error("[CardForm.js] Tasks array should never be empty!");
+      throw new Error("[TaskList.js] Tasks array should never be empty!");
     setTaskArr(tasks);
     refresh();
   }
@@ -79,9 +81,9 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
     );
   });
 
-  function closeCardForm() {
+  function closeTaskList() {
     refresh();
-    setShowCardForm(false);
+    setShowTaskList(false);
   }
 
   let percentComplete = Math.round(
@@ -89,40 +91,40 @@ export default function CardForm({ cardData, setShowCardForm, refresh }) {
   );
 
   return (
-    <div className="CardForm-background">
-      <div className="CardForm appearAnimation">
-        <div className="CardForm-topPanel">
-          <div className="CardForm-topPanelLeft">
+    <div className="TaskList-background">
+      <div className="TaskList appearAnimation">
+        <div className="TaskList-topPanel">
+          <div className="TaskList-topPanelLeft">
             <h2>{cardData.title}</h2>
-            <button className="CardForm-trashIcon">
+            <button className="TaskList-trashIcon">
               <FontAwesomeIcon icon="fa-solid fa-trash-can" />
             </button>
           </div>
-          <div className="CardForm-topPanelRight">
-            <button onClick={closeCardForm}>
+          <div className="TaskList-topPanelRight">
+            <button onClick={closeTaskList}>
               <FontAwesomeIcon icon="fa-solid fa-xmark" />
             </button>
           </div>
         </div>
-        <div className="CardForm-bodyPanels">
-          <div className="CardForm-leftPanel">
-            <div className="CardForm-leftPanelHeader">
-              <div className="CardForm-progressInfo">
-                <div className="CardForm-progressBar">
+        <div className="TaskList-bodyPanels">
+          <div className="TaskList-leftPanel">
+            <div className="TaskList-leftPanelHeader">
+              <div className="TaskList-progressInfo">
+                <div className="TaskList-progressBar">
                   <div
-                    className="CardForm-progress"
+                    className="TaskList-progress"
                     style={{ width: `${percentComplete}%` }}
                   ></div>
                   <p>{percentComplete}% Complete</p>
                 </div>
               </div>
             </div>
-            <div className="CardForm-tasks">
+            <div className="TaskList-tasks">
               {tasksMarkup}
               <TaskAdd cardData={cardData} refreshTaskList={refreshTaskList} />
             </div>
           </div>
-          <div className="CardForm-rightPanel">
+          <div className="TaskList-rightPanel">
             {activeTask && activeTask.docHtml && (
               <BlockEditor
                 taskIdx={activeTask.idx}

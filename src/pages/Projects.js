@@ -1,37 +1,44 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TileAdd from "../components/TileAdd.js";
 import Tile from "../components/Tile";
 import TileInputForm from "../components/TileInputForm.js";
 import { ProjectContext } from "../App.js";
 import "../styles/TileGrid.css";
 
+/**
+ * This page allows users to create new projects, change the active project,
+ * and lists all available projects
+ */
 export default function Projects() {
   const { setActiveProject, setActiveBoard, projMgr } =
     useContext(ProjectContext);
   const [formShowing, setFormShowing] = useState(false);
   const [projects, setProjects] = useState(projMgr.getProjects());
 
-  let tileCreated = (name, desc) => {
+  //Event listener: create new project
+  function tileCreated(name, desc) {
     projMgr.createNewProject(name, desc);
     setProjects(projMgr.getProjects());
     setActiveProject(projMgr.getActiveProject());
     setActiveBoard(projMgr.getActiveBoard());
-  };
+  }
 
-  let tileActivated = ({ key }) => {
+  //Event listener: activate project
+  function tileActivated({ key }) {
     projMgr.setActiveProject(key);
     setActiveProject(projMgr.getActiveProject());
     setActiveBoard(projMgr.getActiveBoard());
-  };
+  }
 
-  let tileDeleted = ({ key, confirmDelete }) => {
+  //Event listener: delete project
+  function tileDeleted({ key, confirmDelete }) {
     if (confirmDelete) {
       projMgr.removeProject(key);
-      setProjects(projMgr.getProjects());
       setActiveProject(projMgr.getActiveProject());
       setActiveBoard(projMgr.getActiveBoard());
+      setProjects(projMgr.getProjects());
     }
-  };
+  }
 
   let activeProjectId = projMgr.getActiveProjectId();
 

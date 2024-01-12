@@ -20,7 +20,7 @@ import Card from "./Card";
 import ContainerAdd from "./ContainerAdd";
 
 import "../styles/Board.css";
-import CardForm from "./CardForm";
+import TaskList from "./TaskList";
 
 export default function Board() {
   const types = { CONTAINER: "container", CARD: "card" };
@@ -35,19 +35,18 @@ export default function Board() {
   });
   const [dragged, setDragged] = useState(false);
   const interacted = useRef(false);
-  const [showCardForm, setShowCardForm] = useState(false);
-  // const [cardFormData, setCardFormData] = useState(null);
+  const [showTaskList, setShowTaskList] = useState(false);
+  // const [TaskListData, setTaskListData] = useState(null);
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());
-    console.log("refresh");
   }
 
   function save() {
     projMgr.setActiveContainers(containers);
-    console.log("save");
   }
 
+  //event handler for dragEnd
   function handleDragEnd() {
     setLastActiveCard({ ...activeCard });
     setActiveCard(null);
@@ -56,14 +55,13 @@ export default function Board() {
     setDragStatus({ draggingContainer: false, draggingCard: false });
     if (containers !== undefined) save();
 
-    //if !dragged, then card clicked (onKeyUp)
+    //if not dragged, then card clicked (onKeyUp)
     if (!dragged) {
-      setShowCardForm(true);
+      setShowTaskList(true);
     }
-
-    console.log("handleDragEnd");
   }
 
+  //move card within same container
   function moveCards_SameContainer(active, over) {
     if (active.id === over.id) return;
 
@@ -86,6 +84,7 @@ export default function Board() {
     setContainers(updatedContainers);
   }
 
+  //move card between different containers
   function moveCards_DifferentContainer(active, over) {
     if (active.id === over.id) return;
 
@@ -123,7 +122,8 @@ export default function Board() {
     setContainers(updatedContainers);
   }
 
-  function swapContainerLocations(active, over) {
+  //Move container to 'over' location
+  function updateContainerLocation(active, over) {
     if (active.id === over.id) return;
 
     let updatedContainers = [...containers];
@@ -151,6 +151,8 @@ export default function Board() {
     const activeData = active.data.current;
 
     if (activeData.type === types.CARD) {
+      //dragging card
+
       if (activeData.parentIdx !== overData.parentIdx) {
         moveCards_DifferentContainer(activeData, overData);
       } else {
@@ -161,29 +163,15 @@ export default function Board() {
       overData.type === types.CONTAINER
     ) {
       //dragging container
-      swapContainerLocations(activeData, overData);
-    }
-    console.log("handleDragOver");
-  }
 
-  // function handleDragStart({ active }) {
-  //   console.log(dragged);
-  //   if (!dragged) return;
-  //   if (active.data.current.type === types.CONTAINER) {
-  //     setActiveContainer(active.data.current);
-  //     setDragStatus({ draggingContainer: true, draggingCard: false });
-  //   } else {
-  //     setActiveCard(active.data.current);
-  //     setDragStatus({ draggingContainer: false, draggingCard: true });
-  //   }
-  //   if (!interacted.current) interacted.current = true;
-  // }
+      updateContainerLocation(activeData, overData);
+    }
+  }
 
   function handleDragStart({ active }) {
     if (active.data.current.type === types.CARD) {
       setActiveCard(active.data.current);
     }
-    console.log("handleDragStart");
   }
 
   function handleDragMove({ active }) {
@@ -198,7 +186,6 @@ export default function Board() {
       if (!interacted.current) interacted.current = true;
     }
     setDragged(true);
-    console.log("handleDragMove");
   }
 
   const containerMarkup = containers.map((container, idx) => {
@@ -217,9 +204,6 @@ export default function Board() {
         isOverlay={false}
         dragStatus={dragStatus}
         interacted={interacted}
-        isActive={
-          activeContainer && activeContainer.id === container.id ? true : false
-        }
       />
     );
   });
@@ -233,11 +217,11 @@ export default function Board() {
 
   return (
     <div className="Board">
-      {showCardForm && lastActiveCard && (
-        <CardForm
+      {showTaskList && lastActiveCard && (
+        <TaskList
           cardData={lastActiveCard}
           refresh={refresh}
-          setShowCardForm={setShowCardForm}
+          setShowTaskList={setShowTaskList}
         />
       )}
       <div className="Board-grid">

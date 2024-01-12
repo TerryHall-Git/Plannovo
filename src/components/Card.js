@@ -1,8 +1,11 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import "../styles/Card.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../styles/Card.css";
 
+/**
+ * This component creates a card, which is used for the kanban-style containers
+ */
 export default function Card({
   id,
   idx,
@@ -10,8 +13,8 @@ export default function Card({
   data,
   title,
   desc,
-  isActive,
-  previouslyActive,
+  activeCard,
+  lastActiveCard,
   isOverlay,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -22,13 +25,16 @@ export default function Card({
       idx: idx,
     });
 
+  let isActive = activeCard && activeCard.id === id ? true : false;
+  let prevActive = lastActiveCard && lastActiveCard.id === id ? true : false;
+
+  //dynamic styling
   const dndStyle = {
     zIndex: 1,
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
-  let anim = previouslyActive ? " Card-drop" : "";
+  let anim = prevActive ? " Card-drop" : "";
   let cardStyle = isActive ? "Card-inset" : "Card-idle" + anim;
   cardStyle = isOverlay ? "Card-drag" : cardStyle;
 

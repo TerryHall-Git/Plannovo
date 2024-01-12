@@ -16,6 +16,7 @@ export default function CardAdd({ containerIdx, refresh }) {
     }
   }, [mouseLeft, showInput, lostFocus]);
 
+  //Event listener: creates a new card
   function createNewCard() {
     if (title.trim() === "") return;
     projMgr.createNewCard(
@@ -36,7 +37,9 @@ export default function CardAdd({ containerIdx, refresh }) {
     setShowInput(false);
   }
 
+  //Event listener: on key press
   function keyPress(e) {
+    //on "enter"
     if (e.keyCode === 13) createNewCard();
   }
 

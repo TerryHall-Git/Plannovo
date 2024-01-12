@@ -12,6 +12,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import "../styles/BlockEditor.css";
 
+//Extensions for tiptap
 const extensions = [
   BubbleMenu.configure({
     pluginKey: "bubbleMenuOne",
@@ -35,6 +36,9 @@ const extensions = [
   }),
 ];
 
+/**
+ * This component lists all the various text-editing options
+ */
 const MenuBar = ({ editor, deleteTask, taskIdx }) => {
   if (!editor) {
     return null;
@@ -171,6 +175,9 @@ const MenuBar = ({ editor, deleteTask, taskIdx }) => {
   );
 };
 
+/**
+ * This component displays the text-editor - used for modifying tasks
+ */
 export default function BlockEditor({
   taskIdx,
   content,

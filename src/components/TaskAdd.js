@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../App";
 import "../styles/TaskAdd.css";
 
+/**
+ * This component is used to add a new task
+ */
 export default function TaskAdd({ cardData, refreshTaskList }) {
   const { activeProject, activeBoard, setActiveBoard, projMgr } =
     useContext(ProjectContext);

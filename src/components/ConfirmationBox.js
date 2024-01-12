@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/ConfirmationBox.css";
 
+/**
+ * Generic confirmation box component used by various other pages/components
+ */
 export default function ConfirmationBox({ question, confirmCallback }) {
   return (
     <div className="ConfirmationBox">

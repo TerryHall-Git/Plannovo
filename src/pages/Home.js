@@ -1,5 +1,8 @@
 import "../styles/Home.css";
 
+/**
+ * This is a simple welcome page that is intially displayed
+ */
 const Home = () => {
   return (
     <div className="Home">

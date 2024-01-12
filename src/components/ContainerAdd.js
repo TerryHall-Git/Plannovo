@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../App";
 import "../styles/ContainerAdd.css";
 
+/**
+ * This component is used to create new containers
+ */
 export default function ContainerAdd({ refresh }) {
   const { activeProject, activeBoard, setActiveBoard, projMgr } =
     useContext(ProjectContext);

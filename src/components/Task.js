@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Task.css";
 
+/**
+ * This component displays the details associated for the given task
+ */
 export default function Task({
   taskData,
   toggleTask,
@@ -8,12 +11,11 @@ export default function Task({
   setActiveTask,
 }) {
   const isActive = activeTask && activeTask.id === taskData.id;
+
+  //Dynamic styles
   let cls = "Task";
-  //add 'completed' style?
   cls = taskData.complete && !isActive ? cls + " Task-completed" : cls;
-  //add 'active' style?
   cls = !taskData.complete && isActive ? cls + " Task-active" : cls;
-  //add 'active-completed' style?
   cls = taskData.complete && isActive ? cls + " Task-active-completed" : cls;
 
   return (

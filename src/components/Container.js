@@ -1,3 +1,5 @@
+import { useDroppable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 import {
   useSensors,
   useSensor,
@@ -9,15 +11,12 @@ import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
+  sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { useDroppable } from "@dnd-kit/core";
-import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import Card from "./Card";
-import "../styles/Container.css";
-import CardAdd from "./CardAdd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import Card from "./Card";
+import CardAdd from "./CardAdd";
+import "../styles/Container.css";
 
 export default function Container({
   id,
@@ -32,8 +31,6 @@ export default function Container({
   isOverlay,
   dragStatus,
   interacted,
-  isActive,
-  toggleShowCard,
 }) {
   const { setNodeRef: setDropRef } = useDroppable({
     id: id,
@@ -55,16 +52,16 @@ export default function Container({
     idx: idx,
   });
 
+  let isActive = activeContainer && activeContainer.id === id ? true : false;
+
   let cardsMarkup = data.cards.map((card) => (
     <Card
       key={card.id}
       id={card.id}
       title={card.title}
       desc={card.desc}
-      isActive={activeCard && activeCard.id === card.id ? true : false}
-      previouslyActive={
-        lastActiveCard && lastActiveCard.id === card.id ? true : false
-      }
+      activeCard={activeCard}
+      lastActiveCard={lastActiveCard}
       data={card}
       isOverlay={false}
     />
@@ -77,6 +74,7 @@ export default function Container({
     })
   );
 
+  //dynamic styling
   let anim = !interacted.current ? " appearAnimation" : "";
   let styles =
     dragStatus.draggingContainer && isOverlay

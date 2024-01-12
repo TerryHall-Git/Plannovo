@@ -2,8 +2,7 @@ import "../styles/Animation.css";
 import "../styles/Tile.css";
 
 /**
- * Generic tile with an action callback 'onClick'
- * @param {function} param0
+ * This comoponent displays a tile that triggers a callback action when clicked
  */
 export default function TileAdd({ action }) {
   return (
