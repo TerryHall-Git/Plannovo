@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 
 /**
  * This class is used to store all project data in client-side localStorage.
- * It would be preferable to move this all to a server-side database at
- * some point due to the localStorage limitations.
+ * It would be preferable to move this all to a server-side database or cloud-based
+ * storage at some point due to the localStorage limitations.
  */
 class ProjectManager {
   constructor() {
