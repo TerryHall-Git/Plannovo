@@ -33,7 +33,6 @@ export default function Board() {
     draggingContainer: false,
     draggingCard: false,
   });
-  const [dragged, setDragged] = useState(false);
   const interacted = useRef(false);
   const [showTaskList, setShowTaskList] = useState(false);
   // const [TaskListData, setTaskListData] = useState(null);
@@ -51,12 +50,11 @@ export default function Board() {
     setLastActiveCard({ ...activeCard });
     setActiveCard(null);
     setActiveContainer(null);
-    setDragged(false);
     setDragStatus({ draggingContainer: false, draggingCard: false });
     if (containers !== undefined) save();
 
     //if not dragged, then card clicked (onKeyUp)
-    if (!dragged) {
+    if (!dragStatus.draggingCard && !dragStatus.draggingContainer) {
       setShowTaskList(true);
     }
   }
@@ -175,7 +173,7 @@ export default function Board() {
   }
 
   function handleDragMove({ active }) {
-    if (!dragged) {
+    if (!dragStatus.draggingCard && !dragStatus.draggingContainer) {
       if (active.data.current.type === types.CONTAINER) {
         setActiveContainer(active.data.current);
         setDragStatus({ draggingContainer: true, draggingCard: false });
@@ -185,7 +183,6 @@ export default function Board() {
       }
       if (!interacted.current) interacted.current = true;
     }
-    setDragged(true);
   }
 
   const containerMarkup = containers.map((container, idx) => {
