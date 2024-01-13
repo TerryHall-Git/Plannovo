@@ -21,11 +21,7 @@ export default function Navbar() {
     { linkName: "projects", cls: "Navbar-deselected", icon: <ProjectsIcon /> },
     { linkName: "boards", cls: "Navbar-deselected", icon: <BoardsIcon /> },
     { linkName: "tasks", cls: "Navbar-deselected", icon: <TasksIcon /> },
-    // {
-    //   linkName: "settings",
-    //   cls: "Navbar-deselected",
-    //   icon: <SettingsIcon />,
-    // },
+    // {linkName: "settings",cls: "Navbar-deselected", icon: <SettingsIcon />,},
   ]);
 
   function homeClickHandler() {
@@ -44,13 +40,9 @@ export default function Navbar() {
   }
 
   let projTitle =
-    activeProject !== undefined
-      ? `Active Project: ${activeProject.title}`
-      : "[No Project Selected]";
+    activeProject !== undefined ? activeProject.title : "[No Project Selected]";
   let boardTitle =
-    activeBoard !== undefined
-      ? `Active Board: ${activeBoard.title}`
-      : "[No Board Selected]";
+    activeBoard !== undefined ? activeBoard.title : "[No Board Selected]";
 
   //create nav links
   let navLinkMarkup = navLinks.map(({ linkName, cls, icon }) => {
@@ -75,7 +67,7 @@ export default function Navbar() {
       <div className="Navbar-top" onClick={homeClickHandler}>
         <div className="Navbar-home">
           <DeepThoughtsIcon />
-          <span>Deep Thoughts</span>
+          <span>Plannovo</span>
         </div>
         <div className="Navbar-projName">
           <h3>{projTitle + " - " + boardTitle}</h3>
