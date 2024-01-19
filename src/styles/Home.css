@@ -1,9 +1,22 @@
 .Home {
   display: flex;
+  height: 25vh;
   margin: auto;
 }
 
 .Home-content {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
   margin: auto;
   font-weight: bold;
+}
+
+.Home-content h1 {
+  justify-self: center;
+  font-size: x-large;
+}
+
+.Home-content p {
+  align-self: center;
+  font-size: large;
 }
