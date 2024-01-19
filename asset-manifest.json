@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/Plannovo/static/css/main.b652887d.css",
+    "main.js": "/Plannovo/static/js/main.a62c3f96.js",
+    "static/media/DeepThoughtsIcon.svg": "/Plannovo/static/media/DeepThoughtsIcon.85d5b7ee09f4879b02f4233b816b13f0.svg",
+    "static/media/OverviewIcon.svg": "/Plannovo/static/media/OverviewIcon.4c1af63ddc16a0d591c9c472e7c46041.svg",
+    "static/media/TasksIcon.svg": "/Plannovo/static/media/TasksIcon.2b0a35945c27b9f5a4fe936a03a0f980.svg",
+    "static/media/ProjectsIcon.svg": "/Plannovo/static/media/ProjectsIcon.5018ed01911a36723fd0e9ed99683fe8.svg",
+    "static/media/BoardsIcon.svg": "/Plannovo/static/media/BoardsIcon.4bae323f995ee74f445d524e4c9a62a7.svg",
+    "index.html": "/Plannovo/index.html",
+    "main.b652887d.css.map": "/Plannovo/static/css/main.b652887d.css.map",
+    "main.a62c3f96.js.map": "/Plannovo/static/js/main.a62c3f96.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b652887d.css",
+    "static/js/main.a62c3f96.js"
+  ]
+}
