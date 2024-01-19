@@ -34,7 +34,6 @@ export default function Board() {
   const interacted = useRef(false);
   const [showTaskList, setShowTaskList] = useState(false);
 
-  console.log("updating");
   function refresh() {
     setContainers(projMgr.getActiveContainers());
   }
