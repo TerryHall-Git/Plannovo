@@ -8,7 +8,6 @@ import {
   DragOverlay,
 } from "@dnd-kit/core";
 import {
-  arrayMove,
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -35,7 +34,6 @@ export default function Board() {
   });
   const interacted = useRef(false);
   const [showTaskList, setShowTaskList] = useState(false);
-  // const [TaskListData, setTaskListData] = useState(null);
 
   function refresh() {
     setContainers(projMgr.getActiveContainers());

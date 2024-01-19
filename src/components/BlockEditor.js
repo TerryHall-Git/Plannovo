@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
@@ -5,10 +6,8 @@ import TextStyle from "@tiptap/extension-text-style";
 import { EditorContent, useEditor } from "@tiptap/react";
 import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
-import React, { useEffect } from "react";
 import BubbleMenu from "@tiptap/extension-bubble-menu";
 import { Tooltip } from "react-tooltip";
-
 import "react-tooltip/dist/react-tooltip.css";
 import "../styles/BlockEditor.css";
 

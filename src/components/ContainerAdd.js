@@ -33,6 +33,7 @@ export default function ContainerAdd({ refresh }) {
     setShowInput(false);
   }
 
+  //Event listener: on key press
   function keyPress(e) {
     if (e.keyCode === 13) createNewContainer(); //on-Enter
   }

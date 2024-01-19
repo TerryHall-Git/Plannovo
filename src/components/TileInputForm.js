@@ -16,6 +16,7 @@ export default function TileInputForm({
   });
   const [showError, setShowError] = useState(false);
 
+  //Event listener: on-change
   function onChangeHandler(e) {
     let el = e.target;
 
@@ -31,6 +32,7 @@ export default function TileInputForm({
     });
   }
 
+  //Event listener: on-submit
   function onSubmitHandler(e) {
     e.preventDefault();
     if (formData.projectName === "" || formData.projectDesc === "") {
@@ -42,6 +44,7 @@ export default function TileInputForm({
     setFormShowing(false);
   }
 
+  //Event listener: on-click
   function onCancelHandler(e) {
     setShowError(false);
     setFormShowing(false);
