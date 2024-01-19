@@ -68,6 +68,16 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
     refreshTaskList();
   }
 
+  function deleteCard() {
+    projMgr.removeCard(
+      activeProject.id,
+      activeBoard.id,
+      cardData.parentIdx,
+      cardData.idx
+    );
+    closeTaskList();
+  }
+
   const tasksMarkup = taskArr.map((task) => {
     return (
       <Task
@@ -96,7 +106,7 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
         <div className="TaskList-topPanel">
           <div className="TaskList-topPanelLeft">
             <h2>{cardData.title}</h2>
-            <button className="TaskList-trashIcon">
+            <button className="TaskList-trashIcon" onClick={deleteCard}>
               <FontAwesomeIcon icon="fa-solid fa-trash-can" />
             </button>
           </div>

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 /**
  * This class is used to store all project data in client-side localStorage.
  * It would be preferable to move this all to a server-side database or cloud-based
- * storage at some point due to the localStorage limitations.
+ * storage at some point due to localStorage limitations.
  */
 class ProjectManager {
   constructor() {
@@ -222,6 +222,56 @@ class ProjectManager {
 
     if (rootData.projects[projId].activeBoardId === boardId)
       rootData.projects[projId].activeBoardId = undefined;
+
+    this.saveRootData(rootData);
+  }
+
+  /**
+   * Removes a container from a given project & board id based on index
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   */
+  removeContainer(projId, boardId, containerIdx) {
+    const rootData = this.getRootData();
+
+    if (!projId || !boardId || isNaN(containerIdx)) {
+      throw new Error("[utils.js] Failed to remove container!");
+    }
+
+    let containers = rootData.projects[projId].boards[boardId].containers;
+
+    //remove task from array
+    containers.splice(containerIdx, 1);
+
+    //update index info
+    containers = containers.map((container, idx) => (container.idx = idx));
+
+    this.saveRootData(rootData);
+  }
+
+  /**
+   * Removes a container from a given project & board id based on index
+   * @param {string} projId
+   * @param {string} boardId
+   * @param {number} containerIdx
+   * @param {number} cardIdx
+   */
+  removeCard(projId, boardId, containerIdx, cardIdx) {
+    const rootData = this.getRootData();
+
+    if (!projId || !boardId || isNaN(containerIdx) || isNaN(cardIdx)) {
+      throw new Error("[utils.js] Failed to remove card!");
+    }
+
+    let cards =
+      rootData.projects[projId].boards[boardId].containers[containerIdx].cards;
+
+    //remove task from array
+    cards.splice(cardIdx, 1);
+
+    //update index info
+    cards = cards.map((card, idx) => (card.idx = idx));
 
     this.saveRootData(rootData);
   }
