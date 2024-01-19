@@ -17,9 +17,8 @@ import { ProjectContext } from "../App";
 import Container from "./Container";
 import Card from "./Card";
 import ContainerAdd from "./ContainerAdd";
-
-import "../styles/Board.css";
 import TaskList from "./TaskList";
+import "../styles/Board.css";
 
 export default function Board() {
   const types = { CONTAINER: "container", CARD: "card" };
@@ -35,6 +34,7 @@ export default function Board() {
   const interacted = useRef(false);
   const [showTaskList, setShowTaskList] = useState(false);
 
+  console.log("updating");
   function refresh() {
     setContainers(projMgr.getActiveContainers());
   }

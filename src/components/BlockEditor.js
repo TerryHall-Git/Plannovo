@@ -178,18 +178,17 @@ const MenuBar = ({ editor, deleteTask, taskIdx }) => {
  * This component displays the text-editor - used for modifying tasks
  */
 export default function BlockEditor({
-  taskIdx,
-  content,
+  taskData,
   updateTaskDocHtml,
   deleteTask,
 }) {
   function handleChange({ editor }) {
-    updateTaskDocHtml(taskIdx, editor.getHTML());
+    updateTaskDocHtml(taskData.idx, editor.getHTML());
   }
 
   const editor = useEditor({
     onUpdate: handleChange,
-    content: content,
+    content: taskData.docHtml,
     extensions: extensions,
   });
 
@@ -198,8 +197,8 @@ export default function BlockEditor({
       return undefined;
     }
 
-    editor.commands.setContent(content);
-  }, [editor, content]);
+    editor.commands.setContent(taskData.docHtml);
+  }, [editor, taskData]);
 
   if (!editor) {
     return null;
@@ -207,7 +206,7 @@ export default function BlockEditor({
 
   return (
     <>
-      <MenuBar editor={editor} deleteTask={deleteTask} taskIdx={taskIdx} />
+      <MenuBar editor={editor} deleteTask={deleteTask} taskIdx={taskData.idx} />
       <EditorContent editor={editor} />
     </>
   );

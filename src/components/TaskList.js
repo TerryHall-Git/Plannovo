@@ -78,6 +78,11 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
     closeTaskList();
   }
 
+  function setTask(taskData) {
+    setActiveTask(taskData);
+    refreshTaskList();
+  }
+
   const tasksMarkup = taskArr.map((task) => {
     return (
       <Task
@@ -86,7 +91,8 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
         taskData={task}
         setTaskStatus={setTaskStatus}
         activeTask={activeTask}
-        setActiveTask={setActiveTask}
+        setTask={setTask}
+        refresh={refresh}
       />
     );
   });
@@ -137,8 +143,7 @@ export default function TaskList({ cardData, setShowTaskList, refresh }) {
           <div className="TaskList-rightPanel">
             {activeTask && activeTask.docHtml && (
               <BlockEditor
-                taskIdx={activeTask.idx}
-                content={activeTask.docHtml}
+                taskData={activeTask}
                 updateTaskDocHtml={updateTaskDocHtml}
                 deleteTask={deleteTask}
               />

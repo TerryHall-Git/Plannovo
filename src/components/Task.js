@@ -4,12 +4,7 @@ import "../styles/Task.css";
 /**
  * This component displays the details associated for the given task
  */
-export default function Task({
-  taskData,
-  setTaskStatus,
-  activeTask,
-  setActiveTask,
-}) {
+export default function Task({ taskData, setTaskStatus, activeTask, setTask }) {
   const isActive = activeTask && activeTask.id === taskData.id;
 
   //Dynamic styles
@@ -19,7 +14,7 @@ export default function Task({
   cls = taskData.complete && isActive ? cls + " Task-active-completed" : cls;
 
   return (
-    <div className={cls} onClick={() => setActiveTask(taskData)}>
+    <div className={cls} onClick={() => setTask(taskData)}>
       <div className="Task-header">
         <p>{taskData.title}</p>
       </div>

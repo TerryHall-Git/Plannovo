@@ -17,8 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "./Card";
 import CardAdd from "./CardAdd";
 import "../styles/Container.css";
-import { useContext } from "react";
-import { ProjectContext } from "../App";
 
 export default function Container({
   id,
@@ -34,7 +32,6 @@ export default function Container({
   dragStatus,
   interacted,
 }) {
-  const { activeProject, activeBoard, projMgr } = useContext(ProjectContext);
   const { setNodeRef: setDropRef } = useDroppable({
     id: id,
     data: data,

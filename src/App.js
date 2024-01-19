@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import RouteList from "./RouteList";
-import ProjectManager from "./utils";
+import ProjectManager from "./scripts/projectMgr";
 import "./styles/App.css";
 
 const ProjectContext = createContext(undefined);
