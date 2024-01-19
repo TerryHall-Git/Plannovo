@@ -8,9 +8,7 @@ const Home = () => {
     <div className="Home">
       <div className="Home-content">
         <h1>Welcome!</h1>
-        <p>
-          To get started, click on the "Projects" tab to begin a new project.
-        </p>
+        <p>Click on the "Projects" tab to begin a new project.</p>
       </div>
     </div>
   );
