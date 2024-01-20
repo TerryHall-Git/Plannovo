@@ -9,7 +9,7 @@ export default function CardAdd({ containerIdx, refresh }) {
   const [showInput, setShowInput] = useState(false);
   const [mouseLeft, setMouseLeft] = useState(false);
   const [lostFocus, setLostFocus] = useState(false);
-  const MAX_CHARS = 64;
+  const MAX_CHARS = 50;
 
   useEffect(() => {
     if (mouseLeft && showInput && lostFocus) {
@@ -50,9 +50,9 @@ export default function CardAdd({ containerIdx, refresh }) {
     let len = el.value.length;
 
     //limit text input
-    el = len < MAX_CHARS ? el.value : el.value.substring(0, MAX_CHARS);
+    let v = len <= MAX_CHARS ? el.value : el.value.substring(0, MAX_CHARS);
 
-    setTitle(el.value);
+    setTitle(v);
   }
 
   return (
