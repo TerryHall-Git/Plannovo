@@ -44,7 +44,6 @@ export default function Container({
     setNodeRef: setDragRef,
     transform,
     transition,
-    isDragging,
   } = useSortable({
     id: id,
     data: data,

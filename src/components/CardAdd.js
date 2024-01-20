@@ -9,6 +9,7 @@ export default function CardAdd({ containerIdx, refresh }) {
   const [showInput, setShowInput] = useState(false);
   const [mouseLeft, setMouseLeft] = useState(false);
   const [lostFocus, setLostFocus] = useState(false);
+  const MAX_CHARS = 64;
 
   useEffect(() => {
     if (mouseLeft && showInput && lostFocus) {
@@ -43,6 +44,17 @@ export default function CardAdd({ containerIdx, refresh }) {
     if (e.keyCode === 13) createNewCard();
   }
 
+  //Event listener: on-change
+  function onChangeHandler(e) {
+    let el = e.target;
+    let len = el.value.length;
+
+    //limit text input
+    el = len < MAX_CHARS ? el.value : el.value.substring(0, MAX_CHARS);
+
+    setTitle(el.value);
+  }
+
   return (
     <div
       className="CardAdd"
@@ -59,7 +71,7 @@ export default function CardAdd({ containerIdx, refresh }) {
             value={title}
             onFocus={() => setLostFocus(false)}
             onBlur={() => setLostFocus(true)}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={onChangeHandler}
             onKeyUp={keyPress}
           />
           <button onClick={createNewCard}>Add</button>
