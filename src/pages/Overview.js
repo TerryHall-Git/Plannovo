@@ -70,6 +70,9 @@ export default function Overview() {
   const { projMgr } = useContext(ProjectContext);
 
   let allBoards = projMgr.getActiveProjBoards();
+
+  if (!allBoards || !allBoards.length) return;
+
   const boardDetailsMarkup = Object.keys(allBoards).map((boardId) => {
     return <BoardDetails key={boardId} board={allBoards[boardId]} />;
   });

@@ -10,10 +10,9 @@ import "../styles/TileGrid.css";
  * and lists all boards for the active project
  */
 export default function Boards() {
-  const { activeProject, activeBoard, setActiveBoard, projMgr } =
-    useContext(ProjectContext);
+  const { activeProject, setActiveBoard, projMgr } = useContext(ProjectContext);
   const [formShowing, setFormShowing] = useState(false);
-  const [boards, setBoards] = useState(projMgr.getBoards(activeProject.id));
+  const [boards, setBoards] = useState(projMgr.getBoards(activeProject?.id));
 
   //Event listener: create new board
   function tileCreated(name, desc) {
@@ -41,7 +40,7 @@ export default function Boards() {
 
   return (
     <div className="TileGrid">
-      {activeProject !== undefined ? (
+      {activeProject ? (
         <div className="TileGrid-content">
           {formShowing ? (
             <TileInputForm
