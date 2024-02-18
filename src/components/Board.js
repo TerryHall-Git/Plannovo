@@ -262,7 +262,7 @@ export default function Board() {
           <ContainerAdd refresh={refresh} />
         ) : (
           <div className="Board-warning">
-            <p>No active board. Click on "Boards" to activate one.</p>
+            <p>No active board. Click on "Boards" to select one. </p>
           </div>
         )}
       </div>
