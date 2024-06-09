@@ -54,7 +54,7 @@ export default function Boards() {
               {boards !== undefined
                 ? Object.keys(boards).map((boardId) => {
                     const { title, desc } = boards[boardId];
-                    console.log(boardId);
+
                     return (
                       <Tile
                         key={boardId}

@@ -37,3 +37,27 @@
 .Overview-progress {
   height: 100%;
 }
+
+.Overview-downloadUpload {
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  gap: 2em;
+}
+
+.Overview-downloadUpload a,
+.Overview-downloadUpload label {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.Overview-downloadUpload a:hover {
+  color: white;
+}
+.Overview-downloadUpload label:hover {
+  color: white;
+}
+
+input[type="file"] {
+  display: none;
+}

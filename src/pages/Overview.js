@@ -1,5 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProjectContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import "../styles/Overview.css";
 
 /**
@@ -14,7 +16,6 @@ function ContainerDetails({ container }) {
   //Get a count of cards, tasks, and completed tasks
   if (container.cards.length > 0) {
     container.cards.forEach((card) => {
-      console.log(card);
       let taskCount = card.tasks.length;
       let completedCount = card.tasks.filter((task) => task.complete).length;
       numTasks += taskCount;
@@ -68,18 +69,53 @@ function BoardDetails({ board }) {
  */
 export default function Overview() {
   const { projMgr } = useContext(ProjectContext);
-
+  const [download, setDownload] = useState("");
   let allBoards = projMgr.getActiveProjBoards();
 
-  if (!allBoards || !allBoards.length) return;
+  useEffect(() => {
+    const dataFile = new Blob([JSON.stringify(projMgr.getRootData())], {
+      type: "text/plain",
+    });
+    setDownload(URL.createObjectURL(dataFile));
+  }, []);
+
+  if (!allBoards) return;
 
   const boardDetailsMarkup = Object.keys(allBoards).map((boardId) => {
     return <BoardDetails key={boardId} board={allBoards[boardId]} />;
   });
 
+  let handleChange = async (e) => {
+    //function handleChange(e) {
+    e.preventDefault();
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const rootData = JSON.parse(e.target.result);
+
+      projMgr.saveRootData(rootData);
+      alert("Projects uploaded");
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+
   return (
     <div className="Overview">
-      <div className="Overview-content">{boardDetailsMarkup}</div>
+      <div className="Overview-content">
+        <div className="Overview-downloadUpload">
+          <a href={download} download="plannovoProjects.txt">
+            <FontAwesomeIcon icon="fa-solid fa-download" />
+          </a>
+
+          <form>
+            <label htmlFor="file-upload">
+              <FontAwesomeIcon icon="fa-solid fa-upload" />
+              <input type="file" id="file-upload" onChange={handleChange} />
+            </label>
+          </form>
+        </div>
+
+        {boardDetailsMarkup}
+      </div>
     </div>
   );
 }
